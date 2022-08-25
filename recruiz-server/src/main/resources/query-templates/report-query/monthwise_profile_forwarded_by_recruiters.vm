@@ -1,0 +1,25 @@
+#if ($timePeriod != "fromStart")
+
+	SELECT DISTINCT CONCAT(u.name) AS 'Recruiter Name', COUNT(f.id) AS 'Profile Forwarded'
+	FROM USER u
+	INNER JOIN feedback f ON u.email=
+			(CASE 
+	 			WHEN (SELECT LOCATE(u.email,f.eventCreatedBy)) > 0 THEN u.email
+	 		ELSE 0 
+	 		END)
+	WHERE f.creation_date > DATE_SUB(NOW(), INTERVAL $timePeriod) AND type ='Forwarded'
+	GROUP BY u.email;
+	
+#else
+		
+	SELECT DISTINCT CONCAT(u.name) AS 'Recruiter Name', COUNT(f.id) AS 'Profile Forwarded'
+	FROM USER u
+	INNER JOIN feedback f ON u.email=
+			(CASE 
+	 			WHEN (SELECT LOCATE(u.email,f.eventCreatedBy)) > 0 THEN u.email
+	 		ELSE 0 
+	 		END)
+	WHERE type ='Forwarded'
+	GROUP BY u.email;
+	
+#end

@@ -1,0 +1,38 @@
+<h4 md-dialog-title>Add Candidate</h4>
+<div class="top-sticky-header">
+    <mat-form-field class="example-full-width">
+        <mat-label>Type Keyword</mat-label>
+        <input matInput autocomplete="off" [(ngModel)]="candidateName">
+    </mat-form-field>
+</div>
+<hr>
+<div class="clearfix"></div>
+<mat-dialog-content>
+
+    <div class="row">
+        <div class="col-md-6" *ngFor="let candidate of candidateList | userFilter: candidateName">
+            <div class="box-design">
+                <ngx-avatar name="{{ candidate?.fullName }}" initialsSize="1" class="avatar img-fluid alphabet-image" size="40" textSizeRatio="2">
+                </ngx-avatar>
+                <p class="name_avatar">{{ candidate?.fullName }}</p>
+                <p class="email_avatar">{{ candidate?.email }}</p>
+
+                <div class="checlbox-avatar">
+                    <mat-checkbox [(ngModel)]="candidate.selected">
+                    </mat-checkbox>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+</mat-dialog-content>
+
+<hr>
+<mat-dialog-actions align="end">
+    <p class="note-hint">{{ calculateChecked() }} Candidate Selected</p>
+    <button mat-raised-button (click)="onCloseConfirm()">CANCEL</button>
+    <button mat-raised-button color="primary" (click)="addCandidates()">
+      Add
+    </button>
+</mat-dialog-actions>

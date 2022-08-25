@@ -1,0 +1,594 @@
+<app-common-header></app-common-header>
+
+<section class="main-section">
+    <div class="ac-container-drop">
+        <div class="row">
+            <div class="col-md-12">
+                <mat-tab-group (selectedTabChange)="userManagementTabSwitch($event)">
+                    <mat-tab label="Recruiz Users">
+                        <div class="tab-content">
+                            <div class="row">
+                                <div class="col-md-8">
+                                    <mat-file-upload [labelText]="'Or choose bulk upload (excel files only)'" [selectButtonText]="'Choose a File'" [allowMultipleFiles]="false" [showUploadButton]="false" (selectedFilesChanged)="onSelectedFilesChanged($event)">
+                                    </mat-file-upload>
+                                    <br />
+                                    <p class="hint" style="cursor: pointer; display: inline-block;" (click)="sampleBulkUploadDownload()">
+                                        Click here to download a sample excel file
+                                    </p>
+                                </div>
+
+                                <div class="col-md-4">
+                                    <button mat-raised-button color="primary" (click)="inviteUsers('app users')">
+                                      <i class="material-icons" style="font-size: 18px;">add</i> Invite User(s)
+                                    </button>
+                                </div>
+                            </div>
+                            <hr />
+
+                            <div class="clearfi"></div>
+                            <div class="row" style="margin-top: 30px;">
+                                <div class="col-md-3">
+                                    <p style="line-height: 4;">Enabled Portal User(s) : {{ activeJobPortalount }} - {{ allusers?.length }} </p>
+                                </div>
+
+                                <div class="col-md-2">
+                                    <span style="text-transform: capitalize; line-height: 4;" *ngFor="let name of naukriMosterCount">
+                                      {{ name }} &nbsp;&nbsp;
+                                    </span>
+                                </div>
+
+                                <div class="col-md-2">
+                                    <p style="line-height: 4;">Showing {{ firstView }}-{{ secondView }} of {{ allusers?.length }}</p>
+                                </div>
+
+                                <div class="col-md-4">
+                                    <mat-form-field class="example-full-width">
+                                        <mat-label>Search by name</mat-label>
+                                        <input matInput autocomplete="off" [(ngModel)]="userName">
+                                    </mat-form-field>
+                                </div>
+
+                                <div class="col-md-1">
+                                    <button mat-mini-fab color="primary" matToolTip="Sync User" aria-label="Example icon button with a menu icon">
+                                       <mat-icon>sync</mat-icon>
+                                   </button>
+                                </div>
+                            </div>
+                            <div class="clearfix"></div>
+
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <table class="table table-striped">
+                                        <thead>
+                                            <tr>
+                                                <th>User Name</th>
+                                                <th>Role</th>
+                                                <th>Action</th>
+                                                <th *ngIf="jobPortalFlag">Job Portal</th>
+                                                <th>Sources / Views</th>
+                                                <th>Team</th>
+                                                <th>Reporting to</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr *ngFor="let user of allusers | userFilter:userName | paginate: { itemsPerPage: 10, currentPage: page }">
+                                                <td>
+                                                    <div class="avtar-images">
+                                                        <ngx-avatar name="{{ user?.userName }}" class="avatar alphabet-image" initialsSize="1" size="40" textSizeRatio="2">
+                                                        </ngx-avatar>
+                                                        <p style="font-weight: bold; display: inline-block;">{{ user?.userName }}</p>
+                                                        <p>{{ user?.email }}</p>
+                                                    </div>
+                                                    <hr />
+                                                    <p *ngIf="!user.joinedStatus" class="user_table">
+                                                        Pending <br /><br />
+                                                        <span>Invite Sent on : {{ user?.joinedDate }}</span>
+                                                    </p>
+                                                    <p *ngIf="user.joinedStatus" class="user_table">
+                                                        Joined <br /><br />
+                                                        <span>Joined On : {{ user?.joinedDate }}</span>
+                                                    </p>
+                                                </td>
+
+                                                <td>
+                                                    <mat-form-field>
+                                                        <mat-select [(ngModel)]="user.userRole.id" (ngModelChange)="changedUserRole(user.userRole.id, user.email)">
+                                                            <mat-option *ngFor="let role of allroles" [value]="role.id">
+                                                                {{ role?.roleName }}
+                                                            </mat-option>
+                                                        </mat-select>
+                                                    </mat-form-field>
+                                                </td>
+
+                                                <td class="action-icon">
+                                                    <!--disable-->
+                                                    <a *ngIf="user.accountStatus && user.userRole.id !== '1'" (click)="disableUser(user.email, allusers.indexOf(user), false, 'app users')">
+                                                        <span class="material-icons" matTooltip="Disable User">report_off</span>
+                                                    </a>
+                                                    <!--enable-->
+                                                    <a *ngIf="!user.accountStatus && user.userRole.id !== '1'" (click)="disableUser(user.email, allusers.indexOf(user), true, 'app users')">
+                                                        <span class="material-icons" matTooltip="Enable User">report</span>
+                                                    </a>&nbsp;
+                                                    <!--delete-->
+                                                    <a *ngIf="user.userRole.id !== '1'" (click)="replaceUser(user.email, allusers.indexOf(user))">
+                                                        <span class="material-icons" matTooltip="Delete User">delete</span>
+                                                    </a>&nbsp;
+                                                    <!--re invite-->
+                                                    <a *ngIf="user.joinedStatus" (click)="resend(user.email)">
+                                                        <span class="material-icons" matTooltip="Resent Invitation to User">email</span>
+                                                    </a>&nbsp;
+                                                    <!--reset password-->
+                                                    <a *ngIf="user.userRole.id !== '1'" (click)="getClickedUserEmail(user.email)">
+                                                        <span class="material-icons" matTooltip="Reset Password">vpn_lock</span>
+                                                    </a>
+                                                </td>
+
+                                                <td *ngIf="jobPortalFlag">
+                                                    <mat-slide-toggle [(ngModel)]="user.jobPortalEnable" (change)="portalEnableDisable(user)">
+                                                    </mat-slide-toggle>&nbsp;
+
+                                                    <button mat-icon-button [matMenuTriggerFor]="menu" (click)="checkPortalAdded(user.selectedSources)" *ngIf="user.jobPortalEnable">
+                                                      <span class="material-icons" matTooltip="Select Source">settings</span>
+                                                    </button>
+                                                    <mat-menu #menu="matMenu">
+                                                        <button mat-menu-item *ngFor="let source of sourceList" (click)="$event.stopPropagation();">
+                                                            <mat-checkbox [(ngModel)]="source.isChecked" (ngModelChange)="updateUserUsage(user, source)">
+                                                             {{ source?.value }}
+                                                            </mat-checkbox>
+                                                         </button>
+                                                    </mat-menu>
+                                                </td>
+
+                                                <td style="width:100px">
+                                                    <mat-chip-list>
+                                                        <mat-chip color="accent" selected *ngFor="let source of user.selectedSources">
+                                                            {{source}}
+                                                        </mat-chip>
+                                                    </mat-chip-list>
+                                                    <hr />
+
+                                                    <mat-form-field>
+                                                        <mat-label>Usage Type</mat-label>
+                                                        <mat-select [(ngModel)]="user.usageType" (ngModelChange)="updateUserUsage(user, 'usage')">
+                                                            <mat-option *ngFor="let usage of usageTypes" [value]="usage.id">
+                                                                {{ usage?.value }}
+                                                            </mat-option>
+                                                        </mat-select>
+                                                    </mat-form-field>
+
+                                                    <mat-form-field *ngIf="user.usageType !== 'UNLIMITED_VIEW'">
+                                                        <input matInput placeholder="View Period" numbersOnly [(ngModel)]="user.viewCount">
+                                                        <mat-icon matSuffix (click)="updateUserUsage(user, 'count')" style="cursor: pointer;">save</mat-icon>
+                                                    </mat-form-field>
+
+                                                </td>
+
+                                                <td>
+                                                    <mat-chip-list>
+                                                        <mat-chip color="accent" selected *ngFor="let team of user.userTeams | keyvalue" (click)="getTeamStructure(team.key)" style="cursor: pointer;">
+                                                            {{ team?.value }}
+                                                        </mat-chip>
+                                                    </mat-chip-list>
+                                                </td>
+
+                                                <td>
+                                                    <mat-chip-list>
+                                                        <mat-chip color="accent" selected *ngFor="let report of user.userReportingToTeams | keyvalue" (click)="getTeamStructure(report.key)" style="cursor: pointer;">
+                                                            {{ report?.value }}
+                                                        </mat-chip>
+                                                    </mat-chip-list>
+                                                </td>
+                                            </tr>
+
+                                            <!--place holder-->
+                                            <tr *ngIf="allusers?.length === 0">
+                                                <td colspan="7">
+                                                    <h4 class="place-holder">No results found</h4>
+                                                </td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                    <div class="pagonation" style="text-align: center; margin-top: 30px;">
+                                        <pagination-controls (pageChange)="page = $event" previousLabel="" nextLabel=""></pagination-controls>
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>
+                    </mat-tab>
+
+                    <!--department head-->
+                    <mat-tab label="Department Head" *ngIf="globalData.orgType === 'Corporate'">
+                        <div class="tab-content">
+                            <div class="row">
+                                <div class="col-md-4">
+                                    <button mat-raised-button color="primary" (click)="inviteDepartHeadUSer()" style="margin: 0;">
+                                      Add Department Head(s)
+                                    </button>
+                                </div>
+                                <div class="col-md-4"></div>
+
+                                <div class="col-md-4">
+                                    <mat-form-field class="example-full-width">
+                                        <mat-label>Search by name</mat-label>
+                                        <input matInput autocomplete="off" [(ngModel)]="InterviewerName">
+                                    </mat-form-field>
+                                </div>
+                            </div>
+                            <div class="clearfix"></div>
+
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <table class="table table-striped">
+                                        <thead>
+                                            <tr>
+                                                <th>IDepartment Head Name</th>
+                                                <th>Status</th>
+                                                <th>Phone Number</th>
+                                                <th>Action</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr *ngFor="let department of departmentHeadList | paginate: { itemsPerPage: 10, currentPage: intPage } | userFilter: InterviewerName">
+                                                <td>
+                                                    <div class="avtar-images">
+                                                        <ngx-avatar name="{{ department?.userName }}" class="avatar alphabet-image" initialsSize="1" size="40" textSizeRatio="2">
+                                                        </ngx-avatar>
+                                                        <p style="font-weight: bold; display: inline-block;">{{ department?.userName }}</p>
+                                                        <p>{{ department?.email }}</p>
+                                                    </div>
+                                                </td>
+
+                                                <td>
+                                                    <p *ngIf="!department.joinedStatus" class="user_table">
+                                                        Pending
+                                                    </p>
+
+                                                    <p *ngIf="department.joinedStatus" class="user_table">
+                                                        Joined
+                                                    </p>
+                                                </td>
+
+                                                <td>
+                                                    {{ department?.mobile }}
+                                                </td>
+
+                                                <td>
+                                                    <!--re invite-->
+                                                    <a style="cursor: pointer;" *ngIf="department.joinedStatus" (click)="resend(department.email)">
+                                                        <span class="material-icons  mobile-number" matTooltip="Resent Invitation to User">email</span>
+                                                    </a>&nbsp;
+
+                                                    <!--disable-->
+                                                    <a style="cursor: pointer;" (click)="disableUser(department.email, departmentHeadList.indexOf(department), false, 'dept_head')" *ngIf="department.accountStatus">
+                                                        <span class="material-icons  mobile-number" matTooltip="Disable User">report_off</span>
+                                                    </a>&nbsp;
+
+                                                    <!--enable-->
+                                                    <a style="cursor: pointer;" (click)="disableUser(department.email, departmentHeadList.indexOf(department), true, 'dept_head')" *ngIf="!department.accountStatus">
+                                                        <span class="material-icons  mobile-number" matTooltip="Enable User">report</span>
+                                                    </a>&nbsp;
+
+                                                    <!--delete-->
+                                                    <a style="cursor: pointer;" (click)="deleteDeptHead(department.email, departmentHeadList.indexOf(department), 'deptHead')">
+                                                        <span class="material-icons mobile-number" matTooltip="Delete">delete</span>
+                                                    </a>
+                                                </td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                    <div class="pagonation" style="text-align: center; margin-top: 30px;">
+                                        <pagination-controls (pageChange)="intPage = $event" previousLabel="" nextLabel=""></pagination-controls>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </mat-tab>
+
+                    <!--interviewers-->
+                    <mat-tab label="Interviewers">
+                        <div class="tab-content">
+                            <div class="row">
+                                <div class="col-md-4">
+                                    <button mat-raised-button color="primary" (click)="addEditInterviewer('')">
+                                      Add Interviewer(s)
+                                    </button>
+                                </div>
+                                <div class="col-md-4"></div>
+
+                                <div class="col-md-4">
+                                    <mat-form-field class="example-full-width">
+                                        <mat-label>Search by name</mat-label>
+                                        <input matInput autocomplete="off" [(ngModel)]="InterviewerName">
+                                    </mat-form-field>
+                                </div>
+                            </div>
+                            <div class="clearfix"></div>
+
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <table class="table table-striped">
+                                        <thead>
+                                            <tr>
+                                                <th>Interviewer's Name</th>
+                                                <th style="width: 300px;">Added to</th>
+                                                <th>Added on</th>
+                                                <th>Phone Number</th>
+                                                <th>Action</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr *ngFor="let interviewer of allInterviwerList | paginate: { itemsPerPage: 10, currentPage: intPage } | userFilter: InterviewerName">
+                                                <td>
+                                                    <div class="avtar-images">
+                                                        <ngx-avatar name="{{ interviewer?.name }}" class="avatar alphabet-image" initialsSize="1" size="40" textSizeRatio="2">
+                                                        </ngx-avatar>
+                                                        <p style="font-weight: bold; display: inline-block;">{{ interviewer?.name }}</p>
+                                                        <p>{{ interviewer?.email }}</p>
+                                                    </div>
+                                                </td>
+
+                                                <td>
+                                                    <mat-chip-list>
+                                                        <mat-chip color="accent" selected *ngFor="let client of interviewer.clientName">
+                                                            {{ client }}
+                                                        </mat-chip>
+                                                    </mat-chip-list>
+                                                </td>
+
+                                                <td>
+                                                    <span class="material-icons mobile-number">event_note</span> {{ interviewer?.creationDate | date: 'dd-MM-yyyy' }}
+                                                </td>
+
+                                                <td>
+                                                    <span class="material-icons mobile-number">call</span> {{ interviewer?.mobile }}
+                                                </td>
+
+                                                <td>
+                                                    <a style="cursor: pointer;" (click)="addEditInterviewer(interviewer)">
+                                                        <span class="material-icons mobile-number" matTooltip="Edit">edit</span>
+                                                    </a>
+                                                    <a style="cursor: pointer;" (click)="deleteInterviwer(interviewer.id)">
+                                                        <span class="material-icons mobile-number" matTooltip="Delete">delete</span>
+                                                    </a>
+                                                </td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                    <div class="pagonation" style="text-align: center; margin-top: 30px;">
+                                        <pagination-controls (pageChange)="intPage = $event" previousLabel="" nextLabel=""></pagination-controls>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </mat-tab>
+
+                    <mat-tab label="Vendors">
+                        <div class="tab-content" *ngIf="!isUserVendor">
+                            <div class="tab-content">
+                                <div class="row">
+                                    <div class="col-md-4">
+                                        <button mat-raised-button color="primary" (click)="addEditVendor('')">
+                                      Add Interviewer(s)
+                                    </button>
+                                    </div>
+                                    <div class="col-md-4"></div>
+
+                                    <div class="col-md-4">
+                                        <mat-form-field class="example-full-width">
+                                            <mat-label>Search by name</mat-label>
+                                            <input matInput autocomplete="off" [(ngModel)]="InterviewerName">
+                                        </mat-form-field>
+                                    </div>
+                                </div>
+                                <div class="clearfix"></div>
+
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <table class="table table-striped">
+                                            <thead>
+                                                <tr>
+                                                    <th>Vendor Name</th>
+                                                    <th>Type</th>
+                                                    <th>Status</th>
+                                                    <th>Phone Number</th>
+                                                    <th>Action</th>
+                                                    <th style="width: 180px;">Permission to <br />schedule interview</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <tr *ngFor="let vendor of allVendorsList | paginate: { itemsPerPage: 10, currentPage: vendorPage } | userFilter: InterviewerName">
+                                                    <td>
+                                                        <div class="avtar-images">
+                                                            <ngx-avatar name="{{ vendor?.name }}" class="avatar alphabet-image" initialsSize="1" size="40" textSizeRatio="2">
+                                                            </ngx-avatar>
+                                                            <p style="font-weight: bold; display: inline-block;">{{ vendor?.name }}</p>
+                                                            <p>{{ vendor?.email }}</p>
+                                                        </div>
+                                                    </td>
+
+                                                    <td>
+                                                        {{ vendor?.type }}
+                                                    </td>
+
+                                                    <td>
+                                                        {{ vendor?.activationStatus }}
+                                                    </td>
+
+                                                    <td>
+                                                        <span class="material-icons mobile-number">call</span> {{ vendor?.phone }}
+                                                    </td>
+
+                                                    <td>
+                                                        <!--namage use-->
+                                                        <a style="cursor: pointer;" (click)="vendorUsersManagement(vendor.id)">
+                                                            <span class="material-icons mobile-number" matTooltip="Manager User">account_circle</span>
+                                                        </a>
+
+                                                        <!--edit-->
+                                                        <a style="cursor: pointer;" (click)="addEditVendor(vendor)">
+                                                            <span class="material-icons mobile-number" matTooltip="Edit">edit</span>
+                                                        </a>
+
+                                                        <!--disable-->
+                                                        <a style="cursor: pointer;" (click)="disableVendor(vendor.id, allVendorsList.indexOf(vendor), false)" *ngIf="vendor.status">
+                                                            <span class="material-icons  mobile-number" matTooltip="Disable User">report_off</span>
+                                                        </a>
+                                                        <!--enable-->
+                                                        <a style="cursor: pointer;" (click)="disableVendor(vendor.id, allVendorsList.indexOf(vendor), true)" *ngIf="!vendor.status">
+                                                            <span class="material-icons  mobile-number" matTooltip="Enable User">report</span>
+                                                        </a>&nbsp;
+
+                                                        <!--delete-->
+                                                        <a style="cursor: pointer;" (click)="deleteVendor(vendor.id, allVendorsList.indexOf(vendor))">
+                                                            <span class="material-icons mobile-number" matTooltip="Delete">delete</span>
+                                                        </a>
+                                                    </td>
+
+                                                    <td style="text-align: center;">
+                                                        <mat-checkbox [(ngModel)]="vendor.isInterviewSchedule" (change)="permissionToScheduleInterview(vendor.isInterviewSchedule, vendor.id)"></mat-checkbox>
+                                                    </td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                        <div class="pagonation" style="text-align: center; margin-top: 30px;">
+                                            <pagination-controls (pageChange)="vendorPage = $event" previousLabel="" nextLabel=""></pagination-controls>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!--manage user-->
+                        <div class="tab-content" *ngIf="isUserVendor">
+                            <div class="tab-content">
+                                <div class="row">
+                                    <div class="col-md-4">
+                                        <button mat-raised-button color="primary" (click)="addVendorUser()" style="margin:0;">
+                                           Invite Users for Vendor
+                                        </button>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <button mat-button color="primary" (click)="loadVendorList()">
+                                          Back
+                                        </button>
+                                    </div>
+
+                                    <div class="col-md-4">
+                                        <mat-form-field class="example-full-width">
+                                            <mat-label>Search by name</mat-label>
+                                            <input matInput autocomplete="off" [(ngModel)]="InterviewerName">
+                                        </mat-form-field>
+                                    </div>
+                                </div>
+                                <div class="clearfix"></div>
+
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <table class="table table-striped">
+                                            <thead>
+                                                <tr>
+                                                    <th>User Name</th>
+                                                    <th>Status</th>
+                                                    <th>Re-invite</th>
+                                                    <th>Action</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <tr *ngFor="let user of venderUser | paginate: { itemsPerPage: 10, currentPage: vendUserPage } | userFilter: InterviewerName">
+                                                    <td>
+                                                        <div class="avtar-images">
+                                                            <ngx-avatar name="{{ user?.userName }}" class="avatar alphabet-image" initialsSize="1" size="40" textSizeRatio="2">
+                                                            </ngx-avatar>
+                                                            <p style="font-weight: bold; display: inline-block;">{{ user?.userName }}</p>
+                                                            <p>{{ user?.email }}</p>
+                                                        </div>
+                                                    </td>
+
+                                                    <td *ngIf="!user.joinedStatus">
+                                                        <p>Pending</p>
+                                                        <p>Invite sent on {{ user?.joinedDate }}</p>
+                                                    </td>
+                                                    <td *ngIf="user.joinedStatus">
+                                                        <p>Joined</p>
+                                                        <p>Joined on {{ user?.joinedDate }}</p>
+                                                    </td>
+
+                                                    <td>
+                                                        <a style="cursor: pointer;" (click)="resend(user.email)" *ngIf="!user.joinedStatus">
+                                                            <span class="material-icons mobile-number" matTooltip="Re-invite">contact_mail</span>
+                                                        </a>
+                                                        <p *ngIf="user.joinedStatus">----</p>
+                                                    </td>
+
+                                                    <td>
+                                                        ----
+                                                    </td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                        <div class="pagonation" style="text-align: center; margin-top: 30px;">
+                                            <pagination-controls (pageChange)="vendUserPage = $event" previousLabel="" nextLabel=""></pagination-controls>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </mat-tab>
+
+                    <mat-tab label="Decision Makers">
+                        <div class="tab-content">
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <table class="table table-striped">
+                                        <thead>
+                                            <tr>
+                                                <th>Decision Maker Name</th>
+                                                <th style="width: 350px;">Added to</th>
+                                                <th>Added on</th>
+                                                <th>Contact</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr *ngFor="let discison of descisionMakerList | paginate: { itemsPerPage: 10, currentPage: descisionPage }">
+
+                                                <td>
+                                                    <div class="avtar-images">
+                                                        <ngx-avatar name="{{ discison?.name }}" class="avatar alphabet-image" initialsSize="1" size="40" textSizeRatio="2">
+                                                        </ngx-avatar>
+                                                        <p style="font-weight: bold; display: inline-block;">{{ discison?.name }}</p>
+                                                        <p>{{ discison?.email }}</p>
+                                                    </div>
+                                                </td>
+
+                                                <td>
+                                                    <mat-chip-list>
+                                                        <mat-chip color="accent" selected *ngFor="let client of discison.clientNames">
+                                                            {{ client }}
+                                                        </mat-chip>
+                                                    </mat-chip-list>
+                                                </td>
+
+                                                <td>
+                                                    {{ discison?.creationDate | date: 'dd-MM-yyyy' }}
+                                                </td>
+
+                                                <td>
+                                                    {{ discison?.mobile }}
+                                                </td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                    <div class="pagonation" style="text-align: center; margin-top: 30px;">
+                                        <pagination-controls (pageChange)="vendUserPage = $event" previousLabel="" nextLabel=""></pagination-controls>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </mat-tab>
+                </mat-tab-group>
+            </div>
+        </div>
+        <div class="clearfix "></div>
+    </div>
+</section>

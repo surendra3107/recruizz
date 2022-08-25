@@ -1,0 +1,18 @@
+{
+	"shareUrl": "$shareUrl",
+	#if($fbAppId)
+		"fbAppId": "$fbAppId",
+	#end
+	#if($twitterUsername)
+		"twitterUsername": "$twitterUsername",
+	#end
+	#if($isCorporate)
+		"shareText": "$positionName at $orgName",
+		"shareTitle": "$orgName has $noOfOpenings opening(s) for $positionName. Click to apply",
+		"shareDescription": ""
+	#elseif($isAgency)
+		"shareQuote": "$positionName at $clientName",
+		"shareTitle": "$clientName has $noOfOpenings opening(s) for $positionName. Click to apply",
+		"shareDescription": ""
+	#end
+}

@@ -1,0 +1,10 @@
+SELECT 
+	 CONCAT(c.gender) as 'Gender', count(c.cid) as 'Total Number'	
+FROM 
+	candidate c 
+INNER JOIN 
+	round_candidate rc on rc.candidate_cid = c.cid 
+WHERE 
+	positionCode='$positionCode'
+GROUP BY
+	c.gender;

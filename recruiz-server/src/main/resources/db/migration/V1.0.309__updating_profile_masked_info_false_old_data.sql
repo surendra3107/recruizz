@@ -1,0 +1,1 @@
+UPDATE `feedback` SET `profileMasked`= 0 WHERE `id`> 0;

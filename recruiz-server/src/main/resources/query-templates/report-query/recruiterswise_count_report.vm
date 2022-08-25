@@ -1,0 +1,39 @@
+#if ($timePeriod != "fromStart")
+
+	SELECT
+	(
+		SELECT COUNT(c.cid)
+		FROM candidate c
+		WHERE c.owner='$userEmail' AND c.creation_date > DATE_SUB(NOW(), INTERVAL $timePeriod)
+		GROUP BY c.owner) AS 'Total Candidates',
+	(
+		SELECT COUNT(fp.id)
+		FROM forward_profile fp
+		WHERE fp.emailFrom='$userEmail' AND fp.date > DATE_SUB(NOW(), INTERVAL $timePeriod)
+		GROUP BY fp.emailFrom) AS 'Profile forwarded',
+	(
+		SELECT COUNT(i.id)
+		FROM interview_schedule i
+		WHERE i.interviewSchedulerEmail='$userEmail' AND i.creation_date > DATE_SUB(NOW(), INTERVAL $timePeriod)
+		GROUP BY i.interviewSchedulerEmail) AS 'Interviews Scheduled'
+	
+#else
+		
+	SELECT
+	(
+		SELECT COUNT(c.cid)
+		FROM candidate c
+		WHERE c.owner='$userEmail'
+		GROUP BY c.owner) AS 'Total Candidates',
+	(
+		SELECT COUNT(fp.id)
+		FROM forward_profile fp
+		WHERE fp.emailFrom='$userEmail'
+		GROUP BY fp.emailFrom) AS 'Profile forwarded',
+	(
+		SELECT COUNT(i.id)
+		FROM interview_schedule i
+		WHERE i.interviewSchedulerEmail='$userEmail'
+		GROUP BY i.interviewSchedulerEmail) AS 'Interviews Scheduled'
+		
+#end

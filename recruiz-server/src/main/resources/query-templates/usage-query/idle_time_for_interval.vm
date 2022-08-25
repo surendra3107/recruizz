@@ -1,0 +1,9 @@
+SELECT 
+    (SELECT 
+            SUM(last_hit_gap)
+        FROM
+            $tableName
+        WHERE
+            time >= DATE_sub(UTC_TIMESTAMP(), INTERVAL $interval MINUTE)
+                AND user_email = '$userEmail'
+                AND last_hit_gap > $idleTimeOut) totalIdleTime;

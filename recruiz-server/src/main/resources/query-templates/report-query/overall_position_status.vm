@@ -1,0 +1,8 @@
+SELECT CASE 
+	WHEN p.status = '$onHoldStatus' OR p.clientStatus = '$onHoldStatus' THEN '$onHoldStatus' 
+	WHEN p.status = '$closedStatus' OR p.clientStatus = '$closedStatus' THEN '$closedStatus' 
+	WHEN p.status = '$stopSourcingStatus' OR p.clientStatus = '$stopSourcingStatus' THEN '$stopSourcingStatus' ELSE
+	p.status END AS finalStatus, COUNT(p.id) AS 'Total Number'
+FROM POSITION p
+GROUP BY
+	 finalStatus;

@@ -1,0 +1,14 @@
+#if ($positionCode == "all")
+
+		SELECT IFNULL(FLOOR(AVG(TIMESTAMPDIFF(DAY,p.openedDate,p.closedDate))),0) AS 'Avg time to close (In Days)'
+	FROM POSITION p
+	WHERE p.status = '$positionStatus' AND p.creation_date  BETWEEN '$startDate' AND '$endDate'
+	
+#else
+
+		SELECT IFNULL(FLOOR(AVG(TIMESTAMPDIFF(DAY,p.openedDate,p.closedDate))),0) AS 'Avg time to close (In Days)'
+	FROM POSITION p
+	WHERE p.status = '$positionStatus' AND p.positionCode = '$positionCode' 
+		AND p.creation_date  BETWEEN '$startDate' AND '$endDate'
+		
+#end

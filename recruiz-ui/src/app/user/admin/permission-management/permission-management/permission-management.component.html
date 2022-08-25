@@ -1,0 +1,39 @@
+<app-common-header></app-common-header>
+
+<section class="main-section">
+    <div class="ac-container-drop">
+        <div class="row">
+            <div class="col-md-12 side-div">
+                <h4>Permission</h4>
+                <hr />
+            </div>
+        </div>
+        <div class="clearfix"></div>
+
+        <div class="row">
+            <div class="col-md-12">
+                <table id="testtable example" class="table" cellspacing="0" width="100%">
+                    <tr class="table-head" style="text-align: center;">
+                        <th rowspan="2" width="300px">
+                            Permission</th>
+                        <th colspan="16">Roles</th>
+                    </tr>
+                    <tr class="roles" style="text-align: center;">
+                        <th *ngFor="let role of allroles">
+                            <i class="icon-supervisor_account" aria-hidden="true"></i> {{ role?.roleName }}
+                        </th>
+                    </tr>
+                    <tr *ngFor="let permissions of allpermission">
+                        <td>
+                            {{ permissions?.id }}
+                            <span class="material-icons" style="font-size: 15px; float: right; cursor:pointer" matTooltip="Note: {{ permissions?.value }}">info</span>
+                        </td>
+                        <td *ngFor="let role of allroles" style="text-align: center;">
+                            <mat-checkbox [checked]="role.permissions.length > 0 && role.permissionList.indexOf(permissions.id) > -1" (change)="changePermission(permissions.id, role.roleName, role.permissions.length > 0 && role.permissionList.indexOf(permissions.id) > -1, 'NO', role)">
+                            </mat-checkbox>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+    </div>

@@ -1,0 +1,40 @@
+<h4 md-dialog-title>Bank Details</h4>
+<hr>
+<div class="clearfix"></div>
+<mat-dialog-content>
+    <div class="row">
+        <div class="col-md-12">
+            <mat-form-field class="example-full-width">
+                <mat-label>Account Name *</mat-label>
+                <input matInput [(ngModel)]="bank.accountName">
+            </mat-form-field>
+
+            <mat-form-field class="example-full-width">
+                <mat-label>Account Number *</mat-label>
+                <input matInput [(ngModel)]="bank.accountNumber">
+            </mat-form-field>
+
+            <mat-form-field class="example-full-width">
+                <mat-label>Bank Name*</mat-label>
+                <input matInput [(ngModel)]="bank.bankName">
+            </mat-form-field>
+
+            <mat-form-field class="example-full-width">
+                <mat-label>Branch *</mat-label>
+                <input matInput [(ngModel)]="bank.branch">
+            </mat-form-field>
+
+            <mat-form-field class="example-full-width">
+                <mat-label>IFSC *</mat-label>
+                <input matInput [(ngModel)]="bank.ifscCode">
+            </mat-form-field>
+        </div>
+    </div>
+</mat-dialog-content>
+
+<hr>
+<mat-dialog-actions>
+    <button mat-raised-button color="primary" (click)="addBankDetails()" *ngIf="!bank.id">Add Bank Details</button>
+    <button mat-raised-button color="primary" (click)="updateBankDetails()" *ngIf="bank.id">Update Bank Details</button>
+    <button mat-raised-button (click)="onCloseCancel()">CANCEL</button>
+</mat-dialog-actions>

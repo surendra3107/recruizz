@@ -1,0 +1,43 @@
+<table class="content" style="border-spacing: 0; mso-table-lspace: 0pt; mso-table-rspace: 0pt;" border="0" width="100%" cellspacing="0" cellpadding="0">
+<tbody>
+<tr>
+<td class="content_cell" style="padding: 0; text-align: center; background-color: #ffffff; font-size: 0 !important;" align="center" valign="top"><!-- [if (gte mso 9)|(IE)]>
+                <table width="580" border="0" cellspacing="0" cellpadding="0" align="center" style="vertical-align: top;">
+                  <tbody>
+                    <tr>
+                      <td width="580" align="center" valign="top">
+                <![endif]-->
+<div class="row" style="display: inline-block; width: 100%; vertical-align: top; text-align: left; max-width: 580px; margin: 0 auto;"><!-- [if (gte mso 9)|(IE)]>
+                  <table width="580" border="0" cellspacing="0" cellpadding="0" align="center" style="vertical-align: top;">
+                    <tbody>
+                      <tr>
+                        <td width="580" align="center" valign="top">
+                  <![endif]-->
+<div class="col-3" style="display: inline-block; width: 100%; vertical-align: top; text-align: left; max-width: 580px;">
+<table class="column" style="border-spacing: 0; mso-table-lspace: 0pt; mso-table-rspace: 0pt; width: 100%; vertical-align: top;" border="0" width="100%" cellspacing="0" cellpadding="0">
+<tbody>
+<tr>
+<td class="column_cell font_default" style="padding: 16px; font-family: Helvetica, Arial, sans-serif; font-size: 15px; text-align: left; vertical-align: top; color: #888888;" align="left" valign="top">
+<p style="font-family: Helvetica, Arial, sans-serif; font-size: 15px; line-height: 23px; margin-top: 16px; margin-bottom: 24px;">Hi ${candidateName}, <br /><br />This is with regards to your Interview rounds with ${clientName} for the position of ${positionName}.&nbsp;We appreciate you taking the time to Interview with us. After careful consideration, we regret to inform you that your Profile has not been selected for this position.<br /> <br />However your information will remain in our system for any other job opportunities in future and we hope our paths cross again. <br /><br />Thank you for your interest in career opportunities with ${clientName}. <br /><br />Regards, <br />${emailSignature}</p>
+</td>
+<!-- /.column_cell --></tr>
+</tbody>
+</table>
+<!-- /.column --></div>
+<!-- /.col-3 --> <!-- [if (gte mso 9)|(IE)]>
+                        </td>
+                      </tr>
+                    </tbody>
+                  </table>
+                  <![endif]--></div>
+<!-- /.row --> <!-- [if (gte mso 9)|(IE)]>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+                <![endif]--></td>
+<!-- /.content_cell --></tr>
+</tbody>
+</table>
+<!-- /.content -->
+<p>&nbsp;</p>

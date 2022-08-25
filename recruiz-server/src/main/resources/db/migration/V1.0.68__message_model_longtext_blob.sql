@@ -1,0 +1,9 @@
+ALTER TABLE `email_message_model` 
+CHANGE COLUMN `htmlBody` `htmlBody` BLOB(1000000) NULL DEFAULT NULL ,
+CHANGE COLUMN `messageHeader` `messageHeader` BLOB(1000000) NULL DEFAULT NULL ,
+CHANGE COLUMN `textBody` `textBody` BLOB(1000000) NULL DEFAULT NULL ;
+
+ALTER TABLE `email_message_model_audit` 
+CHANGE COLUMN `htmlBody` `htmlBody` BLOB(1000000) NULL DEFAULT NULL ,
+CHANGE COLUMN `messageHeader` `messageHeader` BLOB(1000000) NULL DEFAULT NULL ,
+CHANGE COLUMN `textBody` `textBody` BLOB(1000000) NULL DEFAULT NULL ;

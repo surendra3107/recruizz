@@ -1,0 +1,19 @@
+<div class="email-body" style="background: #fff; border: solid 1px #e8e8e8; border-top: solid 3px #21BCB0; border-bottom: solid 3px #21BCB0; margin: 20px auto 0; overflow: hidden; position: relative; padding: 20px; border-radius: 4px; box-shadow: 0px 10px 10px -5px #e8e8e8; width: 100%; max-width: 90%;">
+	<p><strong>Hi,</strong></p>
+	<p>Status report for opened position <strong>${positionName}</strong></p>
+
+	<div style="max-width: 100%;">
+		<h2 style="font-family: Helvetica, Arial, sans-serif; margin: 0; padding: 10px; border: solid 1px #ededed; letter-spacing: 0.04em; font-size: 24px; font-family: 'Helvetica', Arial;">${positionName}</h2>
+		<div style="max-height: 500px; overflow: auto; border: solid 1px #e8e8e8">
+			<table class="mailer forward-report" style="border-collapse: collapse; margin-bottom: 30px; font-size: 13px;">
+					#foreach( $rowArray in $dataArray )
+						<tr style="border: solid 1px #ccc;">
+					 		#foreach( $data in $rowArray )
+								<td style="border: solid 1px #ccc; padding: 8px; vertical-align: top;">$data</td> 	
+				 			#end
+					 	</tr>
+					#end
+			</table>
+		</div>
+	</div>
+</div>

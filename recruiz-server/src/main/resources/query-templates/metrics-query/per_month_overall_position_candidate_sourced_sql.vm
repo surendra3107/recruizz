@@ -1,0 +1,9 @@
+SELECT 
+count(rc.id) as 'No of Candidates', p.title,  MONTHNAME(rc.creation_date) as 'Month' from
+	round_candidate rc
+INNER JOIN 
+	position p on p.positionCode = rc.positionCode
+	where rc.creation_date between '$startDate' and '$endDate'
+GROUP BY
+	 p.title , Month
+	  ORDER BY rc.creation_date desc;

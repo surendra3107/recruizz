@@ -1,0 +1,16 @@
+#if ($timePeriod != "fromStart")
+
+	SELECT DISTINCT CONCAT(u.name) AS 'Recruiter Name', COUNT(i.id) AS 'Interviews Scheduled'
+	FROM USER u
+	INNER JOIN interview_schedule i ON u.email=i.interviewSchedulerEmail
+	WHERE i.creation_date > DATE_SUB(NOW(), INTERVAL $timePeriod)
+	GROUP BY i.interviewSchedulerEmail;
+	
+#else
+		
+	SELECT DISTINCT CONCAT(u.name) AS 'Recruiter Name', COUNT(i.id) AS 'Interviews Scheduled'
+	FROM USER u
+	INNER JOIN interview_schedule i ON u.email=i.interviewSchedulerEmail
+	GROUP BY i.interviewSchedulerEmail;
+	
+#end

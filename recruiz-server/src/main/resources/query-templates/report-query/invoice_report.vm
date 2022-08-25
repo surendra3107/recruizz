@@ -1,0 +1,29 @@
+SELECT 
+CONCAT(ai.`client_name`) as 'Client Name', CONCAT(ci.`position_name`) as 'Position Name', 
+CONCAT(ci.candidate_name) as 'Candidate Name', DATE_FORMAT(ai.creation_date, '%d/%m/%Y') AS 'Invoice Date',
+CONCAT(ai.invoice_status) as 'Status', DATE_FORMAT(ai.due_date, '%d/%m/%Y') AS 'Payment Due Date', 
+CASE 
+	WHEN ai.total_amount_after_discount > 0 THEN ai.total_amount_after_discount
+	ELSE ai.total_amount
+END AS 'Total Amount',
+CONCAT(ai.payment_received) as 'Payment Received',
+CASE 
+	WHEN ai.total_amount_after_discount > 0 THEN (ai.total_amount_after_discount - ai.payment_received)
+	ELSE (ai.total_amount - ai.payment_received)
+END AS 'Pending', 
+CASE 
+	WHEN IFNULL(DATEDIFF(NOW(),CONVERT_TZ(ai.due_date,'+00:00','$timeZone')),0) < 0 THEN 0 
+	ELSE IFNULL(DATEDIFF(NOW(),CONVERT_TZ(ai.due_date,'+00:00','$timeZone')),0) 
+END AS 'Delay Days'
+FROM `agency_invoice` ai 
+INNER JOIN 
+	`candidate_invoice` ci 
+ON ai.id=ci.`agencyInvoice_id`
+WHERE ai.creation_date BETWEEN '$startDate' AND '$endDate'
+#if ($clientName != "all")
+		AND ai.client_name = '$clientName'
+#end
+#if ($invoiceStatus != "all")
+		AND ai.invoice_status = '$invoiceStatus'
+#end
+ORDER BY ai.creation_date DESC;

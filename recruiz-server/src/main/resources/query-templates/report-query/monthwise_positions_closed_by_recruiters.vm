@@ -1,0 +1,37 @@
+#if ($timePeriod != "fromStart")
+
+	SELECT DISTINCT CONCAT(F.name) AS 'Recruiter Name', COUNT(positionId) AS 'Positions Closed' FROM (
+		SELECT * FROM
+		(
+	SELECT DISTINCT id AS positionId, STATUS, creation_date
+			FROM POSITION) A
+	LEFT JOIN
+	(
+		SELECT DISTINCT position_ID, HR_ID
+		FROM position_hr) D ON A.positionId = D.position_ID) E
+	LEFT JOIN
+	(
+		SELECT DISTINCT user_id,name, email
+		FROM USER) F ON E.HR_ID = F.user_id
+		where STATUS = 'Closed' AND creation_date > DATE_SUB(NOW(), INTERVAL $timePeriod)
+		GROUP BY F.user_id;
+	
+#else
+		
+	SELECT DISTINCT CONCAT(F.name) AS 'Recruiter Name', COUNT(positionId) AS 'Positions Closed' FROM (
+		SELECT * FROM
+		(
+	SELECT DISTINCT id AS positionId, STATUS, creation_date
+			FROM POSITION) A
+	LEFT JOIN
+	(
+		SELECT DISTINCT position_ID, HR_ID
+		FROM position_hr) D ON A.positionId = D.position_ID) E
+	LEFT JOIN
+	(
+		SELECT DISTINCT user_id,name, email
+		FROM USER) F ON E.HR_ID = F.user_id
+		where STATUS = 'Closed'
+		GROUP BY F.user_id;
+	
+#end

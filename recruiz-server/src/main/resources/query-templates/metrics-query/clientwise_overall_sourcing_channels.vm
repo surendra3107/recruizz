@@ -1,0 +1,10 @@
+SELECT 
+	CONCAT(c.source) AS 'Source Channel', COUNT(c.cid) AS 'Total Number'
+FROM 
+	candidate c
+INNER JOIN 
+	round_candidate rc ON rc.candidate_cid = c.cid
+INNER JOIN POSITION p ON p.positionCode = rc.positionCode
+WHERE p.client_id = '$clientId'
+GROUP BY
+	 c.source;

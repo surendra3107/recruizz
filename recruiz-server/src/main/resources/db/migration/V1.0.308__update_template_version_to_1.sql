@@ -1,0 +1,1 @@
+update email_template_data set subjectVersion=1,bodyVersion=1 where id > 0 ;

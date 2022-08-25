@@ -1,0 +1,340 @@
+<app-common-header></app-common-header>
+
+<section class="main-section" style="margin-bottom: 0;">
+    <div class="ac-container-drop">
+        <div class="row">
+            <div class="col-md-12 side-div">
+                <ul class="integration-tabs">
+                    <li [ngClass]="{'active': activeTab === 'jobportal'}" (click)="switchPortal('Portal')">Portal Integration</li>
+                    <li [ngClass]="{'active': activeTab === 'ivrInt'}" (click)="switchPortal('ivr')">IVR Integration</li>
+                </ul>
+            </div>
+        </div>
+        <div class="clearfix"></div>
+    </div>
+</section>
+
+<section class="main-section" *ngIf="jobPoratTab">
+    <div class="ac-container-drop">
+        <div class="row">
+            <div class="col-md-12 side-div">
+                <h4>Job Portal Integration</h4>
+                <hr />
+            </div>
+        </div>
+        <div class="clearfix"></div>
+
+        <div class="row">
+            <div class="col-md-12 top-header">
+                <img src="../../assets/icons/Candidate/Job_Portals.png" />
+                <h5>Job Portals </h5>
+                <p>Connect to Job portals like naukri and monster, etc. and source candidates to your database.</p>
+
+                <hr />
+                <div class="card" style="margin-bottom: 30px;">
+                    <div class="card-header">
+                        Connect to Job Portal
+                    </div>
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-md-6">
+                                <mat-form-field class="example-full-width">
+                                    <mat-label>Job Portal Url</mat-label>
+                                    <input matInput [(ngModel)]="jobPortalUrl" [disabled]="jobPortalFlag">
+                                </mat-form-field>
+                            </div>
+
+                            <div class="col-md-3">
+                                <mat-form-field class="example-full-width">
+                                    <mat-label>Client Id</mat-label>
+                                    <input matInput [(ngModel)]="clientId" [disabled]="jobPortalFlag">
+                                </mat-form-field>
+                            </div>
+
+                            <div class="col-md-3">
+                                <button mat-raised-button color="primary" (click)="jobPortalConnectDisconnect(jobPortalUrl, clientId, jobPortalFlag)">
+                                  {{ portalButtonText }}
+                                </button>
+                            </div>
+
+                            <div class="clearfix"></div>
+
+                            <div class="col-md-12">
+                                <div class="tab-box" style="margin-top: 30px;">
+                                    <mat-tab-group (selectedTabChange)="activeTabEvent($event)">
+                                        <mat-tab label="Source Settings">
+                                            <div class="tab-content" style="margin-top: 20px; margin-bottom: 20px;">
+                                                <div class="col-md-4">
+                                                    <mat-form-field>
+                                                        <mat-label>Filter by source</mat-label>
+                                                        <mat-select [(ngModel)]="filterJobSource">
+                                                            <mat-option *ngFor="let source of sourceList" [value]="source.id">
+                                                                {{ source?.value }}
+                                                            </mat-option>
+                                                            <mat-option value=""> All Sources</mat-option>
+                                                        </mat-select>
+                                                    </mat-form-field>
+                                                </div>
+                                                <div class="clearfix"></div>
+
+                                                <div class="row source-row" *ngFor="let tab of portalDataList | portalFilter:filterJobSource; first as isFirst; let i = index">
+                                                    <div class="col-md-3">
+                                                        <mat-form-field>
+                                                            <mat-label>Select Source</mat-label>
+                                                            <mat-select [(ngModel)]="tab.source">
+                                                                <mat-option *ngFor="let src of sourceList" [value]="src.id">
+                                                                    {{ src?.value }}
+                                                                </mat-option>
+                                                            </mat-select>
+                                                        </mat-form-field>
+                                                    </div>
+
+                                                    <div class="col-md-2">
+                                                        <mat-form-field class="example-full-width">
+                                                            <mat-label>Source User Name </mat-label>
+                                                            <input matInput [(ngModel)]="tab.sourceUserId">
+                                                        </mat-form-field>
+                                                    </div>
+
+                                                    <div class="col-md-2">
+                                                        <mat-form-field class="example-full-width">
+                                                            <mat-label>Source Password </mat-label>
+                                                            <input matInput type="password" [(ngModel)]="tab.password">
+                                                        </mat-form-field>
+                                                    </div>
+
+                                                    <div class="col-md-2">
+                                                        <mat-form-field class="example-full-width">
+                                                            <mat-label>OTP Email Address</mat-label>
+                                                            <input matInput [(ngModel)]="tab.otpEmailID" [disabled]="tab.source === 'monster'">
+                                                        </mat-form-field>
+                                                    </div>
+
+                                                    <div class="col-md-2">
+                                                        <mat-form-field class="example-full-width">
+                                                            <mat-label>OTP Email Password </mat-label>
+                                                            <input matInput [(ngModel)]="tab.otpEmailPwd" [disabled]="tab.source === 'monster'">
+                                                        </mat-form-field>
+                                                    </div>
+
+                                                    <div class="col-md-1">
+                                                        <span class="material-icons action-btn" *ngIf="!isFirst" (click)="removeSourceTab(i, tab.otpEmailID)">
+                                                          delete
+                                                        </span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <button mat-stroked-button color="primary" (click)="addSourceTab()"> Add More </button>
+                                            <button mat-raised-button color="primary" (click)="updatePortalSourceCredentials()">Save Setting</button>
+                                        </mat-tab>
+                                        <mat-tab label="OTP Solver" [disabled]='!jobPortalFlag'>
+                                            <div class="tab-content" style="margin-top: 20px; margin-bottom: 20px;">
+
+                                                <div class="col-md-4">
+                                                    <mat-form-field>
+                                                        <mat-label>Filter by source</mat-label>
+                                                        <mat-select [(ngModel)]="filterOTPSource" (ngModelChange)="changeOTPFilter(filterOTPSource)">
+                                                            <mat-option *ngFor="let source of sourceList" [value]="source.id">
+                                                                {{ source?.value }}
+                                                            </mat-option>
+                                                        </mat-select>
+                                                    </mat-form-field>
+                                                </div>
+                                                <div class="clearfix"></div>
+
+                                                <table class="table table-bordered">
+                                                    <thead>
+                                                        <tr>
+                                                            <th width="5%" style="text-align: center;">
+                                                                <mat-checkbox (ngModelChange)="toggleAll($event)" [(ngModel)]="isAllSelected">
+                                                                </mat-checkbox>
+                                                            </th>
+                                                            <th>
+                                                                Login
+                                                            </th>
+                                                            <th width="15%" *ngIf="showLoginStatusCol">
+                                                                Login Status
+                                                            </th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                        <tr *ngFor="let otpData of otpSourceDataList">
+                                                            <td style="text-align: center;">
+                                                                <mat-checkbox (ngModelChange)="otpSourceToggled($event, otpData)" [(ngModel)]="otpData.selected">
+                                                                </mat-checkbox>
+                                                            </td>
+
+                                                            <td>{{ otpData?.sourceUserId }}</td>
+
+                                                            <td *ngIf="showLoginStatusCol">
+                                                                <a class="btn btn-danger btn-sm" *ngIf="otpData.solveAttempt == 'unsolved'" style="position: absolute; right: 12px; top: 8px;">
+                                                                    <span class="material-icons" matTooltip="OTP not resolved"> close</span>
+                                                                </a>
+
+                                                                <mat-form-field class="example-full-width" *ngIf="!otpData.resolved">
+                                                                    <mat-label>Client Id</mat-label>
+                                                                    <input matInput [(ngModel)]="otpData.submitOtp" [disabled]="jobPortalFlag">
+                                                                </mat-form-field>
+                                                                <span class="material-icons" *ngIf="otpData.resolved">check</span> Solved
+                                                            </td>
+                                                        </tr>
+                                                    </tbody>
+                                                </table>
+                                            </div>
+                                            <button mat-raised-button color="primary" (click)="otpSubmitBtn == 'Solve Source OTP' ? checkOTP() : resolveOTP()">{{ otpSubmitBtn }}
+                                            </button>
+                                        </mat-tab>
+                                    </mat-tab-group>
+                                    <hr />
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+
+            </div>
+        </div>
+        <hr />
+
+        <!--mail gun-->
+        <div class="row">
+            <div class="col-md-12 top-header" style="margin-top: 30px;">
+                <img src="../../assets/icons/Candidate/Job_Portals.png" />
+                <h5>Mailgun bulk email settings</h5>
+                <p>Connect to mail gun.</p>
+
+                <hr />
+
+                <div class="card" style="margin-bottom: 30px;">
+                    <div class="card-header">
+                        Connect to mailgun bulk
+                    </div>
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-md-3">
+                                <mat-form-field class="example-full-width">
+                                    <mat-label>Domain *</mat-label>
+                                    <input matInput [(ngModel)]="mailGunDomain">
+                                </mat-form-field>
+                            </div>
+
+                            <div class="col-md-5">
+                                <mat-form-field class="example-full-width">
+                                    <mat-label>API Key *</mat-label>
+                                    <input matInput [(ngModel)]="mailGunApiKey">
+                                </mat-form-field>
+                            </div>
+
+                            <div class="col-md-2">
+                                <button mat-raised-button color="primary" (click)="mailGunFlag ? mailGunDisconnect() : mailGunConnect()">
+                                  {{ portalMailGunButtonText }}
+                                </button>
+                            </div>
+
+                            <div class="col-md-2">
+                                <button mat-raised-button color="primary" *ngIf="mailGunFlag" (click)="initMailGunIntegration()">
+                                  Test email
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="main-section" *ngIf="ivrPortalTab">
+    <div class="ac-container-drop">
+        <div class="row">
+            <div class="col-md-12 side-div">
+                <h4>IVR Integration</h4>
+                <button mat-stroked-button color="primary" (click)="backToDetails()" style="position: absolute; right: 35px; top: 0;" *ngIf="isIntergrationFormField">
+                  Back
+                </button>
+                <hr />
+            </div>
+        </div>
+        <div class="clearfix"></div>
+
+        <div class="row">
+            <!--if has details-->
+            <div class="col-md-12" *ngIf="showIvrDetails">
+                <div class="card" style="margin-bottom: 30px;">
+                    <div class="card-header">
+                        IVR Details
+                        <span class="material-icons ivr-trash" matTooltip="Delete IVR details" (click)="deleteIVRDetails(ivrDetails.id)">
+                          delete
+                        </span>
+                    </div>
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-md-8">
+                                <p><b>Organization :</b> {{ ivrDetails?.organization_id }}</p>
+                                <p><b>Serial Number : </b>{{ ivrDetails?.sr_number }}</p>
+                                <p><b>Caller Id : </b>{{ ivrDetails.caller_id }}</p>
+                                <p><b>Authorization Key : </b>{{ ivrDetails?.authorization_key }}</p>
+                                <p><b>API : </b>{{ ivrDetails?.xapi_key }}</p>
+                            </div>
+
+                            <div class="col-md-4">
+                                <p><b>Added On :</b> {{ ivrDetails?.creationDate | date: 'dd-MMM-yyyy' }}</p>
+                                <p><b>Status :</b> {{ ivrDetails?.status }}</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!--if empty data-->
+            <div class="col-md-12" *ngIf="!isIVR">
+                <div class="integrations-settings job-portal text-center" style="padding: 80px;">
+                    <h4 style="margin-bottom: 40px;">No details were added, please add details to use this service.
+                    </h4>
+                    <div ng-hide="submitBtnHide">
+                        <button mat-raised-button color="primary" (click)="addIVRDetails()">Add Details </button>
+                    </div>
+                </div>
+            </div>
+
+            <!--if fields to add data-->
+            <div class="col-md-12" *ngIf="isIntergrationFormField">
+                <div class="row">
+                    <div class="col-md-6">
+                        <mat-form-field class="example-full-width">
+                            <mat-label>Serial Number *</mat-label>
+                            <input matInput [(ngModel)]="ivr.SerialNumber">
+                        </mat-form-field>
+                    </div>
+
+                    <div class="col-md-6">
+                        <mat-form-field class="example-full-width">
+                            <mat-label>Caller Id *</mat-label>
+                            <input matInput [(ngModel)]="ivr.CallerId">
+                        </mat-form-field>
+                    </div>
+
+                    <div class="col-md-6">
+                        <mat-form-field class="example-full-width">
+                            <mat-label>Authorization Key *</mat-label>
+                            <input matInput [(ngModel)]="ivr.AuthorizationKey">
+                        </mat-form-field>
+                    </div>
+
+                    <div class="col-md-6">
+                        <mat-form-field class="example-full-width">
+                            <mat-label>API Key *</mat-label>
+                            <input matInput [(ngModel)]="ivr.APIkey">
+                        </mat-form-field>
+                    </div>
+                </div>
+                <div class="clearfix"></div>
+                <div class="col-md-12" style="margin-bottom: 30px;">
+                    <button mat-raised-button color="primary" (click)="submitIVRDetails()">Add Details </button>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</section>

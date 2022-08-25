@@ -1,0 +1,194 @@
+<div class="heading header-breadcrum">
+    <mat-label>ADD NEW POSITION</mat-label>
+</div>
+
+<div class="main-content">
+    <div class="row marg-10">
+        <div class="col-lg-12">
+            <div class="card">
+                <div class="card-body tbl-cont">
+                    <mat-horizontal-stepper linear #stepper>
+                        <mat-step [stepControl]="firstFormGroup">
+                            <form [formGroup]="firstFormGroup" style="margin-top: 10px;">
+                                <ng-template matStepLabel>Basic Details</ng-template>
+
+                                <div class="row">
+                                    <div class="col-md-4">
+                                        <mat-form-field>
+                                            <mat-label>Select {{ translateNameSingle }}</mat-label>
+                                            <mat-select formControlName="clientName" required>
+                                                <mat-option>Clear</mat-option>
+                                                <mat-option *ngFor="let client of ClientList" [value]="client">
+                                                    {{ client }}
+                                                </mat-option>
+                                            </mat-select>
+                                        </mat-form-field>
+                                    </div>
+
+                                    <div class="col-md-4">
+                                        <mat-form-field class="example-full-width">
+                                            <mat-label>Position Name</mat-label>
+                                            <input matInput placeholder="Please enter position name"
+                                                formControlName="positionName" pattern="^$|^[A-Za-z0-9]+" required>
+                                        </mat-form-field>
+                                    </div>
+
+                                    <div class="col-md-4">
+                                        <mat-form-field class="example-full-width">
+                                            <mat-label>Requisition ID</mat-label>
+                                            <input matInput placeholder="Please enter requisition id"
+                                                formControlName="requisitionID">
+                                        </mat-form-field>
+                                    </div>
+
+                                    <div class="col-md-4">
+                                        <mat-form-field (click)="picker.open()">
+                                            <mat-label>Close by date</mat-label>
+                                            <input matInput [matDatepicker]="picker" autocomplete="off"
+                                                formControlName="closeByDate" required>
+                                            <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                                            <mat-datepicker #picker></mat-datepicker>
+                                        </mat-form-field>
+                                    </div>
+
+                                    <div class="col-md-4">
+                                        <mat-form-field>
+                                            <mat-label>Number of Openings</mat-label>
+                                            <input type="number" matInput formControlName="totalPosition" required>
+                                        </mat-form-field>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <mat-form-field>
+                                            <mat-label>Location</mat-label>
+                                            <mat-chip-list #chipList aria-label="Fruit selection">
+                                                <mat-chip *ngFor="let place of locations" (removed)="remove(place)">
+                                                    {{ place }}
+                                                    <button matChipRemove>
+                                                        <mat-icon>cancel</mat-icon>
+                                                    </button>
+                                                </mat-chip>
+                                                <input placeholder="Add location ..." #locationInput
+                                                    ngx-google-places-autocomplete [matChipInputFor]="chipList"
+                                                    [matChipInputSeparatorKeyCodes]="separatorKeysCodes"
+                                                    [options]='options' (onAddressChange)="handleAddressChange($event)"
+                                                    formControlName="location" required>
+                                            </mat-chip-list>
+                                        </mat-form-field>
+                                    </div>
+                                </div>
+
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <label style="color: #aaa; margin-top: 20px;">Job Description *</label>
+                                        <ckeditor [editor]="Editor" formControlName="bodyData"></ckeditor>
+                                    </div>
+                                </div>
+
+                                <div class="row" style="margin-top: 20px;">
+                                    <div class="col-md-6">
+                                        <mat-form-field>
+                                            <mat-label>Skill set *</mat-label>
+                                            <mat-chip-list #chipList1 aria-label="Fruit selection">
+                                                <mat-chip *ngFor="let skill of skills" (removed)="removeSkill(skill)">
+                                                    {{ skill }}
+                                                    <button matChipRemove>
+                                                        <mat-icon>cancel</mat-icon>
+                                                    </button>
+                                                </mat-chip>
+                                                <input placeholder="Add location ..." #skillInput
+                                                    [matChipInputFor]="chipList1"
+                                                    [matChipInputSeparatorKeyCodes]="separatorKeysCodes"
+                                                    (blur)="handleSkillChange($event)" formControlName="skill" required>
+                                            </mat-chip-list>
+                                        </mat-form-field>
+                                    </div>
+
+                                    <div class="col-md-6">
+                                        <mat-form-field>
+                                            <mat-label>Good To Have Skills</mat-label>
+                                            <mat-chip-list #chipList2 aria-label="Fruit selection">
+                                                <mat-chip *ngFor="let good of goodSkills"
+                                                    (removed)="removeGoodSkill(good)">
+                                                    {{ good }}
+                                                    <button matChipRemove>
+                                                        <mat-icon>cancel</mat-icon>
+                                                    </button>
+                                                </mat-chip>
+                                                <input placeholder="Add location ..." #goodSkillInput
+                                                    [matChipInputFor]="chipList2"
+                                                    [matChipInputSeparatorKeyCodes]="separatorKeysCodes"
+                                                    (blur)="handleGoodSkillChange($event)" formControlName="goodSkill"
+                                                    required>
+                                            </mat-chip-list>
+                                        </mat-form-field>
+                                    </div>
+                                </div>
+
+                                <div class="row">
+                                    <div class="col-md-4">
+                                        <mat-form-field>
+                                            <mat-label>Min Experience Range</mat-label>
+                                            <input type="number" matInput formControlName="minExperience"
+                                                (blur)="checkExpRange()" required>
+                                        </mat-form-field>
+                                    </div>
+
+                                    <div class="col-md-4">
+                                        <mat-form-field>
+                                            <mat-label>Max Experience Range</mat-label>
+                                            <input type="number" matInput formControlName="maxExperience"
+                                                (blur)="checkExpRange()" required>
+                                        </mat-form-field>
+                                        <div class="error-msg" *ngIf="isMinMAxValidate">Should be greater than min. exp.
+                                        </div>
+                                    </div>
+
+                                    <div class="col-md-4">
+                                        <mat-form-field>
+                                            <mat-label>Educational Qualification *</mat-label>
+                                            <mat-chip-list #chipList3 aria-label="Qalification selection">
+                                                <mat-chip *ngFor="let education of qualificationList"
+                                                    (removed)="removeQualification(education)">
+                                                    {{ education }}
+                                                    <button matChipRemove>
+                                                        <mat-icon>cancel</mat-icon>
+                                                    </button>
+                                                </mat-chip>
+                                                <input placeholder="Add qualification ..." #qualificationInput
+                                                    [matChipInputFor]="chipList3"
+                                                    [matChipInputSeparatorKeyCodes]="separatorKeysCodes"
+                                                    (blur)="handleEducationQualification($event)"
+                                                    formControlName="qulification" required>
+                                            </mat-chip-list>
+                                        </mat-form-field>
+                                    </div>
+                                </div>
+
+                                <div class="row">
+                                    <div class="col-md-4">
+                                        <mat-form-field>
+                                            <mat-label>End Time</mat-label>
+                                            <div class="row">
+                                                <div class="col-md-10">
+                                                    <input matInput  type="number">
+                                                </div>
+                                                <div class="col-md-2">
+                                                    <mat-select>
+                                                        <mat-option value="AM">AM</mat-option>
+                                                        <mat-option value="PM">PM</mat-option>
+                                                   </mat-select>
+                                                </div>
+                                            </div>
+                                        </mat-form-field>
+                                    </div>
+                                </div>
+                            </form>
+                        </mat-step>
+                    </mat-horizontal-stepper>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

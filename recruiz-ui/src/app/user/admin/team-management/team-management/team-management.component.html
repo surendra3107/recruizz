@@ -1,0 +1,96 @@
+<app-common-header></app-common-header>
+
+<section class="main-section">
+    <div class="ac-container-drop">
+        <div class="row">
+            <div class="col-md-12">
+                <h4>Teams Overview</h4>
+                <button mat-button color="primary" class="pull-right" style="margin-top: -33px;" (click)="addUpdateTeam('')">
+                  Add Team
+                </button>
+                <hr />
+            </div>
+        </div>
+        <div class="clearfix"></div>
+
+        <div class="row">
+            <div class="row-bar">
+                <div class="col-md-2">
+                    <p>Team Name</p>
+                </div>
+
+                <div class="col-md-2">
+                    <p>Total Members </p>
+                </div>
+
+                <div class="col-md-2">
+                    <p>Revenue Target </p>
+                </div>
+
+                <div class="col-md-2">
+                    <p>Closure Target </p>
+                </div>
+
+                <div class="col-md-2">
+                    <p>Created On </p>
+                </div>
+
+                <div class="col-md-2">
+                    <p>Action</p>
+                </div>
+            </div>
+            <div class="clearfix"></div>
+
+            <div class="row-bar-bottom" *ngFor="let team of teamList">
+                <div class="col-md-2">
+                    <p><a class="team-details" (click)="viewTeamInfo(team)">{{ team?.teamName }}</a></p>
+                </div>
+
+                <div class="col-md-2">
+                    <p>{{ team?.teamMemberCount }}</p>
+                </div>
+
+                <div class="col-md-2">
+                    <p>{{ team?.teamTargetAmount }}</p>
+                </div>
+
+                <div class="col-md-2">
+                    <p>{{ team?.teamTargetPositionOpeningClosure }}</p>
+                </div>
+
+                <div class="col-md-2">
+                    <p>{{ team?.creationDate| date: 'dd-MM-yyyy h:mm a' }}</p>
+                </div>
+
+                <div class="col-md-2">
+                    <div>
+                        <div class="bar-options1">
+                            <a #menuTrigger="matMenuTrigger" [matMenuTriggerFor]="menu">
+                                <img src="../../assets/icons/client-list/Menu.png" alt="" alt="" style="cursor: pointer;">
+                            </a>
+                        </div>
+                    </div>
+
+                    <mat-menu #menu="matMenu">
+                        <button mat-menu-item (click)="addUpdateTeam(team.teamId)">
+                            <img src="../../../assets/icons/client-details/Edit.png" alt=""> Edit
+                        </button>
+                        <button mat-menu-item (click)="addMember(team)">
+                            <img src="../../../assets/icons/client-details/ic_add.png" alt=""> Add Members
+                      </button>
+                        <button mat-menu-item (click)="deleteTeam(team)">
+                            <img src="../../../assets/icons/client-details/Delete.png" alt=""> Delete
+                      </button>
+                    </mat-menu>
+                </div>
+            </div>
+
+            <div class="row-bar-bottom" *ngIf="teamList?.length === 0">
+                <div class="col-md-12">
+                    <p class="place-holder">No team added yet</p>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</section>

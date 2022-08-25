@@ -1,0 +1,79 @@
+#if ($timePeriod != "fromStart")
+
+	SELECT B.total AS 'Total Number', CONCAT(B.status) AS 'Status', CASE WHEN name IS NULL THEN (
+		SELECT name
+		FROM USER
+		WHERE email = '$userEmail') ELSE name END AS 'Recruiter Name'
+		FROM (
+		SELECT *
+		FROM (
+		(
+		SELECT COUNT(rc.id) AS total, CASE WHEN rc.status = 'Sourced' THEN rc.status ELSE 'Sourced' END AS STATUS, rc.sourcedBy AS sourcedBy
+		FROM
+			round_candidate rc
+		WHERE rc.sourcedBy = '$userEmail' AND rc.creation_date > DATE_SUB(NOW(), INTERVAL $timePeriod)
+				)
+				 UNION ALL
+				(
+		SELECT COUNT(rc.id) AS total, IFNULL(rc.status,'Offered') AS STATUS, rc.sourcedBy AS sourcedBy
+		FROM
+			round_candidate rc
+		WHERE rc.status='$offeredStatus' AND rc.sourcedBy = '$userEmail' AND rc.creation_date > DATE_SUB(NOW(), INTERVAL $timePeriod)
+				) 
+				UNION ALL
+				(
+		SELECT COUNT(rc.id) AS total, IFNULL(rc.status,'Rejected') AS STATUS, rc.sourcedBy AS sourcedBy
+		FROM
+			round_candidate rc
+		WHERE rc.status='$rejectedStatus' AND rc.sourcedBy = '$userEmail' AND rc.creation_date > DATE_SUB(NOW(), INTERVAL $timePeriod)
+				)
+				UNION ALL
+				(
+		SELECT COUNT(rc.id) AS total, IFNULL(rc.status,'Joined') AS STATUS, rc.sourcedBy AS sourcedBy
+		FROM
+			round_candidate rc
+		WHERE rc.status='$joinedStatus' AND rc.sourcedBy = '$userEmail' AND rc.creation_date > DATE_SUB(NOW(), INTERVAL $timePeriod)
+				) 
+				) A
+		LEFT JOIN USER u ON A.sourcedBy = u.email)B
+	
+#else
+		
+	SELECT B.total AS 'Total Number', CONCAT(B.status) AS 'Status', CASE WHEN name IS NULL THEN (
+		SELECT name
+		FROM USER
+		WHERE email = '$userEmail') ELSE name END AS 'Recruiter Name'
+		FROM (
+		SELECT *
+		FROM (
+		(
+		SELECT COUNT(rc.id) AS total, CASE WHEN rc.status = 'Sourced' THEN rc.status ELSE 'Sourced' END AS STATUS, rc.sourcedBy AS sourcedBy
+		FROM
+			round_candidate rc
+		WHERE rc.sourcedBy = '$userEmail'
+				)
+				UNION ALL
+				(
+		SELECT COUNT(rc.id) AS total, IFNULL(rc.status,'Offered') AS STATUS, rc.sourcedBy AS sourcedBy
+		FROM
+			round_candidate rc
+		WHERE rc.status='$offeredStatus' AND rc.sourcedBy = '$userEmail'
+				) 
+				 UNION ALL
+				(
+		SELECT COUNT(rc.id) AS total, IFNULL(rc.status,'Rejected') AS STATUS, rc.sourcedBy AS sourcedBy
+		FROM
+			round_candidate rc
+		WHERE rc.status='$rejectedStatus' AND rc.sourcedBy = '$userEmail'
+				)
+				UNION ALL
+				(
+		SELECT COUNT(rc.id) AS total, IFNULL(rc.status,'Joined') AS STATUS, rc.sourcedBy AS sourcedBy
+		FROM
+			round_candidate rc
+		WHERE rc.status='$joinedStatus' AND rc.sourcedBy = '$userEmail'
+				)
+				) A
+		LEFT JOIN USER u ON A.sourcedBy = u.email)B
+		
+#end

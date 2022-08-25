@@ -1,0 +1,46 @@
+<h4 md-dialog-title>Team Hierarchy</h4>
+<hr>
+<div class="clearfix"></div>
+<mat-dialog-content>
+    <div class="row" style="margin-left: 0; margin-right: 0;">
+        <div class="row-bar" style="background: #fff;">
+            <div class="col-md-12 team-hierarchy">
+                <div *ngFor="let teamhierarchy of teamHierarchyList">
+                    <div class="team" *ngIf="teamhierarchy.parentTeam" style="color:#21BCB0;">
+                        <span class="name"> {{ teamhierarchy?.parentTeam.teamName }}</span>
+                        <div class="arrow top"></div>
+                    </div>
+
+                    <div class="team">
+                        <span class="name"> {{ teamhierarchy?.teamName }}</span>
+                        <div class="arrow top" *ngIf="teamhierarchy.members.length>0"></div>
+                    </div>
+
+                    <div class="team-group" *ngIf="teamhierarchy.members.length>0">
+                        <p *ngFor="let member of teamhierarchy.members">
+                            {{member.userName}} <br />
+                            <span>{{member.email}}</span> <br />
+                            <span *ngIf="'team_manager'  === member.teamRole">Team Manager</span>
+                            <span *ngIf="'member' === member.teamRole"> Team Member</span>
+                            <span *ngIf="'team_leader' === member.teamRole">Team Leader</span>
+                        </p>
+                        <div class="arrow top" *ngIf="selectedTeamForView.childrenTeams.length >0"></div>
+                    </div>
+                    <div class="clearfix"></div>
+
+                    <div class="team-group" *ngIf="selectedTeamForView.childrenTeams.length>0">
+                        <p *ngFor="let team of teamhierarchy.childrenTeams">
+                            {{team.teamName}} <br />
+                            <span>{{team.teamMemberCount}}  Member(s)</span>
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</mat-dialog-content>
+
+<hr>
+<mat-dialog-actions align="end">
+    <button mat-raised-button (click)="onCloseConfirm()">CANCEL</button>
+</mat-dialog-actions>

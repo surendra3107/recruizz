@@ -1,0 +1,5 @@
+SELECT 
+	CONCAT(c.status) AS 'Status', COUNT(c.id) AS 'Total Number'
+FROM client c
+GROUP BY
+	 c.status;

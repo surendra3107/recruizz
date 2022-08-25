@@ -1,0 +1,28 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 15 15">
+  <g id="Current_Opening" data-name="Current Opening" transform="translate(-654 -492.5)">
+    <g id="Group_9" data-name="Group 9">
+      <g id="Group_7" data-name="Group 7" transform="translate(654 492.5)">
+        <rect id="Rectangle_640" data-name="Rectangle 640" width="15" height="15" fill="none"/>
+      </g>
+    </g>
+    <g id="Group_10" data-name="Group 10" transform="translate(-2.846 -1.45)">
+      <g id="Group_16" data-name="Group 16" transform="translate(656.846 493.95)">
+        <path id="Path_32" data-name="Path 32" d="M30,4.8c0-.444-.593-.8-1.324-.8H26.149v.536c0,.444-.05.94-.78.94H19.805c-.982.021-.931-.5-.931-.94V4h-2.55C15.593,4,15,4.36,15,4.8V18.2c0,.444.593.8,1.324.8H28.676c.731,0,1.324-.36,1.324-.8Z" transform="translate(-15 -4)" fill="#f1a461"/>
+        <path id="Path_33" data-name="Path 33" d="M25.387,4.939h4.647a.356.356,0,0,0,.387-.313V4H25v.626A.356.356,0,0,0,25.387,4.939Z" transform="translate(-20.202 -3.981)" fill="#f1a461"/>
+      </g>
+      <g id="Group_8" data-name="Group 8" transform="translate(659.346 497.162)">
+        <g id="Ellipse_4" data-name="Ellipse 4" fill="#fff" stroke="#e59249" stroke-width="0.5">
+          <circle cx="4.929" cy="4.929" r="4.929" stroke="none"/>
+          <circle cx="4.929" cy="4.929" r="4.679" fill="none"/>
+        </g>
+        <g id="user-3" transform="translate(2.349 1.588)">
+          <ellipse id="Ellipse_3" data-name="Ellipse 3" cx="1.351" cy="1.492" rx="1.351" ry="1.492" transform="translate(1.212)" fill="#f1a461"/>
+          <path id="Path_39" data-name="Path 39" d="M23.188,150a2.637,2.637,0,0,0-2.563,2.7h5.126A2.637,2.637,0,0,0,23.188,150Z" transform="translate(-20.625 -146.606)" fill="#f1a461"/>
+        </g>
+      </g>
+      <g id="arrow-pointing-to-right" transform="translate(665.846 500.85)">
+        <path id="Path_29598" data-name="Path 29598" d="M2.59,42.733l-.781-.781a.122.122,0,0,0-.173.173l.573.573H.122a.122.122,0,1,0,0,.244H2.209l-.573.573a.122.122,0,0,0,.173.173l.781-.781A.122.122,0,0,0,2.59,42.733Z" transform="translate(0 -41.916)" fill="#7ef028"/>
+      </g>
+    </g>
+  </g>
+</svg>

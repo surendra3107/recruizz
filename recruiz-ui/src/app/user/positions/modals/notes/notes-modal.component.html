@@ -1,0 +1,18 @@
+<h4 md-dialog-title *ngIf="!noteId">Add Notes</h4>
+<h4 md-dialog-title *ngIf="noteId">Update Notes</h4>
+<hr>
+<div class="clearfix"></div>
+<mat-dialog-content>
+    <div class="row">
+        <div class="col-md-12">
+            <ckeditor [editor]="Editor" [(ngModel)]="bodyData"></ckeditor>
+        </div>
+    </div>
+</mat-dialog-content>
+
+<hr>
+<mat-dialog-actions>
+    <button mat-raised-button color="primary" (click)="addNotesToPosition()" *ngIf="!noteId">Add Notes</button>
+    <button mat-raised-button color="primary" (click)="updateNotesToPosition()" *ngIf="noteId">Update Notes</button>
+    <button mat-raised-button (click)="onCloseCancel()">CANCEL</button>
+</mat-dialog-actions>

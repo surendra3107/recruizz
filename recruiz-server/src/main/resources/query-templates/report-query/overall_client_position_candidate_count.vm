@@ -1,0 +1,10 @@
+SELECT
+ (
+SELECT COUNT(id)
+FROM client) AS client_count, 
+ (
+SELECT COUNT(id)
+FROM position) AS position_count,
+ (
+SELECT COUNT(cid)
+FROM candidate) AS candidate_count

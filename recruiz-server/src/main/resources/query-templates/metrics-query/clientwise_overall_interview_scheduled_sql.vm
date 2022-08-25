@@ -1,0 +1,12 @@
+SELECT 
+	COUNT(i.id) AS 'Total Number', 
+CASE 
+	WHEN i.active=0 THEN 'Completed' 
+	ELSE 'Active' 
+END AS Interviews, CONCAT(i.positionName)  AS 'Position(s)'
+FROM 
+	interview_schedule i
+INNER JOIN POSITION p ON p.positionCode =	i.positionCode 
+where p.client_id = '$clientId'
+GROUP BY
+	 i.active,i.positionCode;

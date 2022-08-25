@@ -1,0 +1,19 @@
+SELECT 
+    TIME_TO_SEC(TIMEDIFF((SELECT 
+                            time
+                        FROM
+                            $tableName
+                        WHERE
+                            user_email = '$userEmail'
+                                AND DATE(time) = $queryDate
+                        ORDER BY time DESC
+                        LIMIT 1),
+                    (SELECT 
+                            time
+                        FROM
+                            $tableName
+                        WHERE
+                            user_email = '$userEmail'
+                                AND DATE(time) = $queryDate
+                        ORDER BY time ASC
+                        LIMIT 1))) time_difference_in_sec;

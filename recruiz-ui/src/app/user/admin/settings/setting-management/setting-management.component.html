@@ -1,0 +1,1134 @@
+<app-common-header></app-common-header>
+
+<section class="main-section settings">
+    <div class="top-head row">
+        <div class="heading col-md-3">
+            <section class="ac-container">
+                <div class="ac-container-drop">
+                    <input id="ac-1" name="accordion-1" type="radio" checked="">
+                    <label for="ac-1">Basic Settingd</label>
+                    <article class="ac-small">
+                        <ul class="sub-menu">
+                            <li [ngClass]="{'active-class': activeMenu === 'basic-details'}">
+                                <a (click)="basicDetails()">Basic Details</a>
+                            </li>
+                            <li [ngClass]="{'active-class': activeMenu === 'address-details'}">
+                                <a (click)="addressDetails()">Address</a>
+                            </li>
+                            <li [ngClass]="{'active-class': activeMenu === 'social-links'}">
+                                <a (click)="socialLinks()">Social Links</a>
+                            </li>
+                            <li [ngClass]="{'active-class': activeMenu === 'accounts'}" *ngIf="globalData.userRole === 'Super Admin'">
+                                <a (click)="accountsDetails()">Delete Account</a>
+                            </li>
+                        </ul>
+                    </article>
+                </div>
+
+                <div>
+                    <input id="ac-2" name="accordion-1" type="radio" (click)="preferences()">
+                    <label for="ac-2" [ngClass]="{'active-class': activeMenu === 'preference'}">Preferences</label>
+                </div>
+
+                <div>
+                    <input id="ac-3" name="accordion-1" type="radio" (click)="customReport()">
+                    <label for="ac-3" [ngClass]="{'active-class': activeMenu === 'custom-report'}">Custom Reports</label>
+                </div>
+
+                <div>
+                    <input id="ac-4" name="accordion-1" type="radio" (click)="customFileds()">
+                    <label for="ac-4" [ngClass]="{'active-class': activeMenu === 'custom-fields'}">Custom Fields</label>
+                </div>
+
+                <div>
+                    <input id="ac-5" name="accordion-1" type="radio" (click)="customPipeline()">
+                    <label for="ac-5" [ngClass]="{'active-class': activeMenu === 'custom-pipeline'}">Custom Pipeline Stages </label>
+                </div>
+
+                <div>
+                    <input id="ac-6" name="accordion-1" type="radio" (click)="customStatus()">
+                    <label for="ac-6" [ngClass]="{'active-class': activeMenu === 'custom-status'}">Custom Status</label>
+                </div>
+
+                <div class="ac-container-drop">
+                    <input id="ac-7" name="accordion-1" type="radio">
+                    <label for="ac-7">Offer Letter Generation</label>
+                    <article class="ac-medium">
+                        <ul class="sub-menu">
+                            <li [ngClass]="{'active-class': activeMenu === 'offer-letter'}">
+                                <a (click)="offerLetter()">Offer Letter</a>
+                            </li>
+                            <li *ngIf="globalData.orgType === 'Agency'">
+                                <a>Offer Approval Workflow</a>
+                            </li>
+                            <li *ngIf="globalData.orgType === 'Agency'">
+                                <a>Preference</a>
+                            </li>
+                        </ul>
+                    </article>
+                </div>
+
+                <div class="ac-container-drop">
+                    <input id="ac-8" name="accordion-1" type="radio">
+                    <label for="ac-8">Invoice Setting</label>
+                    <article class="ac-large">
+                        <ul class="sub-menu">
+                            <li [ngClass]="{'active-class': activeMenu === 'bank-detail'}">
+                                <a (click)="bankDetails()">Bank Details</a>
+                            </li>
+                            <li [ngClass]="{'active-class': activeMenu === 'tax-detail'}">
+                                <a (click)="taxDetails()">Tax Details</a>
+                            </li>
+                        </ul>
+                    </article>
+                </div>
+            </section>
+        </div>
+
+        <div class="col-md-9 side-div">
+            <!--basic details-->
+            <div class="page-details" *ngIf="showMenuItem === 'basic-details'">
+                <div class="row">
+                    <div class="col-md-12">
+                        <h4>Basic Details</h4>
+                        <hr />
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-4">
+                        <mat-form-field class="example-full-width">
+                            <mat-label>Organization Name</mat-label>
+                            <input matInput [(ngModel)]="orgSettingData.orgName">
+                        </mat-form-field>
+                    </div>
+
+                    <div class="col-md-4">
+                        <mat-form-field class="example-full-width">
+                            <mat-label>Website Url</mat-label>
+                            <input matInput [(ngModel)]="orgSettingData.websiteUrl">
+                        </mat-form-field>
+                    </div>
+
+                    <div class="col-md-4">
+                        <mat-form-field class="example-full-width">
+                            <mat-label>Organization Email</mat-label>
+                            <input matInput [(ngModel)]="orgSettingData.organizationEmail" disabled>
+                        </mat-form-field>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-md-8">
+                        <mat-label>Organization Logo</mat-label><br /><br />
+                        <mat-file-upload [labelText]="'Select a file to upload:'" [selectButtonText]="'Choose File'" [allowMultipleFiles]="false" [showUploadButton]="false" [acceptedTypes]="'.png, .jpg, .jpeg'" (selectedFilesChanged)="onSelectedFilesChanged($event)">
+                        </mat-file-upload>
+
+                        <p class="hint">Max width should be 240X 100 and max size of 100kb</p>
+                    </div>
+
+                    <div class="col-md-4">
+                        <div class="logo-img">
+                            <img src="{{ orgSettingData?.orgLogoUrl }}">
+                        </div>
+                    </div>
+                </div>
+
+                <button mat-raised-button color="primary" (click)="saveOrgSettings()">Save Details</button>
+            </div>
+
+            <div class="page-details" *ngIf="showMenuItem === 'address-details'">
+                <div class="row">
+                    <div class="col-md-12">
+                        <h4>Address Details</h4>
+                        <hr />
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-md-4">
+                        <mat-form-field class="example-full-width">
+                            <mat-label>Address Line 1</mat-label>
+                            <input matInput [(ngModel)]="orgSettingData.addressL1">
+                        </mat-form-field>
+                    </div>
+
+                    <div class="col-md-4">
+                        <mat-form-field class="example-full-width">
+                            <mat-label>Address Line 2</mat-label>
+                            <input matInput [(ngModel)]="orgSettingData.addressL2">
+                        </mat-form-field>
+                    </div>
+
+                    <div class="col-md-4">
+                        <mat-form-field class="example-full-width">
+                            <mat-label>City</mat-label>
+                            <input matInput [(ngModel)]="orgSettingData.city">
+                        </mat-form-field>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-md-4">
+                        <mat-form-field class="example-full-width">
+                            <mat-label>Postal/ZIP Code</mat-label>
+                            <input matInput [(ngModel)]="orgSettingData.pincode">
+                        </mat-form-field>
+                    </div>
+
+                    <div class="col-md-4">
+                        <mat-form-field class="example-full-width">
+                            <mat-label>Country</mat-label>
+                            <input matInput [(ngModel)]="orgSettingData.country">
+                        </mat-form-field>
+                    </div>
+
+                    <div class="col-md-4">
+                        <mat-form-field class="example-full-width">
+                            <mat-label>Province/State</mat-label>
+                            <input matInput [(ngModel)]="orgSettingData.state">
+                        </mat-form-field>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-md-4">
+                        <mat-form-field class="example-full-width">
+                            <mat-label>Phone</mat-label>
+                            <input matInput [(ngModel)]="orgSettingData.phone">
+                        </mat-form-field>
+                    </div>
+                </div>
+
+                <button mat-raised-button color="primary" (click)="saveOrgSettings()">Save Address</button>
+
+            </div>
+
+            <div class="page-details" *ngIf="showMenuItem === 'social-links'">
+                <div class="row">
+                    <div class="col-md-12">
+                        <h4>Social Links</h4>
+                        <hr />
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-md-8">
+                        <mat-form-field class="example-full-width">
+                            <mat-label>Facebook Url</mat-label>
+                            <input matInput [(ngModel)]="orgSettingData.facebookUrl">
+                        </mat-form-field>
+                    </div>
+                    <div class="col-md-4"></div>
+                </div>
+
+                <div class="row">
+                    <div class="col-md-8">
+                        <mat-form-field class="example-full-width">
+                            <mat-label>Twitter Url</mat-label>
+                            <input matInput [(ngModel)]="orgSettingData.twitterUrl">
+                        </mat-form-field>
+                    </div>
+                    <div class="col-md-4"></div>
+                </div>
+
+                <div class="row">
+                    <div class="col-md-8">
+                        <mat-form-field class="example-full-width">
+                            <mat-label>Linkedin Url</mat-label>
+                            <input matInput [(ngModel)]="orgSettingData.linkedInUrl">
+                        </mat-form-field>
+                    </div>
+                    <div class="col-md-4"></div>
+                </div>
+
+                <button mat-raised-button color="primary" (click)="saveOrgSettings()">Save Details</button>
+
+            </div>
+
+            <div class="page-details" *ngIf="showMenuItem === 'accounts'">
+                <div class="row">
+                    <div class="col-md-12">
+                        <h4>Delete Account</h4>
+                        <hr />
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="box-style" *ngIf="markForDelete === false">
+                            <p>The organization account 'Template' (including all users) will be deleted permanently after 1 day. You can revoke the delete action anytime within 1 day.</p>
+
+                            <button mat-raised-button color="warn" (click)="deleteAccount(true)">
+                              Delete Account
+                            </button>
+                        </div>
+
+                        <div class="box-style" *ngIf="markForDelete === true">
+                            <p>Your organization account (including all users) has been marked for delete. You can revoke the delete action by clicking the button below.</p>
+
+                            <button mat-raised-button color="warn" (click)="deleteAccount(true)">
+                              Revoke Account
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!--basic details ends-->
+
+            <!--Preferences-->
+            <div class="page-details" *ngIf="showMenuItem === 'preference'">
+                <div class="row">
+                    <div class="col-md-12">
+                        <h4>Allow Update Candidate</h4>
+                        <hr />
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-md-8">
+                        <mat-form-field>
+                            <mat-label>Time Range</mat-label>
+                            <mat-select [(ngModel)]="candidateModificationDays">
+                                <mat-option *ngFor="let time of timePriods" [value]="time.id">
+                                    {{time?.value}}
+                                </mat-option>
+                            </mat-select>
+                        </mat-form-field>
+                    </div>
+
+                    <div class="col-md-4">
+                        <button mat-raised-button color="primary" (click)="saveOrgSettings()">
+                            Save
+                        </button>
+                    </div>
+                </div>
+                <div class="clearfix gap-in-div" style="margin-bottom: 47px;"></div>
+                <div class="row">
+                    <div class="col-md-12">
+                        <h4>Allow Check Duplicate Candidate</h4>
+                        <hr />
+                    </div>
+                </div>
+
+                <div class="row" style="margin-top:15px; margin-bottom:20px;">
+                    <div class="col-md-8">
+                        <p>Enable/Disable duplicate candidates check</p>
+                    </div>
+
+                    <div class="col-md-4">
+                        <mat-slide-toggle [(ngModel)]="isDuplicate" class="example-margin" (change)="checkDuplicatesTrueFalse(isDuplicate)">
+                        </mat-slide-toggle>
+                    </div>
+                </div>
+            </div>
+            <!--Preferences ends-->
+
+            <!--custom report-->
+            <div class="page-details" *ngIf="showMenuItem === 'custom-report'">
+                <div class="row">
+                    <div class="col-md-12">
+                        <h4>Custom Report</h4>
+                        <hr />
+                    </div>
+                </div>
+                <div class="clearfix"></div>
+
+                <div class="row" style="margin-top:15px; margin-bottom:15px;">
+                    <div class="col-md-8">
+                        <p>Enable/Disable Custom report</p>
+                    </div>
+
+                    <div class="col-md-4">
+                        <mat-slide-toggle [(ngModel)]="reportStatus" class="example-margin" (change)="reportStatusTrueFalse(reportStatus)">
+                        </mat-slide-toggle>
+                    </div>
+                </div>
+
+                <div class="clearfix"></div>
+
+                <div class="row" *ngIf="reportStatus">
+                    <div class="col-md-3" *ngFor="let reportName of reportTypeDropdown" style="margin-bottom: 20px;">
+                        <mat-checkbox [(ngModel)]="reportName.status" (change)="addReportListName(reportName)">{{ reportName?.value }}
+                        </mat-checkbox>
+                    </div>
+                </div>
+                <div class="clearfix"></div>
+
+                <div class="row" *ngIf="reportStatus">
+                    <div class="col-md-8">
+                        <p class="notice-info"><b>Note </b>: Selected custom report name will appear under custom report.</p>
+                    </div>
+
+                    <div class="col-md-4">
+                        <button mat-raised-button color="primary" (click)="saveCustomReport()">
+                            Save Changes
+                        </button>
+                    </div>
+                </div>
+                <hr />
+                <div class="clearfix"></div>
+
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="box effect7">
+                            <h5>Recruitment tracker - Status Report</h5>
+                            <p>Description text...</p>
+
+                            <button mat-raised-button color="primary" (click)="getOverallReport()">
+                            Download Report
+                           </button>
+                        </div>
+                    </div>
+
+                    <div class="col-md-6">
+                        <div class="box effect7">
+                            <h5>Recruitment tracker - Stage Report</h5>
+                            <p>Description text...</p>
+
+                            <button mat-raised-button color="primary" (click)="getOverallReportClientPostion()">
+                            Download Report
+                           </button>
+                        </div>
+                    </div>
+                </div>
+                <div class="clearfix"></div>
+
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="box effect7">
+                            <h5>Recruitment tracker - All Stages + All Status</h5>
+                            <mat-form-field>
+                                <mat-label>Select Time Period</mat-label>
+                                <mat-select [(ngModel)]="timeRange">
+                                    <mat-option value="One_week">One Week</mat-option>
+                                    <mat-option value="Last_month">Last Month</mat-option>
+                                    <mat-option value="Three_months">Three Months</mat-option>
+                                </mat-select>
+                            </mat-form-field>
+                            <p *ngIf="isScheduledReport"><b>{{ scheduledReport }}</b></p>
+
+                            <button mat-raised-button color="warn" (click)="changeTimePeriod(timeRange)">
+                            Schedule Report
+                           </button>
+                            <button mat-raised-button color="primary" (click)="getOverallStageStatusReport(timeRange)">
+                            Download Report
+                           </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!--custom report ends-->
+
+            <!--custom fields-->
+            <div class="page-details" *ngIf="showMenuItem === 'custom-fields'">
+                <div class="row">
+                    <div class="col-md-12">
+                        <h4>Custom Fields</h4>
+                        <hr />
+                    </div>
+                </div>
+                <div class="clearfix"></div>
+
+                <div class="row">
+                    <div class="col-md-12">
+                        <mat-accordion>
+                            <!--client -->
+                            <mat-expansion-panel>
+                                <mat-expansion-panel-header (click)="getCustomFileds('Client')">
+                                    <mat-panel-title>
+                                        {{ translateNameSingle }}
+                                    </mat-panel-title>
+                                </mat-expansion-panel-header>
+
+                                <table class="table table-hover">
+                                    <thead>
+                                        <tr>
+                                            <th scope="col">Field Name</th>
+                                            <th scope="col">Field Type</th>
+                                            <th scope="col">Field Options</th>
+                                            <th scope="col">Action</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr *ngFor="let customField of clientCustomFields">
+                                            <th scope="row">{{ customField?.name }}</th>
+                                            <td>{{ customField?.dataType }}</td>
+                                            <td>{{ customField?.dropDownValues }}</td>
+                                            <td>
+                                                <a style="cursor: pointer;" matTooltip="Edit" (click)="updateCustomFields(customField)">
+                                                    <span class="material-icons" style="font-size: 15px; padding: 5px;">edit</span>
+                                                </a>
+                                                <a style="cursor: pointer;" matTooltip="Delete" (click)="deleteCustomField(customField.id, 'Client')">
+                                                    <span class="material-icons" style="font-size: 15px; padding: 5px;">delete</span>
+                                                </a>
+                                            </td>
+                                        </tr>
+
+                                        <tr *ngIf="clientCustomFields?.length === 0">
+                                            <td colspan="4">No Custom fields added for Clients</td>
+                                        </tr>
+
+                                        <tr *ngIf="clickType">
+                                            <td>
+                                                <mat-form-field class="example-full-width">
+                                                    <mat-label>Filed Name</mat-label>
+                                                    <input matInput [(ngModel)]="input.feildName">
+                                                </mat-form-field>
+                                            </td>
+
+                                            <td>
+                                                <mat-form-field>
+                                                    <mat-label>Field Type</mat-label>
+                                                    <mat-select [(ngModel)]="input.dataType">
+                                                        <mat-option value="text">Text</mat-option>
+                                                        <mat-option value="dropDown">Dropdown</mat-option>
+                                                    </mat-select>
+                                                </mat-form-field>
+                                            </td>
+
+                                            <td *ngIf="input.dataType === 'dropDown'">
+                                                <mat-form-field class="example-chip-list">
+                                                    <mat-chip-list #chipList aria-label="Fruit selection">
+                                                        <mat-chip *ngFor="let option of optionList" [selectable]="selectable" [removable]="removable" (removed)="remove(option)">
+                                                            {{option.name}}
+                                                            <mat-icon matChipRemove *ngIf="removable">cancel</mat-icon>
+                                                        </mat-chip>
+                                                        <input placeholder="Field Options" [matChipInputFor]="chipList" [matChipInputSeparatorKeyCodes]="separatorKeysCodes" [matChipInputAddOnBlur]="addOnBlur" (matChipInputTokenEnd)="add($event)">
+                                                    </mat-chip-list>
+                                                </mat-form-field>
+                                            </td>
+
+                                            <td *ngIf="!input.feildId">
+                                                <button mat-stroked-button color="primary" (click)="addCustomFileds(input, 'Client', input.feildId)">Save</button>
+
+                                                <button mat-icon-button (click)="activeCustomFields(false)" matTooltip="Delete">
+                                                   <mat-icon>close</mat-icon>
+                                                </button>
+                                            </td>
+                                            <td *ngIf="input.feildId">
+                                                <button mat-stroked-button color="primary" (click)="updateCustomFiledsData(input, 'Client', input.feildId);">Update</button>
+                                                <button mat-icon-button (click)="activeCustomFields(false)" matTooltip="Delete">
+                                                   <mat-icon>close</mat-icon>
+                                                </button>
+                                            </td>
+                                        </tr>
+
+                                    </tbody>
+                                </table>
+
+                                <td>
+                                    <button mat-stroked-button color="primary" (click)="activeCustomFields(true)">Add New</button>
+                                </td>
+                            </mat-expansion-panel>
+                            <!--client ends-->
+
+                            <!--positions-->
+                            <mat-expansion-panel (opened)="panelOpenState = true" (closed)="panelOpenState = false">
+                                <mat-expansion-panel-header (click)="getCustomFileds('Position')">
+                                    <mat-panel-title>
+                                        Position
+                                    </mat-panel-title>
+                                </mat-expansion-panel-header>
+                                <table class="table table-hover">
+                                    <thead>
+                                        <tr>
+                                            <th scope="col">Field Name</th>
+                                            <th scope="col">Field Type</th>
+                                            <th scope="col">Field Options</th>
+                                            <th scope="col">Action</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr *ngFor="let customField of positionCustomFields">
+                                            <th scope="row">{{ customField?.name }}</th>
+                                            <td>{{ customField?.dataType }}</td>
+                                            <td>{{ customField?.dropDownValues }}</td>
+                                            <td>
+                                                <a style="cursor: pointer;" matTooltip="Edit" (click)="updateCustomFields(customField)">
+                                                    <span class="material-icons" style="font-size: 15px; padding: 5px;">edit</span>
+                                                </a>
+                                                <a style="cursor: pointer;" matTooltip="Delete" (click)="deleteCustomField(customField.id, 'Position')">
+                                                    <span class="material-icons" style="font-size: 15px; padding: 5px;">delete</span>
+                                                </a>
+                                            </td>
+                                        </tr>
+
+                                        <tr *ngIf="positionCustomFields?.length === 0">
+                                            <td colspan="4">No Custom fields added for Position</td>
+                                        </tr>
+
+                                        <tr *ngIf="clickType">
+                                            <td>
+                                                <mat-form-field class="example-full-width">
+                                                    <mat-label>Filed Name</mat-label>
+                                                    <input matInput [(ngModel)]="input.feildName">
+                                                </mat-form-field>
+                                            </td>
+
+                                            <td>
+                                                <mat-form-field>
+                                                    <mat-label>Field Type</mat-label>
+                                                    <mat-select [(ngModel)]="input.dataType">
+                                                        <mat-option value="text">Text</mat-option>
+                                                        <mat-option value="dropDown">Dropdown</mat-option>
+                                                    </mat-select>
+                                                </mat-form-field>
+                                            </td>
+
+                                            <td *ngIf="input.dataType === 'dropDown'">
+                                                <mat-form-field class="example-chip-list">
+                                                    <mat-chip-list #chipList aria-label="Fruit selection">
+                                                        <mat-chip *ngFor="let option of optionList" [selectable]="selectable" [removable]="removable" (removed)="remove(option)">
+                                                            {{option.name}}
+                                                            <mat-icon matChipRemove *ngIf="removable">cancel</mat-icon>
+                                                        </mat-chip>
+                                                        <input placeholder="Field Options" [matChipInputFor]="chipList" [matChipInputSeparatorKeyCodes]="separatorKeysCodes" [matChipInputAddOnBlur]="addOnBlur" (matChipInputTokenEnd)="add($event)">
+                                                    </mat-chip-list>
+                                                </mat-form-field>
+                                            </td>
+
+                                            <td *ngIf="!input.feildId">
+                                                <button mat-stroked-button color="primary" (click)="addCustomFileds(input, 'Position', input.feildId)">Save</button>
+
+                                                <button mat-icon-button (click)="activeCustomFields(false)" matTooltip="Delete">
+                                                   <mat-icon>close</mat-icon>
+                                                </button>
+                                            </td>
+                                            <td *ngIf="input.feildId">
+                                                <button mat-stroked-button color="primary" (click)="updateCustomFiledsData(input, 'Position', input.feildId);">Update</button>
+                                                <button mat-icon-button (click)="activeCustomFields(false)" matTooltip="Delete">
+                                                   <mat-icon>close</mat-icon>
+                                                </button>
+                                            </td>
+                                        </tr>
+
+                                    </tbody>
+                                </table>
+
+                                <td>
+                                    <button mat-stroked-button color="primary" (click)="activeCustomFields(true)">Add New</button>
+                                </td>
+                            </mat-expansion-panel>
+                            <!--position ends-->
+
+                            <!--candidate-->
+                            <mat-expansion-panel (opened)="panelOpenState = true" (closed)="panelOpenState = false">
+                                <mat-expansion-panel-header (click)="getCustomFileds('Candidate')">
+                                    <mat-panel-title>
+                                        Candidate
+                                    </mat-panel-title>
+                                </mat-expansion-panel-header>
+                                <table class="table table-hover">
+                                    <thead>
+                                        <tr>
+                                            <th scope="col">Field Name</th>
+                                            <th scope="col">Field Type</th>
+                                            <th scope="col">Field Options</th>
+                                            <th scope="col">Action</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr *ngFor="let customField of candidateCustomFields">
+                                            <th scope="row">{{ customField?.name }}</th>
+                                            <td>{{ customField?.dataType }}</td>
+                                            <td>{{ customField?.dropDownValues }}</td>
+                                            <td>
+                                                <a style="cursor: pointer;" matTooltip="Edit" (click)="updateCustomFields(customField)">
+                                                    <span class="material-icons" style="font-size: 15px; padding: 5px;">edit</span>
+                                                </a>
+                                                <a style="cursor: pointer;" matTooltip="Delete" (click)="deleteCustomField(customField.id, 'Candidate')">
+                                                    <span class="material-icons" style="font-size: 15px; padding: 5px;">delete</span>
+                                                </a>
+                                            </td>
+                                        </tr>
+
+                                        <tr *ngIf="candidateCustomFields?.length === 0">
+                                            <td colspan="4">No Custom fields added for Candidate</td>
+                                        </tr>
+
+                                        <tr *ngIf="clickType">
+                                            <td>
+                                                <mat-form-field class="example-full-width">
+                                                    <mat-label>Filed Name</mat-label>
+                                                    <input matInput [(ngModel)]="input.feildName">
+                                                </mat-form-field>
+                                            </td>
+
+                                            <td>
+                                                <mat-form-field>
+                                                    <mat-label>Field Type</mat-label>
+                                                    <mat-select [(ngModel)]="input.dataType">
+                                                        <mat-option value="text">Text</mat-option>
+                                                        <mat-option value="dropDown">Dropdown</mat-option>
+                                                    </mat-select>
+                                                </mat-form-field>
+                                            </td>
+
+                                            <td *ngIf="input.dataType === 'dropDown'">
+                                                <mat-form-field class="example-chip-list">
+                                                    <mat-chip-list #chipList aria-label="Fruit selection">
+                                                        <mat-chip *ngFor="let option of optionList" [selectable]="selectable" [removable]="removable" (removed)="remove(option)">
+                                                            {{option.name}}
+                                                            <mat-icon matChipRemove *ngIf="removable">cancel</mat-icon>
+                                                        </mat-chip>
+                                                        <input placeholder="Field Options" [matChipInputFor]="chipList" [matChipInputSeparatorKeyCodes]="separatorKeysCodes" [matChipInputAddOnBlur]="addOnBlur" (matChipInputTokenEnd)="add($event)">
+                                                    </mat-chip-list>
+                                                </mat-form-field>
+                                            </td>
+
+                                            <td *ngIf="!input.feildId">
+                                                <button mat-stroked-button color="primary" (click)="addCustomFileds(input, 'Candidate', input.feildId)">Save</button>
+
+                                                <button mat-icon-button (click)="activeCustomFields(false)" matTooltip="Delete">
+                                                   <mat-icon>close</mat-icon>
+                                                </button>
+                                            </td>
+                                            <td *ngIf="input.feildId">
+                                                <button mat-stroked-button color="primary" (click)="updateCustomFiledsData(input, 'Candidate', input.feildId);">Update</button>
+                                                <button mat-icon-button (click)="activeCustomFields(false)" matTooltip="Delete">
+                                                   <mat-icon>close</mat-icon>
+                                                </button>
+                                            </td>
+                                        </tr>
+
+                                    </tbody>
+                                </table>
+
+                                <td>
+                                    <button mat-stroked-button color="primary" (click)="activeCustomFields(true)">Add New</button>
+                                </td>
+                            </mat-expansion-panel>
+                            <!--candidate ends-->
+
+                            <!--prospects-->
+                            <mat-expansion-panel (opened)="panelOpenState = true" (closed)="panelOpenState = false" *ngIf="globalData.orgType === 'Agency' && globalData.userRole !== 'vendor'">
+                                <mat-expansion-panel-header (click)="getCustomFileds('Prospects')">
+                                    <mat-panel-title>
+                                        Prospects
+                                    </mat-panel-title>
+                                </mat-expansion-panel-header>
+                                <table class="table table-hover">
+                                    <thead>
+                                        <tr>
+                                            <th scope="col">Field Name</th>
+                                            <th scope="col">Field Type</th>
+                                            <th scope="col">Field Options</th>
+                                            <th scope="col">Action</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr *ngFor="let customField of prospectsCustomFields">
+                                            <th scope="row">{{ customField?.name }}</th>
+                                            <td>{{ customField?.dataType }}</td>
+                                            <td>{{ customField?.dropDownValues }}</td>
+                                            <td>
+                                                <a style="cursor: pointer;" matTooltip="Edit" (click)="updateCustomFields(customField)">
+                                                    <span class="material-icons" style="font-size: 15px; padding: 5px;">edit</span>
+                                                </a>
+                                                <a style="cursor: pointer;" matTooltip="Delete" (click)="deleteCustomField(customField.id, 'Prospects')">
+                                                    <span class="material-icons" style="font-size: 15px; padding: 5px;">delete</span>
+                                                </a>
+                                            </td>
+                                        </tr>
+
+                                        <tr *ngIf="prospectsCustomFields?.length === 0">
+                                            <td colspan="4">No Custom fields added for Prospects</td>
+                                        </tr>
+
+                                        <tr *ngIf="clickType">
+                                            <td>
+                                                <mat-form-field class="example-full-width">
+                                                    <mat-label>Filed Name</mat-label>
+                                                    <input matInput [(ngModel)]="input.feildName">
+                                                </mat-form-field>
+                                            </td>
+
+                                            <td>
+                                                <mat-form-field>
+                                                    <mat-label>Field Type</mat-label>
+                                                    <mat-select [(ngModel)]="input.dataType">
+                                                        <mat-option value="text">Text</mat-option>
+                                                        <mat-option value="dropDown">Dropdown</mat-option>
+                                                    </mat-select>
+                                                </mat-form-field>
+                                            </td>
+
+                                            <td *ngIf="input.dataType === 'dropDown'">
+                                                <mat-form-field class="example-chip-list">
+                                                    <mat-chip-list #chipList aria-label="Fruit selection">
+                                                        <mat-chip *ngFor="let option of optionList" [selectable]="selectable" [removable]="removable" (removed)="remove(option)">
+                                                            {{option.name}}
+                                                            <mat-icon matChipRemove *ngIf="removable">cancel</mat-icon>
+                                                        </mat-chip>
+                                                        <input placeholder="Field Options" [matChipInputFor]="chipList" [matChipInputSeparatorKeyCodes]="separatorKeysCodes" [matChipInputAddOnBlur]="addOnBlur" (matChipInputTokenEnd)="add($event)">
+                                                    </mat-chip-list>
+                                                </mat-form-field>
+                                            </td>
+
+                                            <td *ngIf="!input.feildId">
+                                                <button mat-stroked-button color="primary" (click)="addCustomFileds(input, 'Prospects', input.feildId)">Save</button>
+
+                                                <button mat-icon-button (click)="activeCustomFields(false)" matTooltip="Delete">
+                                                   <mat-icon>close</mat-icon>
+                                                </button>
+                                            </td>
+                                            <td *ngIf="input.feildId">
+                                                <button mat-stroked-button color="primary" (click)="updateCustomFiledsData(input, 'Prospects', input.feildId);">Update</button>
+                                                <button mat-icon-button (click)="activeCustomFields(false)" matTooltip="Delete">
+                                                   <mat-icon>close</mat-icon>
+                                                </button>
+                                            </td>
+                                        </tr>
+
+                                    </tbody>
+                                </table>
+
+                                <td>
+                                    <button mat-stroked-button color="primary" (click)="activeCustomFields(true)">Add New</button>
+                                </td>
+                            </mat-expansion-panel>
+                            <!--prospects ends-->
+
+                            <!--empolyees-->
+                            <mat-expansion-panel (opened)="panelOpenState = true" (closed)="panelOpenState = false">
+                                <mat-expansion-panel-header (click)="getCustomFileds('Employees')">
+                                    <mat-panel-title>
+                                        Employees
+                                    </mat-panel-title>
+                                </mat-expansion-panel-header>
+                                <table class="table table-hover">
+                                    <thead>
+                                        <tr>
+                                            <th scope="col">Field Name</th>
+                                            <th scope="col">Field Type</th>
+                                            <th scope="col">Field Options</th>
+                                            <th scope="col">Action</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr *ngFor="let customField of employeesCustomFields">
+                                            <th scope="row">{{ customField?.name }}</th>
+                                            <td>{{ customField?.dataType }}</td>
+                                            <td>{{ customField?.dropDownValues }}</td>
+                                            <td>
+                                                <a style="cursor: pointer;" matTooltip="Edit" (click)="updateCustomFields(customField)">
+                                                    <span class="material-icons" style="font-size: 15px; padding: 5px;">edit</span>
+                                                </a>
+                                                <a style="cursor: pointer;" matTooltip="Delete" (click)="deleteCustomField(customField.id, 'Employees')">
+                                                    <span class="material-icons" style="font-size: 15px; padding: 5px;">delete</span>
+                                                </a>
+                                            </td>
+                                        </tr>
+
+                                        <tr *ngIf="employeesCustomFields?.length === 0">
+                                            <td colspan="4">No Custom fields added for Employees</td>
+                                        </tr>
+
+                                        <tr *ngIf="clickType">
+                                            <td>
+                                                <mat-form-field class="example-full-width">
+                                                    <mat-label>Filed Name</mat-label>
+                                                    <input matInput [(ngModel)]="input.feildName">
+                                                </mat-form-field>
+                                            </td>
+
+                                            <td>
+                                                <mat-form-field>
+                                                    <mat-label>Field Type</mat-label>
+                                                    <mat-select [(ngModel)]="input.dataType">
+                                                        <mat-option value="text">Text</mat-option>
+                                                        <mat-option value="dropDown">Dropdown</mat-option>
+                                                    </mat-select>
+                                                </mat-form-field>
+                                            </td>
+
+                                            <td *ngIf="input.dataType === 'dropDown'">
+                                                <mat-form-field class="example-chip-list">
+                                                    <mat-chip-list #chipList aria-label="Fruit selection">
+                                                        <mat-chip *ngFor="let option of optionList" [selectable]="selectable" [removable]="removable" (removed)="remove(option)">
+                                                            {{option.name}}
+                                                            <mat-icon matChipRemove *ngIf="removable">cancel</mat-icon>
+                                                        </mat-chip>
+                                                        <input placeholder="Field Options" [matChipInputFor]="chipList" [matChipInputSeparatorKeyCodes]="separatorKeysCodes" [matChipInputAddOnBlur]="addOnBlur" (matChipInputTokenEnd)="add($event)">
+                                                    </mat-chip-list>
+                                                </mat-form-field>
+                                            </td>
+
+                                            <td *ngIf="!input.feildId">
+                                                <button mat-stroked-button color="primary" (click)="addCustomFileds(input, 'Employees', input.feildId)">Save</button>
+
+                                                <button mat-icon-button (click)="activeCustomFields(false)" matTooltip="Delete">
+                                                   <mat-icon>close</mat-icon>
+                                                </button>
+                                            </td>
+                                            <td *ngIf="input.feildId">
+                                                <button mat-stroked-button color="primary" (click)="updateCustomFiledsData(input, 'Employees', input.feildId);">Update</button>
+                                                <button mat-icon-button (click)="activeCustomFields(false)" matTooltip="Delete">
+                                                   <mat-icon>close</mat-icon>
+                                                </button>
+                                            </td>
+                                        </tr>
+
+                                    </tbody>
+                                </table>
+
+                                <td>
+                                    <button mat-stroked-button color="primary" (click)="activeCustomFields(true)">Add New</button>
+                                </td>
+                            </mat-expansion-panel>
+                            <!--employees ends-->
+                        </mat-accordion>
+                    </div>
+                </div>
+            </div>
+            <!--custom fields ends-->
+
+            <!--pipe line stages-->
+            <div class="page-details" *ngIf="showMenuItem === 'custom-pipeline'">
+                <div class="row">
+                    <div class="col-md-12">
+                        <h4>Pipeline Stages</h4>
+                        <hr />
+                    </div>
+                </div>
+                <div class="clearfix"></div>
+
+                <div class="row">
+                    <div class="col-md-9">
+                        <mat-form-field class="example-full-width">
+                            <mat-label>Stage Name</mat-label>
+                            <input matInput [(ngModel)]="stageName">
+                        </mat-form-field>
+                    </div>
+                    <div class="col-md-3">
+                        <button mat-flat-button color="primary" [disabled]="!stageName" (click)="addBoardForCustomRound(stageName)">Add Stage</button>
+                    </div>
+                </div>
+                <div class="clearfix gap-in-div" style="margin-bottom: 47px;"></div>
+
+                <div cdkDropList class="example-list" (cdkDropListDropped)="drop($event)">
+                    <div class="example-box" *ngFor="let stages of customRoundData; let i = index;" cdkDrag>
+                        <div class="col-md-10">
+                            <mat-form-field class="example-full-width">
+                                <mat-label>Stage Name</mat-label>
+                                <input matInput [(ngModel)]="stages.name">
+                            </mat-form-field>
+                        </div>
+                        <div class="col-md-2">
+                            <a style="cursor: pointer;" matTooltip="Delete" (click)="deleteCustomStage(stages.id)">
+                                <span class="material-icons" style="font-size: 15px; padding: 5px;">delete</span>
+                            </a>
+                        </div>
+                    </div>
+
+                    <div class="roe">
+                        <div class="col-md-12" *ngIf="customRoundData?.length === 0">
+                            <h3 style="text-align: center; margin: 63px;">No Pipeline Stages added.</h3>
+                        </div>
+                    </div>
+                </div>
+
+                <button mat-flat-button color="primary" (click)="updateCustomStages(customRoundData, '')" *ngIf="customRoundData?.length !== 0">
+                  Save Chnages
+              </button>
+            </div>
+            <!--pipe line stages ends-->
+
+            <!--custom status-->
+            <div class="page-details" *ngIf="showMenuItem === 'custom-status'">
+                <div class="row">
+                    <div class="col-md-12">
+                        <h4>Custom Status</h4>
+                        <hr />
+                    </div>
+                </div>
+                <div class="clearfix"></div>
+
+                <div class="row">
+                    <div class="col-md-9">
+                        <mat-form-field class="example-full-width">
+                            <mat-label>Add custom status</mat-label>
+                            <input matInput [(ngModel)]="customStatusName">
+                        </mat-form-field>
+                    </div>
+                    <div class="col-md-3">
+                        <button mat-flat-button color="primary" [disabled]="!customStatusName" (click)="addCustomStatus(customStatusName)" *ngIf="!customStatusId">
+                          Add Stage
+                        </button>
+
+                        <button mat-flat-button color="primary" [disabled]="!customStatusName" (click)="updateCurrentCustomStatus(customStatusName)" *ngIf="customStatusId">
+                          Update Stage
+                        </button>
+                    </div>
+                </div>
+                <hr/>
+                <div class="clearfix" style="margin-bottom: 50px;"></div>
+                <div class="row">
+                    <div class="col-md-6" *ngFor="let customStatus of allCustomStatus">
+                        <div class="status-box">
+                            <div class="custom-name">
+                                {{ customStatus?.statusName }}
+                            </div>
+
+                            <div class="status-btn">
+                                <a style="cursor: pointer;" matTooltip="Edit" (click)="updateCustomStatus(customStatus, 'update')">
+                                    <span class="material-icons" style="font-size: 15px; padding: 5px;">edit</span>
+                                </a>
+                                <a style="cursor: pointer;" matTooltip="Delete" (click)="deleteCustomStatus(customStatus.id)">
+                                    <span class="material-icons" style="font-size: 15px; padding: 5px;">delete</span>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+            <!--custom status ends-->
+
+            <!--offer letter-->
+            <div class="page-details" *ngIf="showMenuItem === 'offer-letter'">
+                <div class="row">
+                    <div class="col-md-12">
+                        <h4>Offer Letter Templates</h4>
+                        <button mat-stroked-button color="primary" class="pull-right" style="margin-top: -32px;"> Add New </button>
+                        <hr />
+                    </div>
+                </div>
+                <div class="clearfix"></div>
+
+                <div class="row">
+                    <div class="col-md-12" *ngFor="let template of templateList">
+                        <div class="offer-box">
+                            <mat-radio-group aria-label="Select an option" name="template" (change)="selectTemplate(template.offerLetterId)" style="float:left">
+                                <mat-radio-button [value]="template.templateName" [checked]="template.selected_status">
+                                </mat-radio-button>
+                            </mat-radio-group>
+                            {{ template?.templateName }}
+
+                            <ul class="template_action pull-right">
+                                <li style="font-size: 13px; font-weight: bold; color: #bbb;	font-style: italic;">
+                                    Created on : {{ template?.creationDate | date:'MM-dd-yyyy'}}
+                                </li>
+
+                                <li>
+                                    <a (click)="viewOfferLetter(template.offerLetterId)" class="edit-btn" matTooltip="View">
+                                        <i class="material-icons">visibility</i>
+                                    </a>
+                                </li>
+
+                                <li>
+                                    <a (click)="editOfferLetter(template.offerLetterId, template)" class="edit-btn" matTooltip="Edit">
+                                        <i class="material-icons">edit</i>
+                                    </a>
+                                </li>
+
+                                <li>
+                                    <a data-toggle="modal" (click)="deleteOfferLetter(template.offerLetterId)" matTooltip="Delete">
+                                        <i class="material-icons">delete</i>
+                                    </a>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!--offer letter ends-->
+
+            <!--add bank details-->
+            <div class="page-details" *ngIf="showMenuItem === 'bank-detail'">
+                <div class="row">
+                    <div class="col-md-12">
+                        <h4>Bank Details</h4>
+                        <hr />
+                    </div>
+                </div>
+                <div class="clearfix"></div>
+
+                <div class="row">
+                    <div class="col-md-12">
+                        <table class="table table-hover" style="margin-bottom: 20px; margin-top: 30px;">
+                            <thead>
+                                <tr>
+                                    <th scope="col">Default</th>
+                                    <th scope="col">Account Name</th>
+                                    <th scope="col">Bank Name (Branch)</th>
+                                    <th scope="col">Account Number</th>
+                                    <th scope="col">IFSC Code</th>
+                                    <th scope="col">Action</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr *ngFor="let bank of bankDetailList">
+                                    <td>
+                                        <mat-radio-group aria-label="Select an otemplateption" name="bank" (change)="handleRadioClick(true, bank.id)" style="float:left">
+                                            <mat-radio-button [value]="bank.defaultBankDetails" [checked]="bank.defaultBankDetails">
+                                            </mat-radio-button>
+                                        </mat-radio-group>
+                                    </td>
+                                    <td>{{ bank?.accountName }}</td>
+                                    <td>{{ bank?.bankName }} ({{ bank?.branch }})</td>
+                                    <td>{{ bank?.accountNumber }}</td>
+                                    <td>{{ bank?.ifscCode }}</td>
+                                    <td>
+                                        <a (click)="addBankDetails('updateInfo', bank)" class="edit-btn" matTooltip="Edit">
+                                            <i class="material-icons" style="font-size: 14px; cursor: pointer;">edit</i>
+                                        </a>
+                                        &nbsp; &nbsp;
+                                        <a data-toggle="modal" (click)="deleteBankDetails(bank.id)" matTooltip="Delete">
+                                            <i class="material-icons" style="font-size: 14px; cursor: pointer;">delete</i>
+                                        </a>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-md-12" style="margin-bottom: 20px;">
+                        <h4 class="place-holder" *ngIf="bankDetailList?.length === 0">No bank details added <br /><br />
+                            <button mat-stroked-button color="primary" (click)="addBankDetails('', '')"> Add Bank Detail </button>
+                        </h4>
+                        <button mat-stroked-button color="primary" (click)="addBankDetails('', '')" *ngIf="bankDetailList?.length !== 0">
+                          Add More Bank Detail </button>
+                    </div>
+                </div>
+
+            </div>
+            <!--add bank details ends-->
+
+            <!--add tax details-->
+            <div class="page-details" *ngIf="showMenuItem === 'tax-detail'">
+                <div class="row">
+                    <div class="col-md-12">
+                        <h4>Tax Details</h4>
+                        <hr />
+                    </div>
+                </div>
+                <div class="clearfix"></div>
+
+                <div class="row" style="margin-top: 20px;">
+                    <div class="col-md-4" *ngFor="let otherTax of taxListDetails">
+                        <mat-form-field appearance="outline">
+                            <mat-label>{{ otherTax?.taxName }}</mat-label>
+                            <input matInput [(ngModel)]="otherTax.taxValue" disabled>
+                            <mat-icon matSuffix (click)="deleteTaxes(otherTax.id)" style="cursor: pointer;">delete</mat-icon>
+                        </mat-form-field>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-md-12" style="margin-bottom: 20px;">
+                        <h4 class="place-holder" *ngIf="taxListDetails?.length === 0">No tax details added <br /><br />
+                            <button mat-stroked-button color="primary" (click)="addTaxDetails('', '')"> Add Tax Detail </button>
+                        </h4>
+                        <button mat-stroked-button color="primary" (click)="addTaxDetails('', '')" *ngIf="taxListDetails?.length !== 0">
+                          Add More Tax Detail </button>
+                    </div>
+                </div>
+
+            </div>
+            <!--add tax details ends-->
+        </div>
+    </div>
+</section>

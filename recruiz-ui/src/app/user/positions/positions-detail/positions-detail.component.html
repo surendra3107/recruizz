@@ -1,0 +1,640 @@
+<!-- Breadcrumb Section -->
+<div *ngIf="isFilterOpen" class="overlay"></div>
+<section class="main-section ">
+    <div class="top-head row">
+        <div class="heading col-md-8">
+            <mat-label class="client">{{pageTitle}}</mat-label>
+            <!-- Bread-crum section -->
+            <nav *ngIf="isBreadcrumbShow" class="breadcrumb-nav" aria-label="breadcrumb">
+                <ol class="breadcrumb breadcrumb-list">
+                    <li class="breadcrumb-item"><a routerLink="/user/dashboard">Home</a></li>
+                    <li class="breadcrumb-item"><a routerLink="{{mainRoute}}">{{mainBreacrumb}}</a></li>
+                    <li class="breadcrumb-item recruiz-green bold">{{ positionName }}</li>
+                </ol>
+            </nav>
+        </div>
+        <div class="rest-part col-md-4">
+            <ul class="side-filters list-inline m-0">
+                <li class="list-inline-item">
+                    <a class="btn btn-default btn-sm add-client" *ngIf="true">
+                        <img class="mr-2 add-client-image btn-default" src="../../assets/icons/client-list/Add Client.png">
+                        <span class="client-button">Add Position</span>
+                    </a>
+                </li>
+            </ul>
+        </div>
+    </div>
+</section>
+<!-- Breadcrumb End -->
+<section class="main-section">
+    <div class="basic-container">
+        <ul class="list-menu">
+            <li class="list-items row">
+                <div class="col-md-6">
+                    <h2 class="recruiz-head">{{ positionName }}</h2>
+                    <ul class="inline-div">
+                        <li>
+                            <p class="active-button para">
+                                <img src="../../../assets/icons/Positions-list/Recruiz_test.png" alt=""> {{ clientName }}
+                            </p>
+                        </li>
+
+                        <li *ngIf="positionData?.finalStatus === 'Active'">
+                            <p class="active-button para"><img src="../../assets/icons/Positions-list/active.png" alt=""> {{positionData?.finalStatus}}
+                            </p>
+                        </li>
+
+                        <li *ngIf="positionData?.finalStatus === 'StopSourcing'">
+                            <p class="active-button para"><img src="../../assets/icons/Positions-list/stop-sourcing.svg " alt=""> Stop Sourcing
+                            </p>
+                        </li>
+
+                        <li *ngIf="positionData?.finalStatus === 'OnHold'">
+                            <p class="active-button para"><img src="../../assets/icons/Positions-list/on-hold.svg " alt=""> On Hold
+                            </p>
+                        </li>
+
+                        <li *ngIf="positionData?.finalStatus === 'Closed'">
+                            <p class="active-button para"><img src="../../assets/icons/Positions-list/closed.svg " alt=""> {{positionData?.finalStatus}}
+                            </p>
+                        </li>
+
+                        <li>
+                            <p class="para"><img src="../../../assets/icons/Positions-list/Openings.png" alt=""> Openings : {{positionData?.totalPosition}}</p>
+                        </li>
+
+                        <li *ngIf="positionData?.publishCareerSite">
+                            <p class="para"><img src="../../../assets/icons/Positions-list/Published.png" alt=""> Published
+                            </p>
+                        </li>
+
+                        <li *ngIf="!positionData?.publishCareerSite">
+                            <p class="para"><img src="../../../assets/icons/Positions-list/un-published.svg" alt=""> Un Published
+                            </p>
+                        </li>
+                    </ul>
+                    <p class="location para">
+                        <img src="../../assets/icons/client-list/Group 5979.png" alt="">{{ positionData?.location }}
+                        <span style="margin-left:25px;"><b>Position Code:</b> {{ positionData?.positionCode }}</span>
+                    </p>
+
+                    <p class="location para">
+                        <img src="../../../assets/icons/Positions-list/closure.svg" alt=""> Closures: {{ closures }}
+                    </p>
+
+                    <p class="location para">
+                        <img src="../../../assets/icons/Positions-list/pending-opening.svg" alt=""> Pending Openings: {{pending_openings}}
+                    </p>
+                    <p class="pd-left dates para">Created on: {{positionData?.openedDate| date: 'dd-MM-yyyy'}} | Close by: {{positionData?.closeByDate| date: 'dd-MM-yyyy'}} | Last edited on: {{positionData?.modificationDate| date: 'dd-MM-yyyy'}}
+                    </p>
+                </div>
+                <div class="col-md-6">
+                    <div class="details-bar-option">
+                        <a #menuTrigger="matMenuTrigger" [matMenuTriggerFor]="menu">
+                            <img src="../../assets/icons/client-list/Menu.png" alt="">
+                        </a>
+                    </div>
+                    <mat-menu #menu="matMenu">
+                        <button mat-menu-item>
+                            <img src="../../../assets/icons/client-details/Edit.png" alt=""> Edit
+                        </button>
+
+                        <button mat-menu-item (click)="deletePositionFromDetail(positionData.id)">
+                            <img src="../../../assets/icons/client-details/Delete.png" alt=""> Delete
+                        </button>
+
+                        <button mat-menu-item *ngIf="positionData?.finalStatus !== 'Active'" (click)="changeStatusFromDetails(allStatusList[0].id, positionData.id, positionData.clientStatus)">
+                            <img src=" ../../assets/icons/Positions-list/active.png " alt=" "> {{ activePosition }}
+                        </button>
+
+                        <button mat-menu-item *ngIf="positionData?.finalStatus !=='OnHold'" (click)="changeStatusFromDetails(allStatusList[1].id, positionData.id, positionData.clientStatus)">
+                            <img src="../../assets/icons/Positions-list/on-hold.svg " alt=" "> {{ onHoldPosition }}
+                        </button>
+
+                        <button mat-menu-item *ngIf="positionData?.finalStatus !=='Closed'" (click)="changeStatusFromDetails(allStatusList[2].id, positionData.id, positionData.clientStatus)">
+                            <img src="../../assets/icons/Positions-list/closed.svg " alt=" "> {{ closedPosition }}
+                        </button>
+
+                        <button mat-menu-item *ngIf="positionData?.finalStatus !=='StopSourcing'" (click)="changeStatusFromDetails(allStatusList[3].id, positionData.id, positionData.clientStatus)">
+                            <img src="../../assets/icons/Positions-list/stop-sourcing.svg " alt=" "> {{ stopSourcingPosition }}
+                        </button>
+
+                        <button mat-menu-item [disabled]="positionData?.finalStatus !=='Active'">
+                            <img src="../../assets/icons/Positions-list/candidate-match.svg " alt=" "> Candidate Match
+                        </button>
+
+                        <button mat-menu-item *ngIf="!positionData?.publishCareerSite" (click)="publishPositionFromDetails(true, positionData.id, positionData)">
+                            <img src="../../../assets/icons/Positions-list/Published.png" alt=" "> Publish
+                        </button>
+
+                        <button mat-menu-item *ngIf="positionData?.publishCareerSite" (click)="publishPositionFromDetails(false, positionData.id, positionData)">
+                            <img src="../../assets/icons/Positions-list/un-published.svg"  alt=" "> Unpublish
+                        </button>
+                    </mat-menu>
+                    <div class="button-grp text-center">
+                        <button class="btn btn-default btn-sm btn1">
+                            Pipeline
+                        </button>
+                        <button class="btn btn-default btn-sm btn2" routerLink="/user/positions-detail">
+                            Match
+                        </button>
+
+                        <button class="btn btn-default btn-sm btn3" routerLink="/user/positions-detail">
+                            Statistics
+                        </button>
+                        <button class="btn btn-default btn-sm btn4">
+                            Search in Portal
+                        </button>
+                    </div>
+                    <div class="links">
+                        <a routerLink="" class="link1"><img src="./../../../assets/icons/Positions-list/Share.png" alt=""></a>
+                        <a #menuTrigger="matMenuTrigger" [matMenuTriggerFor]="menus"><img src="./../../../assets/icons/Positions-list/mail.png" alt=""></a>
+                        <mat-menu #menus="matMenu">
+                            <button mat-menu-item (click)="$event.stopPropagation();">
+                             <mat-form-field appearance="legacy">
+                                <input matInput [(ngModel)]="positionEmail" disabled >
+                                <mat-icon matSuffix (cbOnSuccess)="copied($event)" ngxClipboard [cbContent]="positionEmail">file_copy</mat-icon>
+                             </mat-form-field>
+                            </button>
+                        </mat-menu>
+
+                    </div>
+                </div>
+            </li>
+        </ul>
+        <div class="row">
+            <div class="col-md-8 pr-0">
+                <div class="client-detailtab">
+                    <div class="customtabs">
+                        <mat-tab-group (selectedTabChange)="tabClick($event)">
+                            <mat-tab label="JOB DESCRIPTION">
+                                <div class="col-md-11" style="margin-top: 15px;">
+                                    <p [innerHtml]="positionData?.description"></p>
+                                </div>
+                                <div style="position: absolute; right: 15px; top: 15px;">
+                                    <a routerLink=""><img src="../../../assets/icons/Positions-list/Edit.png" alt=""></a>
+                                </div>
+                            </mat-tab>
+
+                            <mat-tab label="INTERVIEW PANEL">
+                                <!-- No Interview Panel -->
+                                <div *ngIf="interviewerList?.length === 0" style="height: 250px;">
+                                    <div class="no-decision">
+                                        <p class="text-center">
+                                            <img src="../../../assets/icons/client-details/no_interview_panel.png" alt="">
+                                        </p>
+                                        <p>No Interview Panel</p>
+                                    </div>
+                                    <a class="plus-icon" (click)="openDialogToAddInterviewer(interviewerList, positionData.id)">
+                                        <img src="./../../../assets/icons/client-details/add_interview_panel.png" alt="">
+                                    </a>
+                                </div>
+
+                                <!-- Interview Panel List -->
+                                <div *ngIf="interviewerList?.length !== 0">
+                                    <div class="interview-panel clearfix" *ngFor="let interviewer of interviewerList">
+                                        <div class="avatar-image">
+                                            <ngx-avatar name="{{ interviewer?.name }}" class="avatar" initialsSize="1" size="50" textSizeRatio="2"></ngx-avatar>
+                                        </div>
+                                        <div class="panel-details">
+                                            <h4 class="name">{{ interviewer?.name }}</h4>
+                                            <p class="color"><img src="../../../assets/icons/client-details/Email.png" alt=""> {{ interviewer?.email }}
+                                            </p>
+                                            <p class="color"><img src="../../../assets/icons/client-details/Phone.png" alt=""> {{ interviewer?.mobile }}
+                                            </p>
+                                        </div>
+
+                                        <div class="bar-options">
+                                            <a #menuTrigger="matMenuTrigger" [matMenuTriggerFor]="menu">
+                                                <img src="../../assets/icons/client-list/Menu.png" alt="">
+                                            </a>
+                                        </div>
+                                        <mat-menu #menu="matMenu">
+                                            <button mat-menu-item (click)="updateInterviwerFromPosition(interviewer, positionData.title)">
+                                                <img src="../../../assets/icons/client-details/Edit.png" alt=""> Edit
+                                            </button>
+
+                                            <button mat-menu-item (click)="deleteInterviewerFromPosition(positionData.id, interviewer.id)">
+                                                <img src="../../../assets/icons/client-details/Delete.png" alt=""> Delete
+                                            </button>
+                                        </mat-menu>
+
+                                    </div>
+                                    <a class="plus-icon" (click)="openDialogToAddInterviewer(interviewerList, positionData.id)" class="plus-icon">
+                                        <img src="./../../../assets/icons/client-details/add_interview_panel.png" alt="">
+                                    </a>
+                                </div>
+                            </mat-tab>
+
+                            <mat-tab label="TEAM / HR EXECUTIVES">
+                                <!-- Team/Hr Executive List -->
+                                <div>
+                                    <h3 class="team-heading">Team</h3>
+                                    <div class="hr-table">
+                                        <table class="team-table" *ngIf="teamList">
+                                            <thead>
+                                                <tr>
+                                                    <th style="border-top-left-radius:5px;">Team Name</th>
+                                                    <th>Team Size</th>
+                                                    <th style="border-top-right-radius:5px;">Target Revenue</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <tr>
+                                                    <td class="team-name">{{ teamList?.teamName }}</td>
+                                                    <td>{{ teamList?.memeberCount }}</td>
+                                                    <td>{{ teamList?.teamTargetAmount}}</td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+
+                                        <h4 class="place-holders" *ngIf="!teamList">Team no added yet.</h4>
+
+                                    </div>
+                                    <h3 class="team-heading">HR EXECUTIVES</h3>
+                                    <div class="interview-panel clearfix" *ngFor="let hr of selectedHrPanel">
+
+                                        <div class="avatar-image">
+                                            <ngx-avatar name="{{ hr?.name }}" class="avatar" initialsSize="1" size="50" textSizeRatio="2"></ngx-avatar>
+                                        </div>
+                                        <div class="panel-details">
+                                            <h4 class="name">{{ hr?.name }}</h4>
+                                            <p class="color"><img src="../../../assets/icons/client-details/Email.png" alt=""> {{ hr?.email }}
+                                            </p>
+                                            <p class="color" *ngIf="hr.mobile"><img src="../../../assets/icons/client-details/Phone.png" alt=""> {{ hr?.mobile }}
+                                            </p>
+                                            <p class="color" *ngIf="!hr.mobile"><img src="../../../assets/icons/client-details/Phone.png" alt=""> N/A
+                                            </p>
+                                        </div>
+
+                                        <div class="bar-options">
+                                            <a (click)="removeHrFromPosition(positionData.id, hr.id)">
+                                                <img src="../../../assets/icons/client-details/Delete.png" alt="">
+                                            </a>
+                                        </div>
+
+                                    </div>
+                                    <a class="plus-icon" (click)="openDialogToAddHr(positionData.id)">
+                                        <img src="./../../../assets/icons/client-details/add_interview_panel.png" alt="">
+                                    </a>
+                                </div>
+                                <h4 class="place-holders" *ngIf="!teamList">No HRs found.</h4>
+                            </mat-tab>
+
+                            <mat-tab label="VENDORS">
+                                <!-- Vendors List -->
+                                <div class="inner-div" style="min-height: 220px;">
+                                    <div class="interview-panel clearfix" *ngFor="let vendor of allVendors">
+                                        <div class="avatar-image">
+                                            <ngx-avatar name="{{ vendor?.name }}" class="avatar" initialsSize="1" size="50" textSizeRatio="2"></ngx-avatar>
+                                        </div>
+                                        <div class="panel-details">
+                                            <h4 class="name">{{ vendor?.name }}</h4>
+                                            <p class="color"><img src="../../../assets/icons/client-details/Email.png" alt=""> {{ vendor?.email }}
+                                            </p>
+                                            <p class="color"><img src="../../../assets/icons/client-details/Phone.png" alt=""> {{ vendor?.phone }}
+                                            </p>
+                                        </div>
+
+                                        <div class="bar-options">
+                                            <a (click)="deleteVendorFromPosition(positionData.id, vendor.id)">
+                                                <img src="../../../assets/icons/client-details/Delete.png" alt="">
+                                            </a>
+                                        </div>
+
+                                    </div>
+
+                                    <div class="no-decision" *ngIf="allVendors?.length === 0">
+                                        <p class="text-center">
+                                            <img src="../../../assets/icons/client-details/no_interview_panel.png" alt="">
+                                        </p>
+                                        <p>No vendor's added to position</p>
+                                    </div>
+
+                                    <a (click)="openDialogToAddVendors(positionData.id)" class="plus-icon">
+                                        <img src="./../../../assets/icons/client-details/add_interview_panel.png" alt="">
+                                    </a>
+                                </div>
+                            </mat-tab>
+
+                            <mat-tab label="ACTIVITY">
+                                <div class="inner-div">
+
+                                    <div class="interview-panel clearfix" *ngFor="let activity of allActivity">
+                                        <div class="avatar-image">
+                                            <img src="../../../assets/icons/Positions-list/notification.png" alt="">
+                                        </div>
+                                        <div class="panel-details">
+                                            <h4 class="name">{{ activity?.actionByEmal }}</h4>
+                                            <p class="color"> {{ activity?.time| date: 'h:mma, dd-MMM-yyyy' }}
+                                            </p>
+                                            <p class="color" [innerHtml]="activity.message">
+                                            </p>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-12" *ngIf="totalPages !== 1">
+                                        <a style="position: relative; left: 42%;" [ngClass]="{'disabled-link': totalPages === currentActivityPage}" (click)="getNextActivity()">Load More...</a>
+                                    </div>
+
+                                </div>
+
+                            </mat-tab>
+
+                            <mat-tab label="NOTES">
+                                <div class="inner-div" style="min-height: 220px;">
+                                    <div class="interview-panel-notes clearfix" *ngFor="let notes of allNotes">
+                                        <div class="date">
+                                            <p class="time-date">{{ notes?.creationDate | date: 'MMM dd yyyy, h:m a'}}</p>
+                                        </div>
+                                        <div class="bar-options1">
+                                            <a #menuTrigger="matMenuTrigger" [matMenuTriggerFor]="menu">
+                                                <img src="../../assets/icons/client-list/Menu.png" alt="">
+                                            </a>
+                                        </div>
+                                        <mat-menu #menu="matMenu">
+                                            <button mat-menu-item (click)="updatePositionNotes(notes)">
+                                            <img src="../../../assets/icons/client-details/Edit.png" alt=""> Edit
+                                        </button>
+
+                                            <button mat-menu-item (click)="deletePositionNotes(notes.id)">
+                                            <img src="../../../assets/icons/client-details/Delete.png" alt=""> Delete
+                                        </button>
+                                        </mat-menu>
+                                        <div class="bottom-div">
+                                            <div class="avatar-image2">
+                                                <img class="icon-image2" src="../../../assets/icons/Positions-list/Notes.png" alt="">
+                                            </div>
+                                            <div class="panel-details2">
+                                                <p class="notes" [innerHtml]="notes.notes"></p>
+                                            </div>
+                                            <div class="added-by-div">
+                                                <p class="added-by">
+                                                    Added by: <b>{{ notes?.addedBy }}</b>
+                                                </p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <a class="plus-icon" (click)="openDialogNotes()">
+                                        <img src="./../../../assets/icons/client-details/add_interview_panel.png" alt="">
+                                    </a>
+
+                                    <div class="no-decision" *ngIf="allNotes?.length === 0">
+                                        <p class="text-center">
+                                            <img src="../../../assets/icons/Positions-list/Notes.png" alt="">
+                                        </p>
+                                        <p>No notes added to position</p>
+                                    </div>
+                                </div>
+                            </mat-tab>
+
+                            <mat-tab label="DOCS">
+                                <!-- Notes List -->
+                                <div class="interview-panel-notes clearfix">
+                                    <div class="date">
+                                        <p class="time-date">16-Jul-2019, 4:41 PM</p>
+                                    </div>
+                                    <div class="bar-options1">
+                                        <a #menuTrigger="matMenuTrigger" [matMenuTriggerFor]="menu">
+                                            <img src="../../assets/icons/client-list/Menu.png" alt="">
+                                        </a>
+                                    </div>
+                                    <mat-menu #menu="matMenu">
+                                        <button mat-menu-item><img src="../../../assets/icons/client-details/Edit.png"
+                                                        alt=""> Edit</button>
+                                        <button mat-menu-item><img src="../../../assets/icons/client-details/Delete.png"
+                                                        alt=""> Delete</button>
+                                    </mat-menu>
+                                    <div class="bottom-div">
+                                        <div class="avatar-image2">
+                                            <img class="icon-image2" src="../../../assets/icons/Positions-list/Notes.png" alt="">
+                                        </div>
+                                        <div class="panel-details2">
+                                            <p class="notes">Lorem ipsum dolor sit amet consectetur adipisicing elit. Eligendi velit enim deleniti molestiae quos. Error nisi illo velit maiores, facere aut tempora sint. Repellendus, dicta vitae totam dolor in fugiat</p>
+                                        </div>
+                                        <div class="added-by-div">
+                                            <p class="added-by">
+                                                Added by antony(antony@beyondbytes.co.in)
+                                            </p>
+                                        </div>
+                                    </div>
+                                </div>
+                                <a routerLink="" class="plus-icon">
+                                    <img src="./../../../assets/icons/client-details/add_interview_panel.png" alt="">
+                                </a>
+
+                                <!-- Below Content to be deleted After Using Loop -->
+                                <div class="interview-panel-notes clearfix">
+                                    <div class="date">
+                                        <p class="time-date">16-Jul-2019, 4:41 PM</p>
+                                    </div>
+                                    <div class="bar-options1">
+                                        <a #menuTrigger="matMenuTrigger" [matMenuTriggerFor]="menu">
+                                            <img src="../../assets/icons/client-list/Menu.png" alt="">
+                                        </a>
+                                    </div>
+                                    <mat-menu #menu="matMenu">
+                                        <button mat-menu-item><img src="../../../assets/icons/client-details/Edit.png"
+                                                        alt=""> Edit</button>
+                                        <button mat-menu-item><img src="../../../assets/icons/client-details/Delete.png"
+                                                        alt=""> Delete</button>
+                                    </mat-menu>
+                                    <div class="bottom-div">
+                                        <div class="avatar-image2">
+                                            <img class="icon-image2" src="../../../assets/icons/Positions-list/Notes.png" alt="">
+                                        </div>
+                                        <div class="panel-details2">
+                                            <p class="notes">Lorem ipsum dolor sit amet consectetur adipisicing elit. Eligendi velit enim deleniti molestiae quos. Error nisi illo velit maiores, facere aut tempora sint. Repellendus, dicta vitae totam dolor in fugiat</p>
+                                        </div>
+                                        <div class="added-by-div">
+                                            <p class="added-by">
+                                                Added by antony(antony@beyondbytes.co.in)
+                                            </p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </mat-tab>
+
+                            <mat-tab label="RATES">
+                                <!-- No Activity -->
+                                <div *ngIf="isRatesEmpty">
+                                    <div class="no-decision1">
+                                        <p class="text-center">
+                                            <img src="../../../assets/icons/client-details/no_rate.png" alt="">
+                                        </p>
+                                        <p class="text-center no-rate">No Rate</p>
+                                    </div>
+                                    <a routerLink="" class="plus-icon">
+                                        <img src="./../../../assets/icons/client-details/add_interview_panel.png" alt="">
+                                    </a>
+                                </div>
+                                <!-- Activity List -->
+                                <div *ngIf="!isRatesEmpty">
+                                    <div class="interview-panel clearfix">
+                                        <div class="avatar-image1">
+                                            <img class="icon-image" src="../../../assets/icons/client-details/Notification.png" alt="">
+
+                                        </div>
+                                        <div class="panel-details1">
+                                            <h4 class="activity-name">antony@beyondbytes.co.in</h4>
+                                            <p class="color"> Modified by <span>antony(antony@beyondbytes.co.in)</span></p>
+                                        </div>
+
+                                        <div class="date-time">
+                                            <h4>16-Jul-2019</h4>
+                                            <p>4:33 PM</p>
+                                        </div>
+                                    </div>
+                                    <div class="interview-panel clearfix">
+                                        <div class="avatar-image1">
+                                            <img class="icon-image" src="../../../assets/icons/client-details/Notification.png" alt="">
+
+                                        </div>
+                                        <div class="panel-details1">
+                                            <h4 class="activity-name">antony@beyondbytes.co.in</h4>
+                                            <p class="color"> Modified by <span>antony(antony@beyondbytes.co.in)</span></p>
+                                        </div>
+
+                                        <div class="date-time">
+                                            <h4>16-Jul-2019</h4>
+                                            <p>4:33 PM</p>
+                                        </div>
+                                    </div>
+                                    <div class="interview-panel clearfix">
+                                        <div class="avatar-image1">
+                                            <img class="icon-image" src="../../../assets/icons/client-details/Notification.png" alt="">
+
+                                        </div>
+                                        <div class="panel-details1">
+                                            <h4 class="activity-name">antony@beyondbytes.co.in</h4>
+                                            <p class="color"> Modified by <span>antony(antony@beyondbytes.co.in)</span></p>
+                                        </div>
+
+                                        <div class="date-time">
+                                            <h4>16-Jul-2019</h4>
+                                            <p>4:33 PM</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </mat-tab>
+                        </mat-tab-group>
+                    </div>
+                    <!-- ----------------- Main Tab Content Block ------------------ -->
+                </div>
+            </div>
+            <!-- Right Side Main Block -->
+            <!-- --------------------- -->
+            <div class="col-md-4">
+                <div class="client-additional">
+                    <div class="custom-additional-tab">
+                        <p class="title">ADDITIONAL INFO</p>
+                    </div>
+                    <div class="tabs-content">
+                        <div class="description">
+                            <h6>Skill Set</h6>
+                            <ul>
+                                <li *ngFor="let skill of reqSkillSetList">{{ skill }}</li>
+                                <li *ngIf="reqSkillSetList?.length === 0"> N/A </li>
+                            </ul>
+                        </div>
+                        <div class="description">
+                            <h6>Good To Have Skills</h6>
+                            <ul>
+                                <li *ngFor="let goodSkillSet of goodSkillSetList">{{ goodSkillSet }}</li>
+                                <li *ngIf="goodSkillSetList?.length === 0"> N/A </li>
+                            </ul>
+                        </div>
+                        <div class="description">
+                            <h6>Educational Qualification</h6>
+                            <ul>
+                                <li *ngFor="let qualification of qualificationsList">{{ qualification }}</li>
+                                <li *ngIf="qualificationsList?.length === 0"> N/A </li>
+                            </ul>
+                        </div>
+                        <div class="more-details">
+                            <ul>
+                                <li *ngIf="positionData?.positionUrl">Job URL: {{ positionData?.positionUrl }}</li>
+                                <li *ngIf="!positionData?.positionUrl">Job URL: N/A</li>
+
+                                <li *ngIf="positionData?.typeDisplayName">Job Type: {{ positionData?.typeDisplayName }}</li>
+                                <li *ngIf="!positionData?.typeDisplayName">Job Type: N/A</li>
+
+                                <li *ngIf="positionData?.minSal || positionData?.maxSal">
+                                    Salary Range: <span ng-show="positionData?.salUnit === 'Rupee'">INR {{positionData?.minSal}} - {{positionData?.maxSal}}</span>
+                                    <span ng-show="positionData?.salUnit === 'Dollar'">USD {{positionData?.minSal}} - {{positionData?.maxSal}}</span>
+                                    <span ng-show="positionData?.salUnit === 'Dirham'">AED {{positionData?.minSal}} - {{positionData?.maxSal}}</span>
+
+                                </li>
+                                <li *ngIf="!positionData?.minSal || positionData?.maxSal">Salary Range: N/A</li>
+
+                                <li *ngIf="positionData?.industry">Industry: {{ positionData?.industry }}</li>
+                                <li *ngIf="!positionData?.industry">Industry: N/A</li>
+
+                                <li *ngIf="positionData?.functionalArea">Category: {{ positionData?.functionalArea }}</li>
+                                <li *ngIf="positionData?.functionalArea">Category: N/A</li>
+
+                                <li *ngIf="positionData?.remoteWork === true">Remote Working Option: Yes</li>
+                                <li *ngIf="positionData?.remoteWork === false">Remote Working Option: No</li>
+
+                                <li *ngIf="positionData?.notes">Additional Info: {{ positionData?.notes }}</li>
+                                <li *ngIf="!positionData?.notes">Additional Info: N/A</li>
+
+                                <li *ngIf="positionData?.clientNotes">About Client: <span [innerHtml]="clientNotes"></span></li>
+                                <li *ngIf="!positionData?.clientNotes">About Client: N/A</li>
+
+                                <li *ngIf="positionData?.endClient">End Client: <span [innerHtml]="positionData?.endClient"></span></li>
+                                <li *ngIf="!positionData?.endClient">End Client: N/A</li>
+
+                                <li *ngIf="positionData?.verticalCluster">Vertical/Cluster: <span [innerHtml]="positionData?.verticalCluster"></span></li>
+                                <li *ngIf="!positionData?.verticalCluster">Vertical/Cluster: N/A</li>
+
+                                <li *ngIf="positionData?.hiringManager">Client Hiring Manager: <span [innerHtml]="positionData?.hiringManager"></span></li>
+                                <li *ngIf="!positionData?.hiringManager">Client Hiring Manager: N/A</li>
+
+                                <li *ngIf="positionData?.screener">Screener: <span [innerHtml]="positionData?.screener"></span></li>
+                                <li *ngIf="!positionData?.screener">Screener: N/A</li>
+
+
+                                <span *ngIf="globalData.orgType === 'Agency'">Internal SPOC:
+                                    <li *ngIf="positionData?.spoc">Internal SPOC: <span [innerHtml]="positionData?.spoc"></span></li>
+                                <li *ngIf="!positionData?.spoc">Internal SPOC: N/A</li>
+                                </span>
+
+                                <span *ngIf="globalData.orgType === 'Corporate'">
+                                    <li *ngIf="positionData?.spoc">SPOC: <span [innerHtml]="positionData?.spoc"></span></li>
+                                <li *ngIf="!positionData?.spoc">SPOC: N/A</li>
+                                </span>
+
+                                <li *ngIf="positionData?.requisitionId">Requisition ID: <span [innerHtml]="positionData?.requisitionId"></span></li>
+                                <li *ngIf="!positionData?.requisitionId">Requisition ID: N/A</li>
+                            </ul>
+                        </div>
+
+                    </div>
+                </div>
+                <div class="custom-info">
+                    <h4 class="title-tab">Custom info</h4>
+                </div>
+                <div class="custom">
+                    <div>
+                        <p class="education-info" *ngFor="let item of positionData?.customField | keyvalue">{{ item.key }}:
+                            <span *ngIf="item.value">{{ item.value }}</span> <span *ngIf="!item.value"> N/A </span></p>
+                    </div>
+                    <h6>Generate Share URL</h6>
+                    <mat-form-field>
+                        <mat-label>Select a source</mat-label>
+                        <mat-select [(value)]="selectedSource">
+                            <mat-option>None</mat-option>
+                            <mat-option value="{{ source?.id }}" *ngFor="let source of sourceList">{{ source?.value }}</mat-option>
+                        </mat-select>
+                    </mat-form-field>
+                    <button mat-stroked-button *ngIf="selectedSource" color="primary" (click)="generateExtUrl(positionData.positionCode, selectedSource)" style="margin-bottom: 20px;">Generate URL</button>
+
+                    <span *ngIf="positionDetailsExternalURL">
+                    <input matInput [(ngModel)]="positionDetailsExternalURL" disabled style="width: 92%;">
+                    <mat-icon matSuffix (cbOnSuccess)="copied($event)" ngxClipboard [cbContent]="positionDetailsExternalURL" style="padding: 0px 8px 0px 9px; cursor: pointer;">file_copy</mat-icon>
+                    </span>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>

@@ -1,0 +1,3 @@
+ALTER TABLE `position_activity` 
+ADD COLUMN `teamId` BIGINT(20) NULL,
+ADD COLUMN `teamName` VARCHAR(1000) NULL;

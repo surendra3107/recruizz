@@ -1,0 +1,4 @@
+SELECT CONCAT(p.companyName) AS 'Company Name', CONCAT(p.owner) as 'Owner', CONCAT(p.email) AS 'Email', CONCAT(p.mobile) AS 'Mobile', CONCAT(p.creation_date) AS 'Creation Date', CONCAT(p.status) AS 'Status', IFNULL(p.deal_size,0) AS 'Deal Size'
+FROM prospect p 
+WHERE p.creation_date BETWEEN '$startDate' AND '$endDate' 
+ORDER BY p.owner;

@@ -1,0 +1,26 @@
+select
+  (
+    select count(*) from candidate
+    where owner like '%${hrEmail}%' AND creation_date between '${startDate}' And '${endDate}'
+  ) 'Sourced_Count', (
+    select count(*) from interview_schedule
+    where interviewSchedulerEmail like '%${hrEmail}%' AND creation_date between '${startDate}' And '${endDate}'
+  )'Schedule_Count', (
+    select count(*) from feedback
+    where eventCreatedBy like '%${hrEmail}%' AND type ='Forwarded' AND creation_date between '${startDate}' And '${endDate}'
+  ) 'Forward_Count', (
+    select count(*) from position
+    where status = 'Closed' AND team_id IN (${teamIds}) AND creation_date between '${startDate}' And '${endDate}'
+  ) 'Closed_Count',(
+  select count(*) from round_candidate where status = 'Joined' AND positionCode in (${pcodes}) AND modification_date between '${startDate}' And '${endDate}'
+  ) 'total_joined',(
+  select count(*) from round_candidate where status = 'Offered' AND positionCode in (${pcodes}) AND modification_date between '${startDate}' And '${endDate}'
+  ) 'total_offered',(
+  select count(*) from round_candidate where status = 'Rejected' AND positionCode in (${pcodes}) AND modification_date between '${startDate}' And '${endDate}'
+  ) 'total_rejected',(
+  select count(*) from round_candidate where status = 'OfferAccepted' AND positionCode in (${pcodes}) AND modification_date between '${startDate}' And '${endDate}'
+  ) 'total_offer_accepted',(
+  select count(*) from round_candidate where status = 'OfferDeclined' AND positionCode in (${pcodes}) AND modification_date between '${startDate}' And '${endDate}'
+  ) 'total_offer_declined',(
+  select count(*) from round_candidate where positionCode in (${pcodes}) AND creation_date between '${startDate}' And '${endDate}'
+  ) 'total_sourced_board';

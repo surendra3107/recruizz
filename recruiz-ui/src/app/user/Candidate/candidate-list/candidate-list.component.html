@@ -1,0 +1,318 @@
+<!-- <app-sub-header></app-sub-header> -->
+<!-- Breadcrumb Section -->
+<div *ngIf="isFilterOpen" class="overlay"></div>
+<section class="main-section ">
+    <div class="top-head row">
+        <div class="heading col-md-8">
+            <mat-label class="client" style="text-transform: uppercase;">CANDIDATE LIST</mat-label>
+            <!-- Bread-crum section -->
+            <nav class="breadcrumb-nav" aria-label="breadcrumb">
+                <ol class="breadcrumb breadcrumb-list">
+                    <li class="breadcrumb-item"><a routerLink="/user/dashboard">Home</a></li>
+                    <li class="breadcrumb-item recruiz-green bold">Candidates</li>
+                </ol>
+            </nav>
+        </div>
+        <div class="rest-part col-md-4">
+            <ul class="side-filters list-inline m-0">
+                <li class="list-inline-item">
+                    <a class="btn btn-default btn-sm add-client" *ngIf="true" routerLink="/user/add-client">
+                        <img class="mr-2 add-client-image btn-default" src="../../assets/icons/client-list/Add Client.png">
+                        <span class="client-button">Add New Candidate</span>
+                    </a>
+                </li>
+                <li class="list-inline-item">
+                    <div class="btn-group button-group m-0">
+                        <button type="button" class="btn btn-default button-default btn-sm m-0">
+                            <img class="sort-by" src="../..//assets/icons/client-list/Sortby.png" alt="">
+                        </button>
+                        <button type="button" class="btn btn-default button-second dropdown-toggle dropdown-toggle-split btn-sm" #menuTrigger="matMenuTrigger" [matMenuTriggerFor]="menu"></button>
+                        <mat-menu #menu="matMenu">
+                            <ul class="cutom-radio-button">
+                                <li *ngFor="let sortName of sortDropdown">
+                                    <input type="radio" name="selector" value="{{sortName.value}}" [(ngModel)]="sortBy">
+                                    <label for="f-option" (click)="onSortByChange(sortName.value)">{{ sortName?.key }}</label>
+                                    <div class="check"></div>
+                                </li>
+                            </ul>
+                        </mat-menu>
+                    </div>
+                </li>
+                <li class="list-inline-item">
+                    <div class="btn-group button-group">
+                        <button type="button" class="btn btn-default button-default btn-sm m-0">
+                            <img class="sort-by" src="../..//assets/icons/client-list/Filter.png" alt="">
+                        </button>
+                        <button type="button" class="btn btn-default button-second dropdown-toggle btn-sm" (click)="openFilter()"></button>
+                    </div>
+                </li>
+            </ul>
+        </div>
+    </div>
+
+    <!-- Filter Sidebar/Pop-up -->
+    <div *ngIf="isFilterOpen" class="container bg-white filter-box">
+        <div class="row filter-head filter-line mb-4">
+            <div class="col-md-10 mt-3">
+                <p class="filter"> FILTERS</p>
+            </div>
+            <div class="col-md-2 mt-3">
+                <i class="fa fa-times" aria-hidden="true" (click)="openFilter()"></i>
+            </div>
+        </div>
+        <div class="status">
+            <div class="row status-row">
+                <div class="col-md-10">
+                    <p class='title'>STATUS</p>
+                </div>
+                <div class="col-md-2">
+                    <i class="fa {{statusDivIcon}} green-icon" aria-hidden="true" (click)="toggleFilterDiv('status')"></i>
+                </div>
+            </div>
+            <div class="show-hide" *ngIf='isStatusDivOpen'>
+                <div class="row status-row">
+                    <div class="col-md-6" *ngFor="let status of allStatusList" [hidden]="status.value === 'Closed'">
+                        <div class="text-left">
+                            <mat-checkbox m-0 value="{{status.name}}" [(ngModel)]="status.checkStatus" class="check" (change)="clientStatusFilter(status.id, status.checkStatus);">
+                                {{ status?.value }}
+                            </mat-checkbox>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="location status">
+            <div class="row status-row">
+                <div class="col-md-10">
+                    <p class='title'>CURRENT LOCATION</p>
+                </div>
+                <div class="col-md-2">
+                    <i class="fa {{currentDivIcon}} green-icon" aria-hidden="true" (click)="toggleFilterDiv('location')"></i>
+                </div>
+            </div>
+            <div *ngIf='isCurrentLocationDivOpen' class="searchinp">
+                <div class="col-md-12">
+                    <mat-form-field>
+                        <input matInput placeholder="Search by location" (input)="onInputChanged($event)" [matAutocomplete]="auto" #reference>
+                        <mat-icon matSuffix *ngIf="deleteInput" (click)="reference.value=''" style="cursor: pointer;">close</mat-icon>
+                        <mat-autocomplete #auto="matAutocomplete" [displayWith]="displayFn" (optionSelected)="selectedLocation($event.option.value)">
+                            <mat-option *ngIf="isLoading" class="is-loading">Loading...</mat-option>
+                            <mat-option *ngIf="errorMsg" class="is-loading">{{errorMsg}}</mat-option>
+                            <ng-container *ngIf="!isLoading">
+                                <mat-option *ngFor="let location of filteredLocation" [value]="location.name">
+                                    <span><b>{{location.name}}</b></span>
+                                </mat-option>
+                            </ng-container>
+                        </mat-autocomplete>
+                    </mat-form-field>
+                </div>
+            </div>
+        </div>
+        <div class="client-name status">
+            <div class="row status-row">
+                <div class="col-md-10">
+                    <p class='title'>CLIENT NAME</p>
+                </div>
+                <div class="col-md-2">
+                    <i class="fa {{clientNameDivIcon}} green-icon" aria-hidden="true" (click)="toggleFilterDiv('client')"></i>
+                </div>
+            </div>
+            <div *ngIf='isClientNameDivOpen'>
+                <div class="col-md-12">
+                    <mat-form-field>
+                        <input matInput placeholder="Search by name" (input)="onInputClientName($event)" [matAutocomplete]="auto" #reference>
+                        <mat-icon matSuffix *ngIf="deleteInput" (click)="reference.value=''" style="cursor: pointer;">close</mat-icon>
+                        <mat-autocomplete #auto="matAutocomplete" [displayWith]="displayFn" (optionSelected)="selectedClientName($event.option.value)">
+                            <mat-option *ngIf="isLoading" class="is-loading">Loading...</mat-option>
+                            <mat-option *ngIf="errorMsg" class="is-loading">{{errorMsg}}</mat-option>
+                            <ng-container *ngIf="!isLoading">
+                                <mat-option *ngFor="let name of filteredClientName" [value]="name.name">
+                                    <span><b>{{name.name}}</b></span>
+                                </mat-option>
+                            </ng-container>
+                        </mat-autocomplete>
+                    </mat-form-field>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="main-section ">
+    <div class="basic-container">
+        <ul class="list-menu">
+            <li class="list-items row candidate-card" *ngFor="let candidate of candidateList | paginate: { id: 'server', itemsPerPage: pageSize, currentPage: onPage, totalItems: totalElements };">
+                <div class="col-md-4 padding-left">
+                    <ngx-avatar name="{{ candidate?.fullName }}" class="avatar alphabet-image" initialsSize="1" size="50" textSizeRatio="2"></ngx-avatar>
+                    <div class="name">
+                        <a target="_new" [routerLink]="['/user/candidate-detail']" [queryParams]="{cid: candidate.cid }">
+                            <h3>{{ candidate?.fullName }}</h3>
+                        </a>
+                        <a>
+                            <p>{{ candidate?.currentTitle }}</p>
+                        </a>
+                    </div>
+                    <!-- check box-->
+                    <div class="msk" [ngClass]="{'selected-mask':candidate.checked}">
+                        <label class="control control--checkbox">
+                           <input type="checkbox" checked="checked" [(ngModel)]="candidate.checked" (click)="selectCandidate(candidate, true)" />
+                           <div class="control__indicator"></div>
+                       </label>
+                    </div>
+                    <p class="current-location"><b>Current Location : </b> <span class="light-blue-color">{{ candidate?.currentLocation }}</span></p>
+                    <p><b>Preferred Location:</b>
+                        <span class="light-blue-color" *ngIf="candidate.preferredLocation">{{ candidate?.preferredLocation }}</span>
+                        <span class="light-blue-color" *ngIf="!candidate.preferredLocation">N/A</span>
+                    </p>
+                    <p class="email"><img src="../../../assets/icons/client-details/Email.png" alt="">
+                        <span class="light-blue-color"> {{ candidate?.email }}</span>
+                    </p>
+                    <p class="phone"><img src="../../../assets/icons/client-details/Phone.png" alt="">
+                        <span class="light-blue-color" *ngIf="candidate.mobile"> {{ candidate?.mobile }}</span>
+                        <span class="light-blue-color" *ngIf="!candidate.mobile"> N/A</span>
+                    </p>
+                    <div class="qualification">
+                        <p class="bold">Highest Qualification </p>
+                        <p class="light-blue-color" *ngIf="candidate.highestQual">{{ candidate?.highestQual }}</p>
+                        <p class="light-blue-color" *ngIf="!candidate.highestQual">N/A</p>
+                    </div>
+                    <div class="current-company">
+                        <p class="bold">Current Company</p>
+                        <p class="light-blue-color" *ngIf="candidate.currentCompany">{{ candidate?.currentCompany }}</p>
+                        <p class="light-blue-color" *ngIf="!candidate.currentCompany">N/A</p>
+                    </div>
+
+                    <p class="resume-link" style="cursor: pointer; ">
+                        <a (click)="getResume(candidate.resumeLink)"><img src="../../../../assets/icons/Candidate/Data with files.png" alt="">Resume</a>
+                    </p>
+
+                </div>
+
+                <div class="col-md-8 right-div">
+                    <div class="bar-options1" style="cursor: pointer;">
+                        <a #menuTrigger="matMenuTrigger" [matMenuTriggerFor]="menu">
+                            <img src="../../assets/icons/client-list/Menu.png" alt="">
+                        </a>
+                    </div>
+                    <mat-menu #menu="matMenu">
+                        <button mat-menu-item>
+                            <img src="../../../assets/icons/client-details/Edit.png" alt=""> Edit
+                        </button>
+                        <button mat-menu-item (click)="deleteCandidateById(candidate.cid, candidateList.indexOf(candidate), candidateList)">
+                            <img src="../../../assets/icons/client-details/Delete.png" alt=""> Delete
+                        </button>
+                        <button mat-menu-item *ngIf="candidate.status === 'Active'" (click)="changeCandidateStatus(onHoldCandidate, candidate.cid, candidateList.indexOf(candidate), candidateList)">
+                            <img src="../../../assets/icons/Candidate/on-hold.svg" alt=""> On Hold
+                        </button>
+                        <button mat-menu-item *ngIf="candidate.status === 'OnHold'" (click)="changeCandidateStatus(activeCandidate, candidate.cid, candidateList.indexOf(candidate), candidateList)">
+                            <img src="../../../assets/icons/Candidate/active.png" alt=""> Active
+                        </button>
+                        <button mat-menu-item>
+                            <img src="../../../assets/icons/Candidate/Position.png" alt=""> Add to Position
+                        </button>
+                        <button mat-menu-item>
+                            <img src="../../../assets/icons/Candidate/Email.png" alt=""> Email
+                        </button>
+                        <button mat-menu-item>
+                            <img src="../../../assets/icons/Candidate/Notes.png" alt=""> Add Notes 
+                        </button>
+                        <button mat-menu-item>
+                            <img src="../../../assets/icons/Candidate/folder.jpg" alt="" style="width: 20px;"> Add to Folder
+                        </button>
+
+                    </mat-menu>
+                    <ul class="emp-detail">
+                        <li>
+                            <p class="bold">Total Experience</p>
+                            <p *ngIf="candidate.totalExp">{{ candidate?.totalExp }} Years</p>
+                            <p *ngIf="!candidate.totalExp">N/A</p>
+                        </li>
+                        <li>
+                            <p class="bold">Current Salary</p>
+                            <p>&#x20b9; {{ candidate?.currentCtc }}</p>
+                        </li>
+                        <li>
+                            <p class="bold">Expected Salary</p>
+                            <p>&#x20b9; {{ candidate?.expectedCtc }}</p>
+                        </li>
+                        <li>
+                            <p class="bold">Notice Period</p>
+                            <p *ngIf="candidate.noticePeriod != 0 && candidate.noticePeriod != 1">{{ candidate?.noticePeriod }} Days</p>
+                            <p *ngIf="candidate.noticePeriod == 0 || candidate.noticePeriod == 1">{{ candidate?.noticePeriod }} Day</p>
+                        </li>
+                    </ul>
+                    <h3 class="key-skills">Key Skills:</h3>
+                    <ul class="skills">
+                        <li *ngFor="let skill of candidate.keySkills | slice :19:0">{{ skill }}</li>
+                        <!-- <span *ngIf="candidate.keySkills.length > 19">
+                        <button class="btn btn-more" *ngIf="endLimit !== 5" (click)="showMoreSkill(candidate.keySkills.length)">+ More</button>
+                        <button class="btn btn-more" *ngIf="endLimit === 5" (click)="skillLimit = 5">- Less</button>
+                        </span> -->
+                    </ul>
+                    <h3 class="position-source mt-3">Positions sourced for :
+                        <ul class="skills">
+                            <li *ngFor="let item of candidate.currentPositionMap | keyvalue">
+                                <span (click)="checkPermission('board', item.key)" style="cursor: pointer;">{{ item?.value }}</span>
+                            </li>
+                        </ul>
+                    </h3>
+                </div>
+
+                <div class="block-items">
+                    <hr>
+                    <ul class="list-footer">
+                        <li>Sourced : {{ candidate?.source }}</li>
+                        <li>Sourced by : {{ candidate?.owner }}</li>
+                        <li>Sourced on : {{ candidate?.sourcedOnDate| date: 'dd-MM-yyyy' }}</li>
+                        <li>Last edited on : {{ candidate?.modificationDate| date: 'dd-MM-yyyy' }}</li>
+                    </ul>
+                    <span class="pull-right" style="position: relative; right: 7px; margin-bottom: 0; margin-top: -25px; font-weight: bold;" *ngIf="candidate.status === 'Active'">
+                        <img src="../../../assets/icons/Candidate/active.png" alt=""> {{candidate?.status}}
+                    </span>
+
+                    <span class="pull-right" style="position: relative; right: 7px; margin-bottom: 0; margin-top: -25px; font-weight: bold;" *ngIf="candidate.status === 'OnHold'">
+                        <img src="../../../assets/icons/Candidate/on-hold.svg" alt=""> On Hold
+                    </span>
+                </div>
+            </li>
+
+        </ul>
+
+        <!-- Page Footer -->
+        <div class="page-footer">
+            <div class="row ">
+                <div class="col-md-5">
+                    Showing <b>{{ firstView }} to {{ totalNumberOfElements }} of {{ totalElements }}</b> entries
+                </div>
+
+                <div class="col-md-7 paginations" *ngIf="totalElements > 10">
+                    <div class="row number-row">
+                        <div class="col-md-7 left-page-number">
+                            <pagination-controls (pageChange)="getCandidateListOnPageChange($event)" id="server" maxSize="10" directionLinks="true" autoHide="true" responsive="true" previousLabel="" nextLabel="" screenReaderPaginationLabel="Pagination" screenReaderPageLabel="page"
+                                screenReaderCurrentLabel="You're on page">
+                            </pagination-controls>
+                        </div>
+                        <div class="col-md-5 right-page-number">
+                            <div>Go page <input type="text" [(ngModel)]="goToPage" class="search-bar" (keyup.enter)="getCandidateListOnPageChange(goToPage)"> <b>Go</b>
+                                <i class="material-icons" (click)="getCandidateListOnPageChange(goToPage)">arrow_right</i>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</section>
+
+<div class="overlay-bottom" *ngIf="selectedCandidateIds.length !== 0">
+    <div class="action-button">
+        <p>{{ selectedCandidateIds?.length }} Selected</p>
+        <p>Add To position</p>
+        <p>Add To Folder</p>
+        <p>Email</p>
+        <p>Delete</p>
+        <p>Clear All</p>
+    </div>
+</div>

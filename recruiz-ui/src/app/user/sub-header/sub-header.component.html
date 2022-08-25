@@ -1,0 +1,150 @@
+<div *ngIf="isFilterOpen" class="overlay"></div>
+<section class="main-section ">
+    <div class="top-head row">
+        <div class="heading col-md-8">
+            <mat-label class="client">{{pageTitle}}</mat-label>
+            <!-- Bread-crum section -->
+            <nav *ngIf="isBreadcrumbShow" class="breadcrumb-nav" aria-label="breadcrumb">
+                <ol class="breadcrumb breadcrumb-list">
+                    <li class="breadcrumb-item"><a routerLink="/user/dashboard">Home</a></li>
+                    <!-- <li class="breadcrumb-item"><a routerLink="{{mainRoute}}">{{mainBreacrumb}}</a></li> -->
+                    <li class="breadcrumb-item recruiz-green bold">{{finalBreadcrumb}}</li>
+                </ol>
+            </nav>
+        </div>
+        <div class="rest-part col-md-4">
+            <ul class="side-filters list-inline m-0">
+                <li class="list-inline-item">
+                    <a class="btn btn-default btn-sm add-client" *ngIf="isClient">
+                        <img class="mr-2 add-client-image btn-default" src="../../assets/icons/client-list/Add Client.png">
+                        <span class="client-button">Add Client</span>
+                    </a>
+                    <a class="btn btn-default btn-sm add-client" *ngIf="isPosition">
+                        <img class="mr-2 add-client-image btn-default" src="../../assets/icons/client-list/Add Client.png">
+                        <span class="client-button">Add Position</span>
+                    </a>
+                </li>
+                <li class="list-inline-item">
+                    <div class="btn-group button-group">
+                        <button type="button" class="btn btn-default button-default btn-sm">
+                            <img src="../..//assets/icons/client-list/Sortby.png" alt="">
+                        </button>
+                        <button type="button" class="btn btn-default button-second dropdown-toggle dropdown-toggle-split btn-sm" #menuTrigger="matMenuTrigger" [matMenuTriggerFor]="menu"></button>
+                        <mat-menu #menu="matMenu">
+                            <ul class="cutom-radio-button">
+                                <li *ngFor="let sortName of sortDropdown;let i = index">
+                                    <input type="radio" name="selector" id="Prefered-{{i}}" [checked]="sortName.value === sortBy">
+                                    <label for="f-option">{{ sortName?.key }}</label>
+                                    <div class="check"></div>
+                                </li>
+                            </ul>
+                        </mat-menu>
+                    </div>
+                </li>
+                <li class="list-inline-item">
+                    <div class="btn-group button-group">
+                        <button type="button" class="btn btn-default button-default btn-sm m-0">
+                            <img class="sort-by" src="../..//assets/icons/client-list/Filter.png" alt="">
+                        </button>
+                        <button type="button" class="btn btn-default button-second dropdown-toggle btn-sm" (click)="openFilter()"></button>
+                    </div>
+                </li>
+            </ul>
+        </div>
+    </div>
+    <!-- Filter Sidebar/Pop-up -->
+    <div *ngIf="isFilterOpen" class="container bg-white filter-box">
+        <div class="row filter-head filter-line mb-4">
+            <div class="col-md-10 mt-3">
+                <p class="filter"> FILTERS</p>
+            </div>
+            <div class="col-md-2 mt-3">
+                <i class="fa fa-times" aria-hidden="true" (click)="openFilter()"></i>
+            </div>
+        </div>
+        <div class="status">
+            <div class="row status-row">
+                <div class="col-md-10">
+                    <p class='title'>STATUS</p>
+                </div>
+                <div class="col-md-2">
+                    <i class="fa {{statusDivIcon}} green-icon" aria-hidden="true" (click)="toggleFilterDiv('status')"></i>
+                </div>
+            </div>
+            <div class="show-hide" *ngIf='isStatusDivOpen'>
+                <div class="row status-row">
+                    <div class="col-md-6">
+                        <div class="text-left">
+                            <mat-checkbox m-0>Active</mat-checkbox>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <mat-checkbox m-0>On Hold</mat-checkbox>
+                    </div>
+                </div>
+                <div class="row status-row">
+                    <div class="col-md-12 m-10">
+                        <mat-checkbox m-0>Stop Sourcing</mat-checkbox>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="location status">
+            <div class="row status-row">
+                <div class="col-md-10">
+                    <p class='title'>CURRENT LOCATION</p>
+                </div>
+                <div class="col-md-2">
+                    <i class="fa {{currentDivIcon}} green-icon" aria-hidden="true" (click)="toggleFilterDiv('location')"></i>
+                </div>
+            </div>
+            <div *ngIf='isCurrentLocationDivOpen' class="searchinp">
+                <i class="fa fa-search icon" aria-hidden="true"></i>
+                <input id="location" class="form-control m-10" type="text" placeholder="Search location" (input)="search($event,'location')" autocomplete="off">
+                <div *ngIf="isLocationSearch" class="search-container">
+                    <ul id="search-result">
+                        <li><a>Adele</a></li>
+                        <li><a>Agnes</a></li>
+                        <li><a>Billy</a></li>
+                        <li><a>Bob</a></li>
+                        <li><a>Billy</a></li>
+                        <li><a>Bob</a></li>
+                        <li><a>Calvin</a></li>
+                        <li><a>Christina</a></li>
+                        <li><a>Cindy</a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <div class="client-name status">
+            <div class="row status-row">
+                <div class="col-md-10">
+                    <p class='title'>CLIENT NAME</p>
+                </div>
+                <div class="col-md-2">
+                    <i class="fa {{clientNameDivIcon}} green-icon" aria-hidden="true" (click)="toggleFilterDiv('client')"></i>
+                </div>
+            </div>
+            <div *ngIf='isClientNameDivOpen'>
+                <i class="fa fa-search icon" aria-hidden="true"></i>
+                <input id="name" class="form-control m-10 mb-4" type="text" placeholder="Search Name" (input)="search($event,'name')" autocomplete="off">
+                <div *ngIf="isNameSearch" class="search-container-name">
+                    <ul id="search-result">
+                        <li><a>Adele</a></li>
+                        <li><a>Agnes</a></li>
+                        <li><a>Billy</a></li>
+                        <li><a>Bob</a></li>
+                        <li><a>Calvin</a></li>
+                        <li><a>Christina</a></li>
+                        <li><a>Cindy</a></li>
+                        <li><a>Billy</a></li>
+                        <li><a>Bob</a></li>
+                        <li><a>Calvin</a></li>
+                        <li><a>Christina</a></li>
+                        <li><a>Cindy</a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>

@@ -1,0 +1,10 @@
+SELECT 
+	substring_index(fr.reason,'-',1) AS 'Reason', COUNT(fr.id) AS 'Total Number'
+FROM 
+	feedback_reason fr
+INNER JOIN 
+	feedback f ON f.id = fr.id
+INNER JOIN 
+	round_candidate rc ON f.round_candidate = rc.id
+GROUP BY
+	 substring_index(fr.reason,'-',1);

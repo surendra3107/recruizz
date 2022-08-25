@@ -1,0 +1,27 @@
+<h4 md-dialog-title *ngIf="!dataOption.folderData">Create new folder</h4>
+<h4 md-dialog-title *ngIf="dataOption.folderData">Update folder</h4>
+<hr>
+<div class="clearfix"></div>
+<mat-dialog-content>
+    <div class="row">
+        <div class="col-md-12">
+            <form class="example-form" style="margin-top: 10px;">
+                <mat-form-field class="example-full-width">
+                    <input matInput placeholder="Folder Name" required [(ngModel)]="folderName" [ngModelOptions]="{standalone: true}">
+                </mat-form-field>
+
+                <mat-form-field class="example-full-width">
+                    <textarea matInput cdkTextareaAutosize placeholder="Folder Description" [(ngModel)]="folderDescription" cdkAutosizeMinRows="5" cdkAutosizeMaxRows="5" [formControl]="textControl" required maxlength="100"></textarea>
+                </mat-form-field>
+                (Max 100 characters) You have written {{ descriptionLength | async }} characters out of 100
+            </form>
+        </div>
+    </div>
+</mat-dialog-content>
+
+<hr>
+<mat-dialog-actions>
+    <button mat-raised-button color="primary" (click)="createCandidateFolder(folderName, folderDescription)" [disabled]="!folderName && !folderDescription" *ngIf="!dataOption.folderData">CREATE</button>
+    <button mat-raised-button color="primary" (click)="updateCandidateFolder(folderName, folderDescription)" [disabled]="!folderName && !folderDescription" *ngIf="dataOption.folderData">UPDATE</button>
+    <button mat-raised-button (click)="onCloseCancel()">CANCEL</button>
+</mat-dialog-actions>

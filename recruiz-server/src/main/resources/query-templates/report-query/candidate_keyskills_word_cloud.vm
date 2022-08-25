@@ -1,0 +1,5 @@
+SELECT DISTINCT keySkills, COUNT(LOWER(keySkills)) AS COUNT
+FROM candidate_key_skills
+GROUP BY keySkills
+ORDER BY COUNT DESC
+LIMIT 200;

@@ -1,0 +1,12 @@
+/.settings/
+/*.project
+/*.classpath
+/files/
+/log/
+/resources/
+/target/
+*.doc
+*.ics
+/*.log
+/bin/
+.DS_Store

@@ -1,0 +1,54 @@
+<app-common-header></app-common-header>
+
+<section class="main-section">
+    <div class="ac-container-drop">
+        <div class="row">
+            <div class="col-md-12 side-div">
+                <h4>Create Roles</h4>
+                <hr />
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-6">
+            <mat-form-field class="example-full-width">
+                <mat-label>User Role</mat-label>
+                <input matInput [(ngModel)]="roleName">
+            </mat-form-field>
+        </div>
+        <div class="col-md-6">
+            <button mat-raised-button color="primary" [disabled]="!roleName" (click)="submitRole()">Create Role</button>
+        </div>
+    </div>
+    <hr />
+    <div class="clearfix" style="margin-bottom: 30px;"></div>
+    <div class="row">
+        <div class="col-md-12">
+            <table class="table table-bordered">
+                <thead>
+                    <tr>
+                        <th colspan="2">Role Name</th>
+                        <th>No. of users</th>
+                        <th>Action</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let role of userRoles">
+                        <td>
+                            <span class="material-icons">supervisor_account</span>
+                        </td>
+                        <td width="50%">{{ role?.role }}</td>
+                        <td>{{ role?.count }} User(s)</td>
+                        <td>
+                            <button mat-stroked-button color="primary">Assign</button>&nbsp;&nbsp;&nbsp;
+                            <span class="material-icons" style="font-size: 14px;">edit</span> &nbsp;&nbsp;&nbsp;
+                            <span class="material-icons" style="font-size: 14px;">delete</span>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+</section>

@@ -1,0 +1,264 @@
+<!-- <app-sub-header></app-sub-header> -->
+<!-- Breadcrumb Section -->
+<div *ngIf="isFilterOpen" class="overlay"></div>
+<section class="main-section ">
+    <div class="top-head row">
+        <div class="heading col-md-8">
+            <mat-label class="client" style="text-transform: uppercase;">{{ translateNameSingle }} LIST</mat-label>
+            <!-- Bread-crum section -->
+            <nav class="breadcrumb-nav" aria-label="breadcrumb">
+                <ol class="breadcrumb breadcrumb-list">
+                    <li class="breadcrumb-item"><a routerLink="/user/dashboard">Home</a></li>
+                    <li class="breadcrumb-item recruiz-green bold">{{translateNameSingle}}s</li>
+                </ol>
+            </nav>
+        </div>
+        <div class="rest-part col-md-4">
+            <ul class="side-filters list-inline m-0">
+                <li class="list-inline-item">
+                    <a class="btn btn-default btn-sm add-client" *ngIf="true" routerLink="/user/add-client">
+                        <img class="mr-2 add-client-image btn-default" src="../../../../assets/icons/client-list/Add Client.png">
+                        <span class="client-button">Add {{ translateNameSingle }}</span>
+                    </a>
+                </li>
+                <li class="list-inline-item">
+                    <div class="btn-group button-group m-0">
+                        <button type="button" class="btn btn-default button-default btn-sm m-0">
+                            <img class="sort-by" src="../../../../assets/icons/client-list/Sortby.png" alt="">
+                        </button>
+                        <button type="button" class="btn btn-default button-second dropdown-toggle dropdown-toggle-split btn-sm" #menuTrigger="matMenuTrigger" [matMenuTriggerFor]="menu"></button>
+                        <mat-menu #menu="matMenu">
+                            <ul class="cutom-radio-button">
+                                <li *ngFor="let sortName of sortDropdown">
+                                    <input type="radio" name="selector" value="{{sortName.value}}" [(ngModel)]="sortBy">
+                                    <label for="f-option" (click)="onSortByChange(sortName.value)">{{ sortName?.key }}</label>
+                                    <div class="check"></div>
+                                </li>
+                            </ul>
+                        </mat-menu>
+                    </div>
+                </li>
+                <li class="list-inline-item">
+                    <div class="btn-group button-group">
+                        <button type="button" class="btn btn-default button-default btn-sm m-0">
+                            <img class="sort-by" src="../../../../assets/icons/client-list/Filter.png" alt="">
+                        </button>
+                        <button type="button" class="btn btn-default button-second dropdown-toggle btn-sm" (click)="openFilter()"></button>
+                    </div>
+                </li>
+            </ul>
+        </div>
+    </div>
+
+    <div class="row" *ngIf="filterObject.statusList.length !== 0 || clientLocations.length !== 0 || clientNames.length !== 0">
+        <div class="col-lg-12">
+            <ul class="filters-applied">
+                <!--status-->
+                <li class="star-inserted" *ngFor="let list of allStatusList; let i = index" [hidden]="list.checkStatus !== true">
+                    {{ list?.value }}
+                    <mat-icon class="mat-18 mat-icon mat-new-icon notranslate material-icons mat-icon-no-color" role="img" aria-hidden="true" (click)="removeStatusClient(list.id, allStatusList, i)">close
+                    </mat-icon>
+                </li>
+
+                <!-- current location-->
+                <li class="star-inserted" *ngFor="let list of clientLocations; let i = index" [hidden]="list.checkStatus !== true">
+                    {{ list?.name }}
+                    <mat-icon class="mat-18 mat-icon mat-new-icon notranslate material-icons mat-icon-no-color" role="img" aria-hidden="true" (click)="removeLocation(list.name, clientLocations, i)">close
+                    </mat-icon>
+                </li>
+
+                <!-- client name -->
+                <li class="star-inserted" *ngFor="let list of clientNames; let i = index" [hidden]="list.checkStatus !== true">
+                    {{ list?.name }}
+                    <mat-icon class="mat-18 mat-icon mat-new-icon notranslate material-icons mat-icon-no-color" role="img" aria-hidden="true" (click)="removeClientName(list.name, clientNames, i)">close
+                    </mat-icon>
+                </li>
+            </ul>
+        </div>
+    </div>
+
+    <!-- Filter Sidebar/Pop-up -->
+    <div *ngIf="isFilterOpen" class="container bg-white filter-box">
+        <div class="row filter-head filter-line mb-4">
+            <div class="col-md-10 mt-3">
+                <p class="filter"> FILTERS</p>
+            </div>
+            <div class="col-md-2 mt-3">
+                <i class="fa fa-times" aria-hidden="true" (click)="openFilter()"></i>
+            </div>
+        </div>
+        <div class="status">
+            <div class="row status-row">
+                <div class="col-md-10">
+                    <p class='title'>STATUS</p>
+                </div>
+                <div class="col-md-2">
+                    <i class="fa {{statusDivIcon}} green-icon" aria-hidden="true" (click)="toggleFilterDiv('status')"></i>
+                </div>
+            </div>
+            <div class="show-hide" *ngIf='isStatusDivOpen'>
+                <div class="row status-row">
+                    <div class="col-md-6" *ngFor="let status of allStatusList" [hidden]="status.value === 'Closed'">
+                        <div class="text-left">
+                            <mat-checkbox m-0 value="{{status.name}}" [(ngModel)]="status.checkStatus" class="check" (change)="clientStatusFilter(status.id, status.checkStatus);">
+                                {{ status?.value }}
+                            </mat-checkbox>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="location status">
+            <div class="row status-row">
+                <div class="col-md-10">
+                    <p class='title'>CURRENT LOCATION</p>
+                </div>
+                <div class="col-md-2">
+                    <i class="fa {{currentDivIcon}} green-icon" aria-hidden="true" (click)="toggleFilterDiv('location')"></i>
+                </div>
+            </div>
+            <div *ngIf='isCurrentLocationDivOpen' class="searchinp">
+                <div class="col-md-12">
+                    <mat-form-field>
+                        <input matInput placeholder="Search by location" (input)="onInputChanged($event)" [matAutocomplete]="auto" #reference>
+                        <mat-icon matSuffix *ngIf="deleteInput" (click)="reference.value=''" style="cursor: pointer;">close</mat-icon>
+                        <mat-autocomplete #auto="matAutocomplete" [displayWith]="displayFn" (optionSelected)="selectedLocation($event.option.value)">
+                            <mat-option *ngIf="isLoading" class="is-loading">Loading...</mat-option>
+                            <mat-option *ngIf="errorMsg" class="is-loading">{{errorMsg}}</mat-option>
+                            <ng-container *ngIf="!isLoading">
+                                <mat-option *ngFor="let location of filteredLocation" [value]="location.name">
+                                    <span><b>{{location.name}}</b></span>
+                                </mat-option>
+                            </ng-container>
+                        </mat-autocomplete>
+                    </mat-form-field>
+                </div>
+            </div>
+        </div>
+        <div class="client-name status">
+            <div class="row status-row">
+                <div class="col-md-10">
+                    <p class='title'>CLIENT NAME</p>
+                </div>
+                <div class="col-md-2">
+                    <i class="fa {{clientNameDivIcon}} green-icon" aria-hidden="true" (click)="toggleFilterDiv('client')"></i>
+                </div>
+            </div>
+            <div *ngIf='isClientNameDivOpen'>
+                <div class="col-md-12">
+                    <mat-form-field>
+                        <input matInput placeholder="Search by name" (input)="onInputClientName($event)" [matAutocomplete]="auto" #reference>
+                        <mat-icon matSuffix *ngIf="deleteInput" (click)="reference.value=''" style="cursor: pointer;">close</mat-icon>
+                        <mat-autocomplete #auto="matAutocomplete" [displayWith]="displayFn" (optionSelected)="selectedClientName($event.option.value)">
+                            <mat-option *ngIf="isLoading" class="is-loading">Loading...</mat-option>
+                            <mat-option *ngIf="errorMsg" class="is-loading">{{errorMsg}}</mat-option>
+                            <ng-container *ngIf="!isLoading">
+                                <mat-option *ngFor="let name of filteredClientName" [value]="name.name">
+                                    <span><b>{{name.name}}</b></span>
+                                </mat-option>
+                            </ng-container>
+                        </mat-autocomplete>
+                    </mat-form-field>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<!-- Breadcrumb End -->
+<section class="main-section ">
+    <!-- Main section-->
+    <div class="basic-container">
+        <ul class="list-menu">
+            <li class="list-items row" *ngFor="let clients of clientList | paginate: { id: 'server', itemsPerPage: pageSize, currentPage: onPage, totalItems: totalElements }">
+                <div class="col-md-4">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <p class="recruiz-head" (click)="goToUrl(clients.client.id, '/user/client-details')" style="cursor: pointer;">{{ clients?.client.clientName }}</p>
+                        </div>
+                        <div class="col-md-6 text-center">
+                            <p class="active-button" *ngIf="clients.client.status === 'Active'">
+                                <img src="../../../../assets/icons/client-list/Radiobutton On.png" alt=""> Active
+                            </p>
+                            <p class="active-button" *ngIf="clients.client.status === 'OnHold'">
+                                <img src="../../../../assets/icons/Positions-list/on-hold.svg" alt=""> On Hold
+                            </p>
+                            <p class="active-button" *ngIf="clients.client.status === 'StopSourcing'">
+                                <img src="../../../../assets/icons/Positions-list/stop-sourcing.svg" alt=""> Stop Sourcing
+                            </p>
+                        </div>
+                    </div>
+                    <p class="location">
+                        <img src="../../../../assets/icons/client-list/Group 5979.png" alt="">{{ clients?.client.clientLocation }}
+                    </p>
+                    <small class="creation-date">Created on : {{ clients?.client.creationDate| date: 'dd-MM-yyyy' }} | Last edited on : 
+                        {{ clients?.client.modificationDate| date: 'dd-MM-yyyy' }}</small>
+                </div>
+                <div class="col-md-4">
+                    <h6 class="total-position">Total Positions</h6>
+                    <p><b>{{ clients?.totalPosition }}</b></p>
+                </div>
+                <div class="col-md-3 buttons">
+                    <button class="btn btn-default btn-sm btn1 mr-3" routerLink="/user/client-details">
+                        <img src="../../../../assets/icons/client-list/Statistic Icon.png" alt="">Statistics
+                    </button>
+                    <button class="btn btn-default btn-sm btn2">
+                        <img src="../../../../assets/icons/client-list/Positions Icon.png" alt="">Positions
+                    </button>
+                </div>
+
+                <div class="col-md-1 text-right">
+                    <div class="bar-options1">
+                        <a #menuTrigger="matMenuTrigger" [matMenuTriggerFor]="menu">
+                            <img src="../../../../assets/icons/client-list/Menu.png" alt="" alt="" style="cursor: pointer;">
+                        </a>
+                    </div>
+                </div>
+
+                <mat-menu #menu="matMenu">
+                    <button mat-menu-item>
+                    <img src="../../../../assets/icons/client-details/Edit.png" alt=""> Edit
+                </button>
+
+                    <button mat-menu-item (click)="deleteClient(clients.client.id, clientList.indexOf(clients), clientList)">
+                    <img src="../../../../assets/icons/client-details/Delete.png" alt=""> Delete
+                </button>
+
+                    <button mat-menu-item *ngIf="clients.client.status !== 'Active'" (click)="changeStatusClient(allStatusList[0].id, clients.client.id, clientList.indexOf(clients), clientList)">
+                    <img src="../../../../assets/icons/Positions-list/active.png" alt=" "> {{ activeClient }}
+                </button>
+
+                    <button mat-menu-item *ngIf="clients.client.status !== 'OnHold'" (click)="changeStatusClient(allStatusList[1].id, clients.client.id, clientList.indexOf(clients), clientList)">
+                    <img src="../../../../assets/icons/Positions-list/on-hold.svg" alt=" "> {{ onHoldClient }}
+                </button>
+
+                    <button mat-menu-item *ngIf="clients.client.status !== 'StopSourcing'" (click)="changeStatusClient(allStatusList[3].id, clients.client.id, clientList.indexOf(clients), clientList)">
+                    <img src="../../../../assets/icons/Positions-list/stop-sourcing.svg" alt=" "> {{ stopSourcingClient }}
+                </button>
+
+                </mat-menu>
+            </li>
+        </ul>
+
+        <div class="page-footer">
+            <div class="row ">
+                <div class="col-md-5">
+                    Showing <b>{{ firstView }} to {{ totalNumberOfElements }} of {{ totalElements }}</b> entries
+                </div>
+
+                <div class="col-md-7 paginations" *ngIf="totalElements > 10">
+                    <div class="row number-row">
+                        <div class="col-md-7 left-page-number">
+                            <pagination-controls (pageChange)="getClientListOnPageChange($event)" id="server" maxSize="9" directionLinks="true" autoHide="true" responsive="true" previousLabel="" nextLabel="" screenReaderPaginationLabel="Pagination" screenReaderPageLabel="page" screenReaderCurrentLabel="You're on page">
+                            </pagination-controls>
+                        </div>
+                        <div class="col-md-5 right-page-number">
+                            <div>Go page <input type="text" [(ngModel)]="goToPage" class="search-bar" (keyup.enter)="getClientListOnPageChange(goToPage)"> <b>Go</b> <i class="material-icons" (click)="getClientListOnPageChange(goToPage)">arrow_right</i></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</section>

@@ -1,0 +1,225 @@
+.main-section {
+    background-color: #ececec;
+    min-height: 600px;
+    padding: 30px 56px;
+}
+.list-name {
+    color: #fff;
+    font-size: 16px;
+    margin: 0;
+    padding: 16px;
+}
+.task-header {
+    background-color: #21bcb0;
+    margin: 0;
+    border-top-right-radius: 5px;
+    border-top-left-radius: 5px;
+}
+.task-body {
+    padding: 12px;
+    background-color: #fff;
+    position: relative;
+    border-bottom-left-radius: 5px;
+    border-bottom-right-radius: 5px;
+}
+
+.border-class {
+    border: 1px solid #ccc;
+    padding: 0px 15px 15px 15px;
+    min-height: 250px;
+    border-bottom-left-radius: 4px;
+    border-bottom-right-radius: 4px;
+}
+
+.plus-icon {
+    position: absolute;
+    top: 72%;
+    left: 80%;
+}
+.input-field {
+    width: 35%;
+    display: inline-block;
+}
+.p-10 {
+    padding: 10px 15px;
+}
+.time-period {
+    background-color: #ececec;
+    padding: 12px;
+    border-bottom: 1px solid #ccc;
+}
+.time-period li {
+    display: inline-block;
+    margin-right: 10rem;
+}
+.time-period li a {
+    cursor: pointer;
+    text-decoration: none;
+    list-style: none;
+    color: #a5a5a5;
+    font-size: 13px;
+    font-weight: 600;
+}
+.time-period li a:hover {
+    color:#21bcb0;
+}
+.no-task {
+    position: absolute;
+    top: 40%;
+    left: 41%;
+}
+.no-task p {
+    margin-top: 25px;
+    color: #8c8c8c;
+    font-size: 14px;
+}
+.search-icon {
+    position: absolute;
+    top: 19px;
+    right: 23px;
+}
+/* mat-checkbox */
+.text-left {
+    margin-bottom: 8px;
+}
+.terms {
+    color: #21bcb0;
+    font-weight: 500;
+}
+::ng-deep .mat-checkbox-checked .mat-checkbox-background {
+    background-color: #21bcb0 !important;
+}
+
+::ng-deep .mat-checkbox {
+    font-size: 13px;
+}
+::ng-deep .mat-checkbox-layout {
+    margin: 13px;
+}
+
+.check-content .candidate-remainder {
+    margin: 0;
+    font-size: 14px;
+    color: #000;
+    font-weight: 600;
+}
+.check-content small {
+    font-weight: 600;
+    color: #626466;
+}
+
+.bar-options {
+    padding: 8px;
+    padding-bottom: 0;
+}
+.list {
+    background-color: #f6f9ff;
+    margin: 0;
+}
+.checkbox-list-date {
+    font-weight: 600;
+    margin: 7px;
+}
+/* Modal */
+.modal-dialog {
+    max-width: 650px;
+}
+.modal-header {
+    background-color: #577495;
+    color: #fff;
+}
+.modal-header .new-task {
+    margin: 0;
+    font-size: 14px;
+}
+.task-list-name {
+    width: 80%;
+    display: inline-block;
+}
+
+.add-task-section {
+    background-color: #ececec;
+    padding: 15px 15px;
+}
+.section-tabs {
+    margin-bottom: 15px;
+}
+.add-button {
+    color: #21bcb0;
+    background-color: #ececec;
+    border-color: #21bcb0;
+    margin-left: 85px;
+}
+
+.p-15 {
+    padding: 15px;
+}
+.create-button {
+    background-color: #21bcb0;
+    color: #fff;
+    border: #21bcb0;
+}
+.m-bottom {
+    margin-bottom: 1rem;
+}
+
+.form-control:focus, .btn:focus {
+    outline: none;
+    border-color: inherit;
+    -webkit-box-shadow: none;
+    box-shadow: none;
+  }
+.add-button {
+    outline: none;
+    box-shadow: none;
+}
+.close-button {
+    color: #fff;
+    text-decoration: none;
+}
+
+.fade.show {
+    opacity: 1;
+}
+
+.left-chevron {
+  float: left;
+  margin-left: 15px;
+  cursor: pointer;
+}
+.right-chevron {
+  float: right;
+  margin-right: 15px;
+  cursor: pointer;
+}
+.months-style {
+  border: 1px solid black;
+  padding: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.months {
+  color: #7f7f7f;
+}
+.schedule {
+  background-color: #21bcb0;
+    color: #fff;
+    padding: 2px 6px;
+    border-radius: 50%;
+    font-size: 10px;
+}
+.date-view {
+    font-size: 16px;
+}
+
+/* calendar css */
+h3 {
+    margin: 0 0 10px;
+  }
+  
+  pre {
+    background-color: #f5f5f5;
+    padding: 15px;
+  }
+  

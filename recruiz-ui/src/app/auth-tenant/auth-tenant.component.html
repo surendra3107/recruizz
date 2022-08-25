@@ -1,0 +1,60 @@
+<div class="container text-center">
+    <div class="auth-container">
+        <div class="row">
+
+            <!-- Left Side -->
+            <div class="col-md-6 d-none d-md-block nopadding bgimage">
+                <div class="logo text-center">
+                    <img src="../../assets/icons/auth/logo.png" alt="" class="img-responsive">
+                    <p class="logotext">Recruitment on Cruise mode</p>
+                </div>
+                <div id="demo" class="carousel slide" data-ride="carousel">
+                    <ul class="carousel-indicators">
+                        <li data-target="#demo" data-slide-to="0" class="active"></li>
+                        <li data-target="#demo" data-slide-to="1"></li>
+                        <li data-target="#demo" data-slide-to="2"></li>
+                    </ul>
+                    <!-- The slideshow -->
+                    <div class="carousel-inner">
+                        <div class="carousel-item active main-image text-left">
+                            <img class="sliderimg" src="../../assets/icons/auth/group-6027.png" alt="" width="1100" height="500">
+                        </div>
+                        <div class="carousel-item main-image text-left">
+                            <img class="sliderimg" src="../../assets/icons/auth/group-6027.png" alt="" width="1100" height="500">
+                        </div>
+                        <div class="carousel-item main-image text-left">
+                            <img class="sliderimg" src="../../assets/icons/auth/group-6027.png" alt="" width="1100" height="500">
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Right Side  -->
+            <div class="col-md-6">
+                <!-- Choose Sign-In -->
+                <div class="back-button text-left mt-4">
+                    <i class="material-icons back-icon" (click)='goToSignIn()'>arrow_back</i>
+                </div>
+                <div>
+                    <ngx-avatar name="{{ tenantEmail }}" class="avatar" size="50" textSizeRatio="2"></ngx-avatar>
+                    <p class="mt-2"><b>{{ tenantEmail }}</b></p>
+                </div>
+                <div class="row ">
+                    <div class="col-md-12 mt-3">
+                        <p class="question">Which account do you want to login to ?</p>
+                    </div>
+                </div>
+                <div class="panel panel-primary" id="result_panel">
+                    <div class="panel-body">
+                        <ul class="list-group text-center">
+                            <a class="list-tag multi-tenant-class" *ngFor="let chooseSignin of tenantLists | keyvalue">
+                                <li class="list-group-item list-style" (click)="selectedTenant(chooseSignin.key)">{{ chooseSignin.value }}</li>
+                            </a>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>

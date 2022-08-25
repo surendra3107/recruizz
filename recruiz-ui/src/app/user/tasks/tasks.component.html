@@ -1,0 +1,120 @@
+<app-sub-header></app-sub-header>
+<div class="main-section">
+    <div class="tasks">
+        <div class="task-header row">
+            <div class="col-md-6">
+                <h3 class="list-name">Tasks List</h3>
+            </div>
+            <div class="col-md-6 text-right p-10">
+                <input class="form-control input-field" type="text" placeholder="Search Task">
+                <a style="cursor:pointer;"><i class="fa fa-search search-icon" aria-hidden="true"></i></a>
+            </div>
+        </div>
+        <div class="task-body">
+            <div class="border-class">
+                <div class="row">
+                    <div class="col-md-12 p-0">
+                        <ul class="time-period">
+                            <li (click)="tabSelected('all')"><a>All</a></li>
+                            <li (click)="tabSelected('today')"><a>Today</a></li>
+                            <li (click)="tabSelected('this-week')"><a>This Week</a></li>
+                            <li (click)="tabSelected('this-month')"><a>This Month</a></li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="task-list">
+                    <!-- No Task List -->
+                    <div class="no-task text-center" *ngIf='taskDataArray.length==0'>
+                        <img src="../../../assets/icons/tasks/list.png" alt="">
+                        <p>No task list to show at this time</p>
+                    </div>
+                    <!-- Task List -->
+                    <div class="list row" *ngFor='let data of taskDataArray'>
+                        <div class="col-md-6">
+                            <div class="bg-checkbox">
+                                <mat-checkbox m-0>
+                                    <div class="check-content">
+                                        <p class="candidate-remainder">Candidate Remainder</p>
+                                        <small>Wazida calling - Candidate Remainder wazida calling</small>
+                                    </div>
+                                </mat-checkbox>
+                            </div>
+                        </div>
+                        <div class="col-md-6 text-right">
+                            <div class="bar-options">
+                                <a #menuTrigger="matMenuTrigger" [matMenuTriggerFor]="menu">
+                                    <img src="../../assets/icons/client-list/Menu.png" alt="">
+                                </a>
+                            </div>
+                            <mat-menu #menu="matMenu">
+                                <button mat-menu-item><img src="../../../assets/icons/client-details/Edit.png" alt="">
+                                    Edit</button>
+                                <button mat-menu-item><img src="../../../assets/icons/client-details/Delete.png" alt="">
+                                    Delete</button>
+                            </mat-menu>
+                            <small class="checkbox-list-date">11 sept</small>
+                        </div>
+                    </div>
+                    <!-- Plus Button -->
+                    <a class="plus-icon" (click)="openModal('task_1')">
+                        <img src="./../../../assets/icons/client-details/add_interview_panel.png" alt="">
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+<!-- Modal -->
+<jw-modal id="task_1">
+    <div class="initial-modal">
+        <div class="text-left m-0 task-header">
+            <h5 class="new-task">Create New Task</h5>
+            <a class="close-button">
+                <i class="fa fa-times" aria-hidden="true" (click)="closeModal('task_1')"></i>
+                <!-- <small>Esc</small> -->
+            </a>
+        </div>
+        <div class="m-0 p-0">
+            <div class="add-task-section">
+                <input class="form-control task-list-name" type="text" placeholder="Task List Name">
+                <button class="btn btn-sm btn-outline-secondary add-button">Add</button>
+            </div>
+            <div class="p-15">
+                <div class="row section-tabs">
+                    <div class="col-md-6">
+                        <select class="form-control">
+                            <option value="Today" selected>Choose Label</option>
+                            <option value="Yesterday">Yesterday</option>
+                            <option value="Tomorrow">Tomorrow</option>
+                        </select>
+                    </div>
+                    <div class="col-md-6">
+                        <input class="form-control" type="text" placeholder="Task Name">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <textarea class="form-control" id="exampleFormControlTextarea3" rows="3" placeholder="Notes"></textarea>
+                </div>
+                <div class="row m-bottom">
+                    <div class="col-md-6">
+                        <div class="md-form">
+                            <input type="date" class="form-control" value="">
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <input class="form-control" type="text" placeholder="Time"><a href=""><img src="../../../assets/icons/tasks/Clock.png" class="clock" alt=""></a>
+                    </div> 
+                </div>
+                <input class="form-control" type="text" placeholder="Who else should be reminded ?">
+            </div>
+        </div>
+        <div class="modal-footer">
+            <button type="button" class="btn btn-secondary create-button" data-dismiss="modal">Create</button>
+        </div>
+    </div>
+</jw-modal>
+<!-- Modal Ends -->

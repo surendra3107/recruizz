@@ -1,0 +1,2 @@
+ALTER TABLE `email_activity` 
+CHANGE COLUMN `date` `date` DATETIME NULL DEFAULT NULL ;

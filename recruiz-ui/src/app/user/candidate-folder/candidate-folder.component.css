@@ -1,0 +1,248 @@
+.main-section {
+  padding: 5px;
+  background-color: #ececec;
+  position: relative;
+}
+
+.top-head {
+  background-color: #f0f1f5;
+  padding-right: 68px;
+}
+
+.heading {
+  color: #444767;
+  padding: 8px;
+  font-size: 22px;
+  font-weight: 600;
+}
+
+.client {
+  margin-left: 30px;
+  font-weight: 600;
+  font-size: 18px;
+}
+
+.rest-part {
+  padding: 2px 4px;
+  text-align: right;
+}
+
+.add-client {
+  font-size: 12px;
+  color: #21bcb0;
+  background-color: #fff;
+  text-decoration: none;
+  margin-top: 3px;
+  cursor: pointer;
+  box-shadow: 1px 1px 3px 0px rgba(0, 0, 0, 0.5);
+}
+
+
+::ng-deep .mat-drawer-content {
+  overflow: hidden;
+}
+
+
+/** Breadcrumb section **/
+.top-head {
+  background-color: #f0f1f5;
+  padding-right: 68px;
+}
+
+.recruiz-green {
+  color: #21bcb0;
+}
+
+.bold {
+  font-weight: 600;
+}
+
+.heading {
+  color: #444767;
+  padding: 8px;
+  font-size: 22px;
+  font-weight: 600;
+}
+
+.client {
+  margin-left: 30px;
+  font-weight: 600;
+  font-size: 18px;
+}
+
+.client-button {
+  font-size: 10px;
+}
+
+.rest-part {
+  padding: 2px 4px;
+  text-align: right;
+}
+
+.add-client {
+  font-size: 12px;
+  color: #21bcb0;
+  background-color: #fff;
+  text-decoration: none;
+  margin-top: 3px;
+  cursor: pointer;
+  box-shadow: 1px 1px 3px 0px rgba(0, 0, 0, 0.5);
+}
+
+
+/* Breadcrumb */
+.breadcrumb-nav {
+  margin-left: 30px;
+}
+
+.breadcrumb-list {
+  background-color: #f0f1f5;
+  margin: 0;
+  padding: 0;
+}
+
+.breadcrumb-list a {
+  color: #444767;
+  font-weight: 600;
+}
+
+::ng-deep .mat-menu-content:not(:empty) {
+  padding-top: 0px;
+  padding-bottom: 0px;
+}
+
+.mat-menu-item {
+  height: 35px;
+  line-height: 35px;
+}
+
+.block-body {
+  background-color: #ececec;
+  padding: 2.5rem;
+  position: relative;
+}
+
+.card {
+  margin-bottom: 2.5rem;
+}
+
+.bar-options {
+  text-align: right;
+  padding: 12px;
+}
+
+.round {
+  text-align: center;
+  border-radius: 50%;
+  border: 3px solid #21bcb0;
+  display: inline-block;
+  width: 40%;
+  padding: 8% 2%;
+}
+
+.round p {
+  color: #7a7a7a;
+  font-weight: 600;
+  font-size: 1rem;
+}
+
+.round .candidate-number {
+  font-size: 20px;
+  font-weight: 600;
+}
+
+.text .candidate-name {
+  font-weight: 600;
+  font-size: 17px;
+  margin: 10px;
+}
+
+.text p {
+  color: #7a7a7a;
+  min-height: 46px;
+}
+
+
+a {
+  text-decoration: none;
+  list-style: none;
+}
+
+.button-group {
+  margin: 10px 0px;
+}
+
+.button-group .user-button {
+  background-color: #498cb9;
+  color: #fff;
+  margin-right: 10px;
+  margin-bottom: 10px;
+  cursor: pointer;
+}
+
+.button-group .share-button {
+  background-color: #000b58;
+  color: #fff;
+  margin-left: 10px;
+  margin-bottom: 10px;
+  cursor: pointer;
+}
+
+.all-candidate {
+  background-color: #21bcb0;
+  color: #fff;
+  border-radius: 0;
+  padding: 8px;
+  border-bottom-left-radius: 3px;
+  border-bottom-right-radius: 3px;
+}
+
+.form-control:focus,
+.btn:focus {
+  outline: none;
+  border-color: inherit;
+  -webkit-box-shadow: none;
+  box-shadow: none;
+}
+
+.plus-icon {
+  position: fixed;
+  bottom: 5%;
+  right: 2%;
+}
+
+.avatar-image {
+  float: left;
+  padding: 5px 5px;
+  clear: both;
+
+}
+
+.panel-details {
+  float: left;
+  padding: 10px;
+}
+
+.bar-options {
+  float: right;
+  padding: 20px;
+}
+
+h4.name {
+  font-size: 15px;
+  width: 260px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+p.color {
+  width: 260px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+::ng-deep .ngx-pagination {
+  text-align: center;
+}

@@ -1,0 +1,16 @@
+#if ($timePeriod != "fromStart")
+	
+	SELECT DISTINCT CONCAT(A.name) AS 'Recruiter Name', COUNT(B.cid) AS 'No of candidates' FROM
+	(SELECT * from USER where joined_status=1)A
+	LEFT JOIN (
+	select * from candidate WHERE creation_date > DATE_SUB(NOW(), INTERVAL $timePeriod))B on B.owner=A.email
+	group by A.email;
+	
+#else
+		
+	SELECT DISTINCT CONCAT(A.name) AS 'Recruiter Name', COUNT(c.cid) AS 'No of candidates' FROM 
+	(SELECT * from USER where joined_status=1) A
+	LEFT JOIN candidate c ON A.email=c.owner
+	GROUP BY A.email;
+		
+#end

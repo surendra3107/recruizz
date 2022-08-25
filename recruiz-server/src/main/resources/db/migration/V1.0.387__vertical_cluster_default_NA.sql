@@ -1,0 +1,1 @@
+update position set verticalCluster = "NA" where verticalCluster IS NULL and id > 0;

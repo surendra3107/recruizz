@@ -1,0 +1,1 @@
+DELETE FROM template_variable WHERE templateId != '';

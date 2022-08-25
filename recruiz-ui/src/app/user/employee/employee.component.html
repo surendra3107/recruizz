@@ -1,0 +1,988 @@
+<!-- <app-sub-header></app-sub-header> -->
+<!-- Breadcrumb Section -->
+<div *ngIf="isFilterOpen" class="overlay"></div>
+<section class="main-section">
+    <div class="top-head row">
+        <div class="heading col-md-8">
+            <mat-label class="client">{{pageTitle}}</mat-label>
+            <!-- Bread-crum section -->
+            <nav *ngIf="isBreadcrumbShow" class="breadcrumb-nav" aria-label="breadcrumb">
+                <ol class="breadcrumb breadcrumb-list">
+                    <li class="breadcrumb-item"><a routerLink="/user/dashboard">Home</a></li>
+                    <li class="breadcrumb-item recruiz-green bold">{{finalBreadcrumb}}</li>
+                </ol>
+            </nav>
+        </div>
+    </div>
+    <!-- Filter Sidebar/Pop-up -->
+    <div *ngIf="isFilterOpen" class="container bg-white filter-box">
+        <div class="row filter-head filter-line mb-4">
+            <div class="col-md-10 mt-3">
+                <p class="filter"> FILTERS</p>
+            </div>
+            <div class="col-md-2 mt-3">
+                <i class="fa fa-times" aria-hidden="true" (click)="openFilter()"></i>
+            </div>
+        </div>
+        <div class="status">
+            <div class="row status-row">
+                <div class="col-md-10">
+                    <p class='title'>STATUS</p>
+                </div>
+                <div class="col-md-2">
+                    <i class="fa {{statusDivIcon}} green-icon" aria-hidden="true" (click)="toggleFilterDiv('status')"></i>
+                </div>
+            </div>
+            <div class="show-hide" *ngIf='isStatusDivOpen'>
+                <div class="row status-row">
+                    <div class="col-md-6">
+                        <div class="text-left">
+                            <mat-checkbox m-0>Active</mat-checkbox>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <mat-checkbox m-0>On Hold</mat-checkbox>
+                    </div>
+                </div>
+                <div class="row status-row">
+                    <div class="col-md-12 m-10">
+                        <mat-checkbox m-0>Stop Sourcing</mat-checkbox>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="location status">
+            <div class="row status-row">
+                <div class="col-md-10">
+                    <p class='title'>CURRENT LOCATION</p>
+                </div>
+                <div class="col-md-2">
+                    <i class="fa {{currentDivIcon}} green-icon" aria-hidden="true" (click)="toggleFilterDiv('location')"></i>
+                </div>
+            </div>
+            <div *ngIf='isCurrentLocationDivOpen' class="searchinp">
+                <i class="fa fa-search icon" aria-hidden="true"></i>
+                <input id="location" class="form-control m-10" type="text" placeholder="Search location" (input)="search($event,'location')" autocomplete="off">
+                <div *ngIf="isLocationSearch" class="search-container">
+                    <ul id="search-result">
+                        <li><a>Adele</a></li>
+                        <li><a>Agnes</a></li>
+                        <li><a>Billy</a></li>
+                        <li><a>Bob</a></li>
+                        <li><a>Billy</a></li>
+                        <li><a>Bob</a></li>
+                        <li><a>Calvin</a></li>
+                        <li><a>Christina</a></li>
+                        <li><a>Cindy</a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <div class="client-name status">
+            <div class="row status-row">
+                <div class="col-md-10">
+                    <p class='title'>CLIENT NAME</p>
+                </div>
+                <div class="col-md-2">
+                    <i class="fa {{clientNameDivIcon}} green-icon" aria-hidden="true" (click)="toggleFilterDiv('client')"></i>
+                </div>
+            </div>
+            <div *ngIf='isClientNameDivOpen'>
+                <i class="fa fa-search icon" aria-hidden="true"></i>
+                <input id="name" class="form-control m-10 mb-4" type="text" placeholder="Search Name" (input)="search($event,'name')" autocomplete="off">
+                <div *ngIf="isNameSearch" class="search-container-name">
+                    <ul id="search-result">
+                        <li><a>Adele</a></li>
+                        <li><a>Agnes</a></li>
+                        <li><a>Billy</a></li>
+                        <li><a>Bob</a></li>
+                        <li><a>Calvin</a></li>
+                        <li><a>Christina</a></li>
+                        <li><a>Cindy</a></li>
+                        <li><a>Billy</a></li>
+                        <li><a>Bob</a></li>
+                        <li><a>Calvin</a></li>
+                        <li><a>Christina</a></li>
+                        <li><a>Cindy</a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<!-- Breadcrumb End -->
+<div class="main-section1">
+    <!-- upper-block -->
+    <div class="upper-block">
+        <h3 class="heading">Overview</h3>
+        <div class="row">
+            <div class="col-md-3 emp-detail text-center">
+                <p class="block-heading">Employee</p>
+                <h3>13</h3>
+            </div>
+            <div class="col-md-3 emp-detail text-center">
+                <p class="block-heading">Onboarding in Progress</p>
+                <h3>0</h3>
+            </div>
+            <div class="col-md-3 emp-detail text-center">
+                <p class="block-heading">Yet to Onboard</p>
+                <h3>9</h3>
+            </div>
+            <div class="col-md-3 text-center">
+                <p class="block-heading">Exits</p>
+                <h3>0</h3>
+            </div>
+        </div>
+    </div>
+    <!-- upper-block-ends -->
+
+    <!-- main-block -->
+    <div class="main-block mt-4">
+        <ul class="nav upper-nav-pills left-tab" id="pills-tab" role="tablist">
+            <li class="nav-item">
+                <a class="nav-link active emp-tab" id="pills-home-tab" data-toggle="pill" href="#pills-home" role="tab"
+                    aria-controls="pills-home" aria-selected="true">Employees</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link emp-tab" id="pills-profile-tab" data-toggle="pill" href="#pills-profile" role="tab"
+                    aria-controls="pills-profile" aria-selected="false">Yet to Onboard</a>
+            </li>
+            <li class="nav-item right-float">
+                <div class="btn-group button-group">
+                    <button type="button" class="btn btn-default button-default btn-sm m-0">
+                        <img class="sort-by" src="../..//assets/icons/client-list/Filter.png" alt="">
+                    </button>
+                    <button type="button" class="btn btn-default button-second dropdown-toggle btn-sm"></button>
+                </div>
+            </li>
+            <li class="nav-item right-float">
+                <input type="text" class="form-control emp-search-field">
+                <i class="fa fa-search search-icon" aria-hidden="true"></i>
+            </li>
+        </ul>
+        <div class="tab-content" id="pills-tabContent">
+            <div class="tab-pane fade show active" id="pills-home" role="tabpanel" aria-labelledby="pills-home-tab">
+                <table class="table">
+                    <thead class="thead-dark">
+                        <tr class="text-center">
+                            <th scope="col">ID</th>
+                            <th scope="col">Employee name</th>
+                            <th scope="col">Client</th>
+                            <th scope="col">Job title</th>
+                            <th scope="col">Emp Status</th>
+                            <th scope="col">Emp Type</th>
+                            <th scope="col">DOJ</th>
+                            <th scope="col">Onboarding Status</th>
+                            <th></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr *ngFor='let data of data' class="text-center">
+                            <td scope="row">###</td>
+                            <td class="emp-name" (click)="openModal('task_1')"><img class="avatar-img" src="https://d1muf25xaso8hp.cloudfront.net/https%3A%2F%2Fs3.amazonaws.com%2Fappforest_uf%2Ff1512936020165x278911292087286720%2FA.png?w=16&h=16&auto=compress&dpr=3&fit=max"
+                                    alt="">Antony Vendor 2</td>
+                            <td>Recruiz - Test</td>
+                            <td>N/A</td>
+                            <td class="active">Active</td>
+                            <td class="grey-color">TBD</td>
+                            <td class="grey-color">N/A</td>
+                            <td class="grey-color">Skipped</td>
+                            <td>
+                                <div class="bar-options">
+                                    <a #menuTrigger="matMenuTrigger" [matMenuTriggerFor]="menu">
+                                        <img src="../../assets/icons/client-list/Menu.png" alt="">
+                                    </a>
+                                </div>
+                                <mat-menu #menu="matMenu">
+                                    <button mat-menu-item (click)="openModal('task_1')"><img src="../../../assets/icons/client-details/Edit.png" alt="">
+                                        Edit</button>
+                                    <button mat-menu-item><img src="../../../assets/icons/client-details/Delete.png"
+                                            alt="">
+                                        Delete</button>
+                                </mat-menu>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <div class="tab-pane fade" id="pills-profile" role="tabpanel" aria-labelledby="pills-profile-tab">
+                <table class="table">
+                    <thead class="thead-dark">
+                        <tr class="second-tab">
+                            <th scope="col">Employee name</th>
+                            <th scope="col">Client/Position</th>
+                            <th scope="col">Emp Type</th>
+                            <th></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr *ngFor='let data of data' class="second-tab">
+                            <td class=""><img class="avatar-img" src="https://d1muf25xaso8hp.cloudfront.net/https%3A%2F%2Fs3.amazonaws.com%2Fappforest_uf%2Ff1512936020165x278911292087286720%2FA.png?w=16&h=16&auto=compress&dpr=3&fit=max"
+                                    alt="">Antony Vendor 2</td>
+                            <td>
+                                <div class="dropdown">
+                                    <a class="btn btn-secondary dropdown-toggle drop" href="#" role="button" id="dropdownMenuLink"
+                                        data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                        Offered in 1 Positions
+                                    </a>
+
+                                    <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+                                        <a class="dropdown-item">Action</a>
+                                        <a class="dropdown-item">Another action</a>
+                                        <a class="dropdown-item">Something else here</a>
+                                    </div>
+                                </div>
+                            </td>
+                            <td class="grey-color">Please select offered position</td>
+                            <td>
+                                <div class="bar-options">
+                                    <a #menuTrigger="matMenuTrigger" [matMenuTriggerFor]="menu">
+                                        <img src="../../assets/icons/client-list/Menu.png" alt="">
+                                    </a>
+                                </div>
+                                <mat-menu #menu="matMenu">
+                                    <button mat-menu-item><img src="../../../assets/icons/client-details/Edit.png" alt="">
+                                        Edit</button>
+                                    <button mat-menu-item><img src="../../../assets/icons/client-details/Delete.png"
+                                            alt="">
+                                        Delete</button>
+                                </mat-menu>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+    <div class="page-footer">
+        <div class="row ">
+            <div class="col-md-7">
+            </div>
+            <div class="col-md-5 paginations">
+                <div class="row number-row">
+                    <div class="col-md-7 left-page-number">
+                        <i class="material-icons">arrow_left</i>
+                        <b class="numbers"><span class="recruiz-green-color-class"> 1 </span> 2 3 4 ..... 8 9
+                            10</b>
+                        <i class="material-icons">arrow_right</i>
+                    </div>
+                    <div class="col-md-5 right-page-number">
+                        <div>Go page <input type="text" class="search-bar"> <a class="go-btn btn btn-default">Go</a> <i
+                                class="material-icons">arrow_right</i></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Modal -->
+<jw-modal id="task_1">
+    <div class="header">
+        <img class="modal-avatar" src="https://d1muf25xaso8hp.cloudfront.net/https%3A%2F%2Fs3.amazonaws.com%2Fappforest_uf%2Ff1512936020165x278911292087286720%2FA.png?w=16&h=16&auto=compress&dpr=3&fit=max"
+            alt="">
+        <div class="right">
+            <h3>Gnanasekaran</h3>
+            <a class='link-btn' href=""><img src="../../../assets/icons/employee/Delete Icon.png" alt=""></a>
+            <a class='link-btn' href=""><img src="../../../assets/icons/employee/Edit Icon.png" alt=""></a>
+            <ul class="list-detail">
+                <li>
+                    <p>
+                        <img src="../../../assets/icons/employee/Email.png" alt=""> sajin@recruiz.com
+                    </p>
+                </li>
+                <li>
+                    <p>
+                        <img src="../../../assets/icons/employee/Phone.png" alt=""> 121314564132
+                    </p>
+                </li>
+                <li>
+                    <p>
+                        <img src="../../../assets/icons/employee/location.png" alt=""> Banglore, Karnataka, India
+                    </p>
+                </li>
+            </ul>
+        </div>
+    </div>
+    <!-- Lower Tab -->
+    <div class="row">
+        <div class="col-md-8 pr-0">
+            <div class="client-detailtab">
+                <div class="customtabs">
+                    <ul class="nav nav-pills nav-fill">
+                        <li class="nav-item" [ngClass]="selectedTab=='onboarding' ? 'active':''">
+                            <a class="nav-link" [ngClass]="selectedTab=='onboarding' ? 'selected-tab':''" (click)="onTabMenu('onboarding')">Onboarding</a>
+                        </li>
+                        <li class="nav-item" [ngClass]="selectedTab=='docs' ? 'active':''">
+                            <a class="nav-link" [ngClass]="selectedTab=='docs' ? 'selected-tab':''" (click)="onTabMenu('docs')">Documents</a>
+                        </li>
+                        <li class="nav-item" [ngClass]="selectedTab=='activity' ? 'active':''">
+                            <a class="nav-link" [ngClass]="selectedTab=='activity' ? 'selected-tab':''" (click)="onTabMenu('activity')">Activity</a>
+                        </li>
+
+                    </ul>
+                </div>
+                <!-- ----------------- Main Tab Content Block ------------------ -->
+                <!-- ----------------------------------------------------------- -->
+                <div class="tabs-content">
+                    <!-- Decision Makers -->
+                    <div *ngIf="selectedTab=='onboarding'" style="padding:20px;">
+                        <!-- No Decision Makers -->
+                        <div *ngIf="isOnboardingEmpty">
+                            <div class="no-decision">
+                                <p class="text-center">
+                                    <img src="../../../assets/icons/client-details/no_decision_makers.png" alt="">
+                                </p>
+                                <p>No Onboarding</p>
+                            </div>
+                            <a href="" class="plus-icon">
+                                <img src="./../../../assets/icons/client-details/add_interview_panel.png" alt="">
+                            </a>
+                        </div>
+                        <!-- Decision Makers List -->
+                        <div *ngIf="!isOnboardingEmpty">
+                            <div class="before-joining">
+                                <div class="onboard-header">
+                                    <p class="before-heading">Before Joining</p>
+                                    <mat-accordion>
+                                        <mat-expansion-panel>
+
+                                            <mat-expansion-panel-header>
+
+                                                <mat-panel-title>
+                                                    <mat-checkbox m-0 (click)="$event.stopPropagation();">
+                                                        <div class="check-content-header">
+                                                            Schedule and Job Duties
+                                                        </div>
+                                                    </mat-checkbox>
+                                                </mat-panel-title>
+                                            </mat-expansion-panel-header>
+
+                                            <div class="row internal-checkbox">
+                                                <div class="col-md-6">
+                                                    <div class="bg-checkbox">
+                                                        <mat-checkbox m-0>
+                                                            <div class="check-content">
+                                                                <p class="candidate-remainder">Submit the hire
+                                                                    transaction</p>
+                                                            </div>
+                                                        </mat-checkbox>
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-6 text-right">
+                                                    <div class="bar-options">
+                                                        <a #menuTrigger="matMenuTrigger" [matMenuTriggerFor]="menu">
+                                                            <img src="../../assets/icons/client-list/Menu.png" alt="">
+                                                        </a>
+                                                    </div>
+                                                    <mat-menu #menu="matMenu">
+                                                        <button mat-menu-item><img src="../../../assets/icons/client-details/Edit.png"
+                                                                alt="">
+                                                            Edit</button>
+                                                        <button mat-menu-item><img src="../../../assets/icons/client-details/Delete.png"
+                                                                alt="">
+                                                            Delete</button>
+                                                    </mat-menu>
+                                                </div>
+                                                <div class="col-md-6">
+                                                    <div class="bg-checkbox">
+                                                        <mat-checkbox m-0>
+                                                            <div class="check-content">
+                                                                <p class="candidate-remainder">Prepare employee's
+                                                                    calendar for the first two weeks</p>
+                                                            </div>
+                                                        </mat-checkbox>
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-6 text-right">
+                                                    <div class="bar-options">
+                                                        <a #menuTrigger="matMenuTrigger" [matMenuTriggerFor]="menu">
+                                                            <img src="../../assets/icons/client-list/Menu.png" alt="">
+                                                        </a>
+                                                    </div>
+                                                    <mat-menu #menu="matMenu">
+                                                        <button mat-menu-item><img src="../../../assets/icons/client-details/Edit.png"
+                                                                alt="">
+                                                            Edit</button>
+                                                        <button mat-menu-item><img src="../../../assets/icons/client-details/Delete.png"
+                                                                alt="">
+                                                            Delete</button>
+                                                    </mat-menu>
+                                                </div>
+                                                <div class="col-md-6">
+                                                    <div class="bg-checkbox">
+                                                        <mat-checkbox m-0>
+                                                            <div class="check-content">
+                                                                <p class="candidate-remainder">Plan the employee's
+                                                                    first assignment</p>
+                                                            </div>
+                                                        </mat-checkbox>
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-6 text-right">
+                                                    <div class="bar-options">
+                                                        <a #menuTrigger="matMenuTrigger" [matMenuTriggerFor]="menu">
+                                                            <img src="../../assets/icons/client-list/Menu.png" alt="">
+                                                        </a>
+                                                    </div>
+                                                    <mat-menu #menu="matMenu">
+                                                        <button mat-menu-item><img src="../../../assets/icons/client-details/Edit.png"
+                                                                alt="">
+                                                            Edit</button>
+                                                        <button mat-menu-item><img src="../../../assets/icons/client-details/Delete.png"
+                                                                alt="">
+                                                            Delete</button>
+                                                    </mat-menu>
+                                                </div>
+                                            </div>
+
+                                        </mat-expansion-panel>
+                                        <mat-expansion-panel>
+
+                                            <mat-expansion-panel-header>
+
+                                                <mat-panel-title>
+                                                    <mat-checkbox m-0 (click)="$event.stopPropagation();">
+                                                        <div class="check-content-header">
+                                                            Work Environment
+                                                        </div>
+                                                    </mat-checkbox>
+                                                </mat-panel-title>
+                                            </mat-expansion-panel-header>
+
+                                            <div class="row internal-checkbox">
+                                                <div class="col-md-6">
+                                                    <div class="bg-checkbox">
+                                                        <mat-checkbox m-0>
+                                                            <div class="check-content">
+                                                                <p class="candidate-remainder">Clean the work area, and set up cube / office space with supplies</p>
+                                                            </div>
+                                                        </mat-checkbox>
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-6 text-right">
+                                                    <div class="bar-options">
+                                                        <a #menuTrigger="matMenuTrigger" [matMenuTriggerFor]="menu">
+                                                            <img src="../../assets/icons/client-list/Menu.png" alt="">
+                                                        </a>
+                                                    </div>
+                                                    <mat-menu #menu="matMenu">
+                                                        <button mat-menu-item><img src="../../../assets/icons/client-details/Edit.png"
+                                                                alt="">
+                                                            Edit</button>
+                                                        <button mat-menu-item><img src="../../../assets/icons/client-details/Delete.png"
+                                                                alt="">
+                                                            Delete</button>
+                                                    </mat-menu>
+                                                </div>
+                                                <div class="col-md-6">
+                                                    <div class="bg-checkbox">
+                                                        <mat-checkbox m-0>
+                                                            <div class="check-content">
+                                                                <p class="candidate-remainder">Order office or work area keys</p>
+                                                            </div>
+                                                        </mat-checkbox>
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-6 text-right">
+                                                    <div class="bar-options">
+                                                        <a #menuTrigger="matMenuTrigger" [matMenuTriggerFor]="menu">
+                                                            <img src="../../assets/icons/client-list/Menu.png" alt="">
+                                                        </a>
+                                                    </div>
+                                                    <mat-menu #menu="matMenu">
+                                                        <button mat-menu-item><img src="../../../assets/icons/client-details/Edit.png"
+                                                                alt="">
+                                                            Edit</button>
+                                                        <button mat-menu-item><img src="../../../assets/icons/client-details/Delete.png"
+                                                                alt="">
+                                                            Delete</button>
+                                                    </mat-menu>
+                                                </div>
+                                                <div class="col-md-6">
+                                                    <div class="bg-checkbox">
+                                                        <mat-checkbox m-0>
+                                                            <div class="check-content">
+                                                                <p class="candidate-remainder">Order business cards and name plates</p>
+                                                            </div>
+                                                        </mat-checkbox>
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-6 text-right">
+                                                    <div class="bar-options">
+                                                        <a #menuTrigger="matMenuTrigger" [matMenuTriggerFor]="menu">
+                                                            <img src="../../assets/icons/client-list/Menu.png" alt="">
+                                                        </a>
+                                                    </div>
+                                                    <mat-menu #menu="matMenu">
+                                                        <button mat-menu-item><img src="../../../assets/icons/client-details/Edit.png"
+                                                                alt="">
+                                                            Edit</button>
+                                                        <button mat-menu-item><img src="../../../assets/icons/client-details/Delete.png"
+                                                                alt="">
+                                                            Delete</button>
+                                                    </mat-menu>
+                                                </div>
+                                            </div>
+
+                                        </mat-expansion-panel>
+                                        <div class="after-joining">
+                                            <p class="before-heading">After Joining</p>
+                                            <mat-expansion-panel>
+
+                                                <mat-expansion-panel-header>
+    
+                                                    <mat-panel-title>
+                                                        <mat-checkbox m-0 (click)="$event.stopPropagation();">
+                                                            <div class="check-content-header">
+                                                                Schedule, Job Duties, and Expectaions
+                                                            </div>
+                                                        </mat-checkbox>
+                                                    </mat-panel-title>
+                                                </mat-expansion-panel-header>
+    
+                                                <div class="row internal-checkbox">
+                                                    <div class="col-md-6">
+                                                        <div class="bg-checkbox">
+                                                            <mat-checkbox m-0>
+                                                                <div class="check-content">
+                                                                    <p class="candidate-remainder">Submit the hire
+                                                                        transaction</p>
+                                                                </div>
+                                                            </mat-checkbox>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-6 text-right">
+                                                        <div class="bar-options">
+                                                            <a #menuTrigger="matMenuTrigger" [matMenuTriggerFor]="menu">
+                                                                <img src="../../assets/icons/client-list/Menu.png" alt="">
+                                                            </a>
+                                                        </div>
+                                                        <mat-menu #menu="matMenu">
+                                                            <button mat-menu-item><img src="../../../assets/icons/client-details/Edit.png"
+                                                                    alt="">
+                                                                Edit</button>
+                                                            <button mat-menu-item><img src="../../../assets/icons/client-details/Delete.png"
+                                                                    alt="">
+                                                                Delete</button>
+                                                        </mat-menu>
+                                                    </div>
+                                                    <div class="col-md-6">
+                                                        <div class="bg-checkbox">
+                                                            <mat-checkbox m-0>
+                                                                <div class="check-content">
+                                                                    <p class="candidate-remainder">Prepare employee's
+                                                                        calendar for the first two weeks</p>
+                                                                </div>
+                                                            </mat-checkbox>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-6 text-right">
+                                                        <div class="bar-options">
+                                                            <a #menuTrigger="matMenuTrigger" [matMenuTriggerFor]="menu">
+                                                                <img src="../../assets/icons/client-list/Menu.png" alt="">
+                                                            </a>
+                                                        </div>
+                                                        <mat-menu #menu="matMenu">
+                                                            <button mat-menu-item><img src="../../../assets/icons/client-details/Edit.png"
+                                                                    alt="">
+                                                                Edit</button>
+                                                            <button mat-menu-item><img src="../../../assets/icons/client-details/Delete.png"
+                                                                    alt="">
+                                                                Delete</button>
+                                                        </mat-menu>
+                                                    </div>
+                                                    <div class="col-md-6">
+                                                        <div class="bg-checkbox">
+                                                            <mat-checkbox m-0>
+                                                                <div class="check-content">
+                                                                    <p class="candidate-remainder">Plan the employee's
+                                                                        first assignment</p>
+                                                                </div>
+                                                            </mat-checkbox>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-6 text-right">
+                                                        <div class="bar-options">
+                                                            <a #menuTrigger="matMenuTrigger" [matMenuTriggerFor]="menu">
+                                                                <img src="../../assets/icons/client-list/Menu.png" alt="">
+                                                            </a>
+                                                        </div>
+                                                        <mat-menu #menu="matMenu">
+                                                            <button mat-menu-item><img src="../../../assets/icons/client-details/Edit.png"
+                                                                    alt="">
+                                                                Edit</button>
+                                                            <button mat-menu-item><img src="../../../assets/icons/client-details/Delete.png"
+                                                                    alt="">
+                                                                Delete</button>
+                                                        </mat-menu>
+                                                    </div>
+                                                </div>
+    
+                                            </mat-expansion-panel>
+                                            <mat-expansion-panel>
+
+                                                <mat-expansion-panel-header>
+    
+                                                    <mat-panel-title>
+                                                        <mat-checkbox m-0 (click)="$event.stopPropagation();">
+                                                            <div class="check-content-header">
+                                                                Socialization
+                                                            </div>
+                                                        </mat-checkbox>
+                                                    </mat-panel-title>
+                                                </mat-expansion-panel-header>
+    
+                                                <div class="row internal-checkbox">
+                                                    <div class="col-md-6">
+                                                        <div class="bg-checkbox">
+                                                            <mat-checkbox m-0>
+                                                                <div class="check-content">
+                                                                    <p class="candidate-remainder">Submit the hire
+                                                                        transaction</p>
+                                                                </div>
+                                                            </mat-checkbox>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-6 text-right">
+                                                        <div class="bar-options">
+                                                            <a #menuTrigger="matMenuTrigger" [matMenuTriggerFor]="menu">
+                                                                <img src="../../assets/icons/client-list/Menu.png" alt="">
+                                                            </a>
+                                                        </div>
+                                                        <mat-menu #menu="matMenu">
+                                                            <button mat-menu-item><img src="../../../assets/icons/client-details/Edit.png"
+                                                                    alt="">
+                                                                Edit</button>
+                                                            <button mat-menu-item><img src="../../../assets/icons/client-details/Delete.png"
+                                                                    alt="">
+                                                                Delete</button>
+                                                        </mat-menu>
+                                                    </div>
+                                                    <div class="col-md-6">
+                                                        <div class="bg-checkbox">
+                                                            <mat-checkbox m-0>
+                                                                <div class="check-content">
+                                                                    <p class="candidate-remainder">Prepare employee's
+                                                                        calendar for the first two weeks</p>
+                                                                </div>
+                                                            </mat-checkbox>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-6 text-right">
+                                                        <div class="bar-options">
+                                                            <a #menuTrigger="matMenuTrigger" [matMenuTriggerFor]="menu">
+                                                                <img src="../../assets/icons/client-list/Menu.png" alt="">
+                                                            </a>
+                                                        </div>
+                                                        <mat-menu #menu="matMenu">
+                                                            <button mat-menu-item><img src="../../../assets/icons/client-details/Edit.png"
+                                                                    alt="">
+                                                                Edit</button>
+                                                            <button mat-menu-item><img src="../../../assets/icons/client-details/Delete.png"
+                                                                    alt="">
+                                                                Delete</button>
+                                                        </mat-menu>
+                                                    </div>
+                                                    <div class="col-md-6">
+                                                        <div class="bg-checkbox">
+                                                            <mat-checkbox m-0>
+                                                                <div class="check-content">
+                                                                    <p class="candidate-remainder">Plan the employee's
+                                                                        first assignment</p>
+                                                                </div>
+                                                            </mat-checkbox>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-6 text-right">
+                                                        <div class="bar-options">
+                                                            <a #menuTrigger="matMenuTrigger" [matMenuTriggerFor]="menu">
+                                                                <img src="../../assets/icons/client-list/Menu.png" alt="">
+                                                            </a>
+                                                        </div>
+                                                        <mat-menu #menu="matMenu">
+                                                            <button mat-menu-item><img src="../../../assets/icons/client-details/Edit.png"
+                                                                    alt="">
+                                                                Edit</button>
+                                                            <button mat-menu-item><img src="../../../assets/icons/client-details/Delete.png"
+                                                                    alt="">
+                                                                Delete</button>
+                                                        </mat-menu>
+                                                    </div>
+                                                </div>
+    
+                                            </mat-expansion-panel>
+                                            <mat-expansion-panel>
+
+                                                <mat-expansion-panel-header>
+    
+                                                    <mat-panel-title>
+                                                        <mat-checkbox m-0 (click)="$event.stopPropagation();">
+                                                            <div class="check-content-header">
+                                                                Technology Access and Related
+                                                            </div>
+                                                        </mat-checkbox>
+                                                    </mat-panel-title>
+                                                </mat-expansion-panel-header>
+    
+                                                <div class="row internal-checkbox">
+                                                    <div class="col-md-6">
+                                                        <div class="bg-checkbox">
+                                                            <mat-checkbox m-0>
+                                                                <div class="check-content">
+                                                                    <p class="candidate-remainder">Submit the hire
+                                                                        transaction</p>
+                                                                </div>
+                                                            </mat-checkbox>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-6 text-right">
+                                                        <div class="bar-options">
+                                                            <a #menuTrigger="matMenuTrigger" [matMenuTriggerFor]="menu">
+                                                                <img src="../../assets/icons/client-list/Menu.png" alt="">
+                                                            </a>
+                                                        </div>
+                                                        <mat-menu #menu="matMenu">
+                                                            <button mat-menu-item><img src="../../../assets/icons/client-details/Edit.png"
+                                                                    alt="">
+                                                                Edit</button>
+                                                            <button mat-menu-item><img src="../../../assets/icons/client-details/Delete.png"
+                                                                    alt="">
+                                                                Delete</button>
+                                                        </mat-menu>
+                                                    </div>
+                                                    <div class="col-md-6">
+                                                        <div class="bg-checkbox">
+                                                            <mat-checkbox m-0>
+                                                                <div class="check-content">
+                                                                    <p class="candidate-remainder">Prepare employee's
+                                                                        calendar for the first two weeks</p>
+                                                                </div>
+                                                            </mat-checkbox>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-6 text-right">
+                                                        <div class="bar-options">
+                                                            <a #menuTrigger="matMenuTrigger" [matMenuTriggerFor]="menu">
+                                                                <img src="../../assets/icons/client-list/Menu.png" alt="">
+                                                            </a>
+                                                        </div>
+                                                        <mat-menu #menu="matMenu">
+                                                            <button mat-menu-item><img src="../../../assets/icons/client-details/Edit.png"
+                                                                    alt="">
+                                                                Edit</button>
+                                                            <button mat-menu-item><img src="../../../assets/icons/client-details/Delete.png"
+                                                                    alt="">
+                                                                Delete</button>
+                                                        </mat-menu>
+                                                    </div>
+                                                    <div class="col-md-6">
+                                                        <div class="bg-checkbox">
+                                                            <mat-checkbox m-0>
+                                                                <div class="check-content">
+                                                                    <p class="candidate-remainder">Plan the employee's
+                                                                        first assignment</p>
+                                                                </div>
+                                                            </mat-checkbox>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-6 text-right">
+                                                        <div class="bar-options">
+                                                            <a #menuTrigger="matMenuTrigger" [matMenuTriggerFor]="menu">
+                                                                <img src="../../assets/icons/client-list/Menu.png" alt="">
+                                                            </a>
+                                                        </div>
+                                                        <mat-menu #menu="matMenu">
+                                                            <button mat-menu-item><img src="../../../assets/icons/client-details/Edit.png"
+                                                                    alt="">
+                                                                Edit</button>
+                                                            <button mat-menu-item><img src="../../../assets/icons/client-details/Delete.png"
+                                                                    alt="">
+                                                                Delete</button>
+                                                        </mat-menu>
+                                                    </div>
+                                                </div>
+    
+                                            </mat-expansion-panel>
+                                        </div>
+
+                                    </mat-accordion>
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Activity -->
+                    <div *ngIf="selectedTab=='activity'">
+                        <!-- No Acticity -->
+                        <div *ngIf="isActivityEmpty">
+                        </div>
+                        <!-- Activity List -->
+                        <div *ngIf='!isActivityEmpty'>
+                            <div class="interview-panel clearfix">
+                                <div class="avatar-image1">
+                                    <img class="icon-image" src="../../../assets/icons/client-details/Notification.png"
+                                        alt="">
+
+                                </div>
+                                <div class="panel-details1">
+                                    <h4 class="activity-name">antony@beyondbytes.co.in</h4>
+                                    <p class="color"> Modified by <span>antony(antony@beyondbytes.co.in)</span></p>
+                                </div>
+
+                                <div class="date-time">
+                                    <h4>16-Jul-2019</h4>
+                                    <p>4:33 PM</p>
+                                </div>
+                            </div>
+                            <div class="interview-panel clearfix">
+                                <div class="avatar-image1">
+                                    <img class="icon-image" src="../../../assets/icons/client-details/Notification.png"
+                                        alt="">
+
+                                </div>
+                                <div class="panel-details1">
+                                    <h4 class="activity-name">antony@beyondbytes.co.in</h4>
+                                    <p class="color"> Modified by <span>antony(antony@beyondbytes.co.in)</span></p>
+                                </div>
+
+                                <div class="date-time">
+                                    <h4>16-Jul-2019</h4>
+                                    <p>4:33 PM</p>
+                                </div>
+                            </div>
+                            <div class="interview-panel clearfix">
+                                <div class="avatar-image1">
+                                    <img class="icon-image" src="../../../assets/icons/client-details/Notification.png"
+                                        alt="">
+
+                                </div>
+                                <div class="panel-details1">
+                                    <h4 class="activity-name">antony@beyondbytes.co.in</h4>
+                                    <p class="color"> Modified by <span>antony(antony@beyondbytes.co.in)</span></p>
+                                </div>
+
+                                <div class="date-time">
+                                    <h4>16-Jul-2019</h4>
+                                    <p>4:33 PM</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Docs -->
+                    <div class="docs-div" *ngIf="selectedTab=='docs'">
+                        <!-- No Docs -->
+                        <div *ngIf="isDocsEmpty">
+
+                        </div>
+                        <!-- Docs List -->
+                        <div *ngIf="!isDocsEmpty">
+                            <div class="docs-bg row">
+                                <div class=" col-md-8">
+                                    <p class="file-head">File Name</p>
+                                </div>
+                                <div class="col-md-4 text-right upload-link">
+                                    <a class="upload-img">
+                                        <img src="../../../assets/icons/client-details/Upload.png" alt="">
+                                    </a>
+                                </div>
+                            </div>
+                            <div class="row uploaded">
+                                <div class="col-md-8">
+                                    <img class="file-image" src="../../../assets/icons/client-details/File.png" alt="">
+                                    <div class="float">
+                                        <p class="doc-title">Shot_2.png</p>
+                                        <p class="doc-date">Uploaded On 07-12-2019, 1:29 PM</p>
+                                    </div>
+                                </div>
+                                <div class="col-md-4 docs-icon">
+                                    <a class="mr-4"><img src="../../../assets/icons/client-details/Download.png" alt=""></a>
+                                    <a><img src="../../../assets/icons/client-details/Delete.png" alt=""></a>
+                                </div>
+                            </div>
+                            <div class="row uploaded">
+                                <div class="col-md-8">
+                                    <img class="file-image" src="../../../assets/icons/client-details/File.png" alt="">
+                                    <div class="float">
+                                        <p class="doc-title">Shot_2.png</p>
+                                        <p class="doc-date">Uploaded On 07-12-2019, 1:29 PM</p>
+                                    </div>
+                                </div>
+                                <div class="col-md-4 docs-icon">
+                                    <a><img class="mr-4" src="../../../assets/icons/client-details/Download.png" alt=""></a>
+                                    <a><img src="../../../assets/icons/client-details/Delete.png" alt=""></a>
+                                </div>
+                            </div>
+                            <div class="row uploaded">
+                                <div class="col-md-8">
+                                    <img class="file-image" src="../../../assets/icons/client-details/File.png" alt="">
+                                    <div class="float">
+                                        <p class="doc-title">Shot_2.png</p>
+                                        <p class="doc-date">Uploaded On 07-12-2019, 1:29 PM</p>
+                                    </div>
+                                </div>
+                                <div class="col-md-4 docs-icon">
+                                    <a><img class="mr-4" src="../../../assets/icons/client-details/Download.png" alt=""></a>
+                                    <a><img src="../../../assets/icons/client-details/Delete.png" alt=""></a>
+                                </div>
+                            </div>
+                            <div class="row uploaded">
+                                <div class="col-md-8">
+                                    <img class="file-image" src="../../../assets/icons/client-details/File.png" alt="">
+                                    <div class="float">
+                                        <p class="doc-title">Shot_2.png</p>
+                                        <p class="doc-date">Uploaded On 07-12-2019, 1:29 PM</p>
+                                    </div>
+                                </div>
+                                <div class="col-md-4 docs-icon">
+                                    <a><img class="mr-4" src="../../../assets/icons/client-details/Download.png" alt=""></a>
+                                    <a><img src="../../../assets/icons/client-details/Delete.png" alt=""></a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- End-Client Detail Tab -->
+            </div>
+        </div>
+        <!-- Right Side Main Block -->
+        <!-- --------------------- -->
+        <div class="col-md-4 right-side-tab">
+            <div class="client-additional">
+                <div class="custom-additional-tab">
+                    <p class="title">Employment INFO</p>
+                </div>
+                <div class="tabs-content">
+                    <div class="description">
+                        <p>Client : Recruiz- Test</p>
+                        <p>Employee ID : N/A</p>
+                        <p>Date of Joining : N/A</p>
+                        <p>Job Location : N/A</p>
+                        <p><b>Employment Status : </b> <span class="active">Active</span></p>
+                        <p>Employment Type : TBD</p>
+                        <p>Reporting Manager : N/A</p>
+                        <p>HR Manager : N/A</p>
+                        <p>Position Name : N/A</p>
+                    </div>
+                    <div class="custom-info1">
+                        <p class="title-tab">Personal INFO</p>
+                        <p class="education-info">DOB:N/A</p>
+                        <p class="education-info">Gender:N/A</p>
+                        <p class="education-info">Mobile NO: 80789654857</p>
+                        <p class="education-info">Alternate Email:N/A</p>
+                        <p class="education-info">Street: N/A</p>
+                        <p class="education-info">City: N/A</p>
+                        <p class="education-info">State: N/A</p>
+                        <p class="education-info">Country: N/A</p>
+                        <p class="education-info">Zip Code: N/A</p>
+                    </div>
+                    <div class="custom-info">
+                        <h4 class="title-tab">Custom info</h4>
+                        <p class="education-info">Education Info : N/A</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</jw-modal>
+<!-- Modal Ends -->

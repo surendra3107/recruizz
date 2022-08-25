@@ -1,0 +1,19 @@
+#if ($timePeriod != "fromStart")
+
+	SELECT MONTHNAME(c.creation_date) AS 'Month', COUNT(c.cid) AS 'No of Candidates'
+	FROM
+		candidate c
+	WHERE c.creation_date > DATE_SUB(NOW(), INTERVAL $timePeriod)
+	GROUP BY MONTH
+	ORDER BY c.creation_date ASC;
+	
+#else
+		
+	SELECT CONVERT(YEAR(c.creation_date), CHAR) AS 'Year', COUNT(c.cid) AS 'No of Candidates'
+	FROM
+		candidate c
+	WHERE c.creation_date IS NOT NULL
+	GROUP BY YEAR
+	ORDER BY c.creation_date ASC;
+	
+#end

@@ -1,0 +1,6 @@
+SELECT 
+	substring_index(reason,'-',1) AS 'Reason', COUNT(id) AS 'Total Number'
+FROM 
+	feedback_reason
+GROUP BY
+	 substring_index(reason,'-',1);

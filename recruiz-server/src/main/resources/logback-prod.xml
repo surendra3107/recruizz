@@ -1,0 +1,33 @@
+<configuration>
+
+	<!-- log file will be archived daily or the file size is larger than 10MB. -->
+	<appender name="FILE"
+		class="ch.qos.logback.core.rolling.RollingFileAppender">
+		<file>log/recruiz-prod.log</file>
+		<encoder class="ch.qos.logback.classic.encoder.PatternLayoutEncoder">
+			<Pattern>
+				%d{dd MMM; HH:mm:ss.SSS} - %msg%n
+			</Pattern>
+		</encoder>
+
+		<rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+			<!-- rollover daily -->
+			<fileNamePattern>log/recruiz-prod.%d{yyyy-MM-dd}.%i.log
+			</fileNamePattern>
+			<timeBasedFileNamingAndTriggeringPolicy
+				class="ch.qos.logback.core.rolling.SizeAndTimeBasedFNATP">
+				<maxFileSize>10MB</maxFileSize>
+			</timeBasedFileNamingAndTriggeringPolicy>
+			<!-- keep 10 days' worth of history -->
+			<maxHistory>2</maxHistory>
+		</rollingPolicy>
+	</appender>
+
+	<logger name="com.bbytes" level="DEBUG" />
+	<logger name="org.apache.pdfbox.pdmodel.font" level="OFF" />
+
+	<root level="ERROR">
+		<appender-ref ref="FILE" />
+	</root>
+
+</configuration>

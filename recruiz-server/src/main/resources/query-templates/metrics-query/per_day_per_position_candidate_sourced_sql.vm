@@ -1,0 +1,9 @@
+SELECT 
+		DATE_FORMAT(rc.creation_date, '%m/%d/%Y') as 'Dates', count(rc.id) as 'No of Candidates' from
+	round_candidate rc
+INNER JOIN 
+	position p on p.positionCode = rc.positionCode
+	where rc.creation_date between '$startDate' and '$endDate'AND rc.positionCode='$positionCode'
+GROUP BY
+	 p.title ,CAST(rc.creation_date AS DATE)
+	  ORDER BY rc.creation_date desc;

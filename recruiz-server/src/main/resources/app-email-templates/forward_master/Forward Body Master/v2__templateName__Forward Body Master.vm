@@ -1,0 +1,71 @@
+<div class="email_body" style="text-align: center; background-color: #383838;">
+<div class="email_container" style="width: 100%; vertical-align: top; text-align: center;">
+<table class="header" border="0" width="100%" cellspacing="0" cellpadding="0">
+<tbody>
+<tr>
+<td class="header_cell col-bottom-0" style="text-align: center; background-color: #323232;" align="center">
+<div class="row" style="width: 100%; vertical-align: top; text-align: center;">
+<div class="col-3" style="width: 100%; vertical-align: top; text-align: center;"><a class="navbar-brand" href="http://recruiz.com" target="_blank"><img style="width: 140px;" src="${logo}" alt="" /></a>
+<table class="column" style="width: 100%; vertical-align: top;" border="0" width="100%" cellspacing="0" cellpadding="0">
+<tbody>
+<tr>
+<td class="column_cell font_default" style="font-size: 20px; text-align: center; vertical-align: top; color: #ffffff;" valign="top"><strong><a style="color: #ffffff;" href="#">RECRUIZ</a></strong></td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</td>
+</tr>
+</tbody>
+</table>
+<table class="jumbotron" border="0" width="100%" cellspacing="0" cellpadding="0">
+<tbody>
+<tr>
+<td class="jumbotron_cell" style="text-align: center; background-color: #fafafa;" align="center">
+<div class="row" style="width: 100%; vertical-align: top; text-align: center;">
+<div class="col-3" style="width: 100%; vertical-align: top; text-align: center;">${forwardBody}
+<table class="primary_btn" style="text-align: center;" border="0" cellspacing="0" cellpadding="0">
+<tbody>
+<tr>
+<td class="font_default" style="font-size: 16px; text-align: center; vertical-align: middle; background-color: #29bbb0;"><a style="color: #ffffff; text-align: center;" href="${noteLink}"><strong><span style="color: #ffffff; text-align: center;">Interested</span></strong></a></td>
+<td style="width: 100px;">&nbsp;</td>
+<td class="font_default" style="font-size: 16px; text-align: center; vertical-align: middle; background-color: #29bbb0;"><a style="color: #ffffff; text-align: center;" href="${notInterestedLink}"><strong><span style="color: #ffffff; text-align: center;">Not Interested</span></strong></a></td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<table class="content" border="0" width="100%" cellspacing="0" cellpadding="0">
+<tbody>
+<tr>
+<td class="content_cell" style="text-align: center; background-color: #ffffff;" align="center">&nbsp;</td>
+</tr>
+</tbody>
+</table>
+<table class="footer" border="0" width="100%" cellspacing="0" cellpadding="0">
+<tbody>
+<tr>
+<td class="footer_cell" style="text-align: center; background-color: #383838;" align="center">
+<div class="row" style="width: 100%; vertical-align: top; text-align: center;">
+<div class="col-13 col-bottom-0" style="width: 100%; vertical-align: top; text-align: center;">
+<table class="column" style="width: 100%; vertical-align: top;" border="0" width="100%" cellspacing="0" cellpadding="0">
+<tbody>
+<tr>
+<td class="column_cell font_default" style="font-size: 15px; text-align: center; vertical-align: top; color: #616161;" align="center"><strong>Powered by Recruiz</strong></td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</td>
+</tr>
+</tbody>
+</table>
+<p>&nbsp;</p>

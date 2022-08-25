@@ -1,0 +1,29 @@
+<h4 md-dialog-title>Select new owner</h4>
+<hr>
+<div class="clearfix"></div>
+<mat-dialog-content>
+    <div class="row" *ngFor="let user of hrUsers">
+        <div class="hrs-box">
+            <div class="col-md-10">
+                <div class="avtar-images">
+                    <ngx-avatar name="{{ user?.name }}" class="avatar alphabet-image" initialsSize="1" size="40" textSizeRatio="2">
+                    </ngx-avatar>
+                    <p>{{ user?.name }}</p>
+                    <p>{{ user?.email }}</p>
+                </div>
+            </div>
+
+            <div class="col-md-2" *ngIf="dataOption.deptType !== 'deptHead'">
+                <button mat-raised-button color="primary" (click)="deleteUser(user.email)">Select</button>
+            </div>
+            <div class="col-md-2" *ngIf="dataOption.deptType === 'deptHead'">
+                <button mat-raised-button color="primary" (click)="deleteDeptHead(user.email)">Select</button>
+            </div>
+        </div>
+    </div>
+</mat-dialog-content>
+
+<hr>
+<mat-dialog-actions align="end">
+    <button mat-raised-button (click)="onCloseConfirm()">CANCEL</button>
+</mat-dialog-actions>

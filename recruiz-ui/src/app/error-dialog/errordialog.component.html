@@ -1,0 +1,33 @@
+<div>
+    <h4 md-dialog-title>Response Error</h4>
+    <hr>
+    <div class="clearfix"></div>
+    <mat-dialog-content>
+        <div class="row">
+            <div class="col-md-12">
+                <div *ngIf="data.status !== 0">
+                    <h3>
+                        Reason: {{data.reason}}
+                    </h3><br /><br />
+                    <h4>
+                        Status: {{data.status}}
+                    </h4>
+                </div>
+
+                <div *ngIf="data.status === 0">
+                    <h3>
+                        Reason: Bad Gateway
+                    </h3><br /><br />
+                    <h4>
+                        Status: 502
+                    </h4>
+                </div>
+            </div>
+        </div>
+    </mat-dialog-content>
+
+    <hr>
+    <mat-dialog-actions>
+        <button mat-raised-button (click)="onCloseCancel()">Ok</button>
+    </mat-dialog-actions>
+</div>

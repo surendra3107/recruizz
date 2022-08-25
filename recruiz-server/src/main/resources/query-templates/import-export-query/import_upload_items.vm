@@ -1,0 +1,5 @@
+SELECT CONCAT(job.batch_id) AS 'Batch Id', 
+		DATE_FORMAT(job.process_date_time, '%d/%m/%Y') AS 'Uploaded Date', 
+		CONCAT(job.Name) AS 'Name', CONCAT(job.identifier) AS 'Identifier', 
+		CONCAT(job.failed_reason) AS 'Failed Reason', CONCAT(job.status) AS 'Status'
+FROM import_job_upload_item job where job.batch_id = '$batchId';

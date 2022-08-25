@@ -1,0 +1,70 @@
+.main-section {
+  background-color: #fff;
+  padding: 10px;
+  box-shadow: 0px 0px 5px 0px #ccc;
+  margin-left: 15px;
+  margin-right: 15px;
+  margin-top: 20px;
+  margin-bottom: 40px;
+}
+
+.main-section .row {
+  margin-left: 10px;
+  margin-right: 10px;
+}
+
+.tab-content {
+  margin: 30px 0px 30px 0px;
+}
+
+.avatar {
+  float: left;
+  margin-right: 20px;
+}
+
+.tab-content .table td {
+  padding: 0.75rem;
+  vertical-align: middle;
+  border: 1px solid #dee2e6;
+}
+
+.tab-content .table th {
+  padding: 1.2rem;
+  vertical-align: middle;
+  border: 1px solid #dee2e6;
+  background: #21bcb0;
+  color: #fff;
+  font-size: 15px;
+}
+
+.action-icon a span {
+  cursor: pointer;
+  font-size: 18px;
+}
+
+.mat-standard-chip {
+  transition: box-shadow 280ms cubic-bezier(.4, 0, .2, 1);
+  display: inline-flex;
+  padding: 7px 7px;
+  border-radius: 16px;
+  align-items: center;
+  cursor: default;
+  min-height: 22px;
+  height: 1px;
+  font-size: 11px;
+}
+
+.hrs-box {
+  display: flex;
+  width: 100%;
+  padding: 10px 0px 0px 0px;
+  margin: 10px 15px 5px 15px;
+  box-shadow: 0px 0px 4px 2px #eee;
+}
+
+.mobile-number {
+  float: left;
+  margin-right: 10px;
+  font-size: 18px;
+  ;
+}

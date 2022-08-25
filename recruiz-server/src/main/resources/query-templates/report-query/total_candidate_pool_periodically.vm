@@ -1,0 +1,47 @@
+SELECT 
+	 'Today', COUNT(c.cid) AS 'Candidate Count'
+	FROM 
+		candidate c
+	WHERE DATE(creation_date) = CURDATE()
+UNION
+SELECT 
+	 'Yesterday', COUNT(c.cid) AS 'Candidate Count'
+	FROM 
+		candidate c
+	WHERE DATE(creation_date) = CURDATE()-1
+UNION
+SELECT 
+	 'Last 1 week', COUNT(c.cid) AS 'Candidate Count'
+	FROM 
+		candidate c
+	WHERE c.creation_date > DATE_SUB(NOW(), INTERVAL 7 DAY)
+UNION
+SELECT 
+	 'Last 1 month', COUNT(c.cid) AS 'Candidate Count'
+	FROM 
+		candidate c
+	WHERE c.creation_date > DATE_SUB(NOW(), INTERVAL 1 MONTH)
+UNION
+SELECT 
+	 'Last 3 months', COUNT(c.cid) AS 'Candidate Count'
+	FROM 
+		candidate c
+	WHERE c.creation_date > DATE_SUB(NOW(), INTERVAL 3 MONTH)
+UNION
+SELECT 
+	 'Last 6 months', COUNT(c.cid) AS 'Candidate Count'
+	FROM 
+		candidate c
+	WHERE c.creation_date > DATE_SUB(NOW(), INTERVAL 6 MONTH)
+UNION
+SELECT 
+	 'Last 12 months', COUNT(c.cid) AS 'Candidate Count'
+	FROM 
+		candidate c
+	WHERE c.creation_date > DATE_SUB(NOW(), INTERVAL 12 MONTH)
+UNION 
+SELECT 
+	 'Older than 1 year', COUNT(c.cid) AS 'Candidate Count'
+	FROM 
+		candidate c
+	WHERE c.creation_date <= (NOW() - INTERVAL 12 MONTH)

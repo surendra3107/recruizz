@@ -1,0 +1,21 @@
+#if ($timePeriod != "fromStart")
+
+	SELECT 
+	c.source AS 'Source Channel', COUNT(c.cid) AS 'Total Number'
+	FROM 
+		candidate c
+	WHERE c.owner='$userEmail' AND c.creation_date > DATE_SUB(NOW(), INTERVAL $timePeriod)
+	GROUP BY
+		 c.source;
+	
+#else
+		
+	SELECT 
+	c.source AS 'Source Channel', COUNT(c.cid) AS 'Total Number'
+	FROM 
+		candidate c
+	WHERE c.owner='$userEmail'
+	GROUP BY
+		 c.source;
+		
+#end

@@ -1,0 +1,85 @@
+<div>
+    <h4 md-dialog-title>Add / Edit Team and HR's</h4>
+    <hr>
+    <div class="clearfix"></div>
+    <mat-dialog-content>
+        <div class="row">
+            <div class="col-md-12">
+                <h3 class="team-heading">Team</h3>
+                <div class="hr-table">
+                    <table class="team-table">
+                        <thead>
+                            <tr>
+                                <th>
+                                    Active Team
+                                </th>
+                                <th style="border-top-left-radius:5px;">Team Name</th>
+                                <th>Team Size</th>
+                                <th style="border-top-right-radius:5px;">Target Revenue</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr *ngFor="let team of teamList">
+                                <td>
+                                    <mat-radio-group aria-label="Select an option" [(ngModel)]="selectedTeam" (change)="getListOfHrs(selectedTeam)">
+                                        <mat-radio-button [value]="team" [checked]="team.currentSelectedTeam === 'true'"></mat-radio-button>
+                                    </mat-radio-group>
+                                </td>
+                                <td class="team-name">{{ team?.teamName }}</td>
+                                <td>{{ team?.teamMemberCount }}</td>
+                                <td>{{ team?.teamTargetAmount}}</td>
+                            </tr>
+                        </tbody>
+                    </table>
+
+                    <h4 class="place-holders" *ngIf="!teamList">Team no added yet.</h4>
+
+                </div>
+            </div>
+        </div>
+        <div class="clearfix"></div>
+        <div class="row">
+            <div class="col md-12">
+                <h3 class="team-heading">HR EXECUTIVES</h3>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-6" *ngFor="let hr of allTeamMembers">
+
+                <div class="interview-panel clearfix" style="margin:0; margin-bottom: 15px;">
+                    <div class="avatar-image">
+                        <ngx-avatar name="{{ hr?.userName }}" initialsSize="1" class="avatar" size="50" textSizeRatio="2"></ngx-avatar>
+                    </div>
+                    <div class="panel-details">
+                        <h4 class="name">{{ hr?.userName }}</h4>
+                        <p class="color">
+                            <img src="../../../assets/icons/client-details/Email.png" alt=""> {{ hr?.email }}
+                        </p>
+                        <p class="color" *ngIf="hr?.mobile">
+                            <img src="../../../assets/icons/client-details/Phone.png" alt=""> {{ hr?.mobile }}
+                        </p>
+                        <p class="color" *ngIf="!hr?.mobile">
+                            <img src="../../../assets/icons/client-details/Phone.png" alt=""> N/A
+                        </p>
+                    </div>
+
+                    <div class="bar-options">
+                        <mat-checkbox [(ngModel)]="hr.selectStatus" (change)="selectIndividualHr(hr)"></mat-checkbox>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-12">
+                <h4 *ngIf="!allTeamMembers" class="place-holders">
+                    {{ teamNotSelected }}
+                </h4>
+            </div>
+        </div>
+
+    </mat-dialog-content>
+
+    <hr>
+    <mat-dialog-actions>
+        <button mat-raised-button color="primary" (click)="submitHrInfo()">SAVE</button>
+        <button mat-raised-button (click)="onCloseCancel()">CANCEL</button>
+    </mat-dialog-actions>
+</div>

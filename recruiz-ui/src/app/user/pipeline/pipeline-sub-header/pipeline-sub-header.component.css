@@ -1,0 +1,108 @@
+.basic-container {
+    background-color: #f0f1f5;
+}
+.pipeline-heading h5 {
+    font-size: 16px;
+    font-weight: 600;
+    color: #444767;
+    margin: 6px 0px 0px 0px;
+}
+/* Breadcrumb */
+
+.breadcrumb-list {
+    background-color: #f0f1f5;
+    margin: 0;
+    padding: 0;
+}
+.breadcrumb-list a {
+    color: #444767;
+    font-weight: 600;
+    font-size: 12px;
+}
+.recruiz-green {
+    color: #21bcb0;
+}
+.bold {
+    font-weight: 600;
+}
+.list-view {
+    background-color: #8d383e;
+    padding: 6px;
+    border-radius: 3px;
+    margin-right: 3px;
+}
+.search {
+    width: 76%;
+    display: inline-block;
+    margin-right: 5px;
+    font-size: 10px;
+}
+.search-icon {
+    position: absolute;
+    top: 38%;
+    right: 10%;
+}
+.add-client {
+    background-color: #fff;
+    padding: 8px;
+    margin: 10px;
+    text-decoration: none;
+    color: #21bcb0;
+    border-radius: 5px;
+    font-size: 11px;
+}
+.add-client img {
+    margin: 0px 3px 3px 0px;
+}
+.add-edit-client {
+    background-color: #fff;
+    padding: 8px;
+    font-size: 11px;
+    text-decoration: none;
+    color: #000b58;
+    margin-right: 10px;
+    border-radius: 5px;
+}
+.add-edit-image {
+    background-color: #000b58;
+    width: 12px;
+    margin: 0px 3px 3px 0px;
+}
+.tracker {
+    background: #fff;
+    padding: 8px;
+    margin: 8px 5px;
+    border-radius: 5px;
+}
+.candidate-button {
+    display: inline-block;
+    width: 50%;
+    padding: 5px 0;
+}
+.candidate-button input {
+    width: 11px;
+    margin-top: 0;
+    margin-right: 4px;
+}
+.candidate-button label {
+    margin: 0;
+    font-size: 11px;
+    font-weight: bold;
+}
+
+.candidate-button p{
+    margin:0;
+}
+.process-button {
+    color: #fff;
+}
+.btn-warning {
+    background-color: #c5a400;
+}
+
+.search-cont{
+    width: 50%;
+    float: left;
+    padding: 7px 0;
+    position: relative;
+}

@@ -1,0 +1,21 @@
+#if ($positionCode == "all")
+      SELECT SUBSTRING_INDEX(fr.reason,'-',1) AS 'Reason', COUNT(fr.id) AS 'Total Number'
+		FROM 
+			feedback_reason fr
+		INNER JOIN 
+			feedback f ON f.id = fr.id
+		INNER JOIN 
+			round_candidate rc ON f.round_candidate = rc.id
+		WHERE rc.creation_date BETWEEN '$startDate' AND '$endDate'
+		GROUP BY SUBSTRING_INDEX(fr.reason,'-',1);
+#else
+		SELECT SUBSTRING_INDEX(fr.reason,'-',1) AS 'Reason', COUNT(fr.id) AS 'Total Number'
+		FROM 
+			feedback_reason fr
+		INNER JOIN 
+			feedback f ON f.id = fr.id
+		INNER JOIN 
+			round_candidate rc ON f.round_candidate = rc.id
+		WHERE rc.positionCode = '$positionCode' AND rc.creation_date BETWEEN '$startDate' AND '$endDate'
+		GROUP BY SUBSTRING_INDEX(fr.reason,'-',1);
+#end

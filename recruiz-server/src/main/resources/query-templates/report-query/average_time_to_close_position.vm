@@ -1,0 +1,4 @@
+SELECT 
+	IFNULL(FLOOR(AVG(TIMESTAMPDIFF(DAY,p.openedDate,p.closedDate))),0) AS 'Avg time to close (In Days)'
+FROM position p
+WHERE p.status = '$positionStatus'

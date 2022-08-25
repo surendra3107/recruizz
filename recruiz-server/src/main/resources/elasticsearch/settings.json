@@ -1,0 +1,92 @@
+{
+  "index": {
+      "number_of_shards": "1",
+      "number_of_replicas": "0"
+   },
+    "analysis": {
+      "filter": {
+        "stemmer": {
+          "type": "stemmer",
+          "language": "english"
+        },
+        "stopwords": {
+          "type": "stop",
+          "stopwords": [
+            "_english_"
+          ]
+        },
+		 "autocomplete_filter": {
+            "type": "edge_ngram",
+            "min_gram": 1,
+            "max_gram": 20
+        },
+        "nGram_filter": {
+          "type": "nGram",
+          "min_gram": 2,
+          "max_gram": 20,
+          "token_chars": [
+            "letter",
+            "digit",
+            "punctuation",
+            "symbol"
+          ]
+        }
+      },
+      "analyzer": {
+        "didYouMean": {
+          "filter": [
+            "lowercase"
+          ],
+          "char_filter": [
+            "html_strip"
+          ],
+          "type": "custom",
+          "tokenizer": "standard"
+        },
+        "suggest_auto_complete": {
+            "type": "custom",
+            "tokenizer": "keyword",
+            "filter": [
+                "lowercase",
+                "autocomplete_filter" 
+            ]
+        },
+        "nGram_analyzer": {
+          "type": "custom",
+          "tokenizer": "whitespace",
+          "filter": [
+            "lowercase",
+            "asciifolding",
+            "nGram_filter"
+          ]
+        },
+        "whitespace_analyzer": {
+          "type": "custom",
+          "tokenizer": "whitespace",
+          "filter": [
+            "lowercase",
+            "asciifolding"
+          ]
+        },
+		"case_insensitive_sort": {
+          "type": "custom",
+          "tokenizer": "keyword",
+          "filter": [
+            "lowercase"
+          ]
+        },
+        "default": {
+          "filter": [
+            "lowercase",
+            "stopwords",
+            "stemmer"
+          ],
+          "char_filter": [
+            "html_strip"
+          ],
+          "type": "custom",
+          "tokenizer": "standard"
+        }
+      }
+    }
+}

@@ -1,0 +1,6 @@
+select 
+  ( select count(distinct(eid_id)) from onboarding_details where completed_status=false) 'on_boarding_count',
+  ( select count(*) from employee where employement_status='Active') 'active_employee_count',
+  ( select count(distinct(candidate_cid)) from round_candidate where status IN('Joined','OfferAccepted')) 'yet_to_onboard',
+  ( select count(*) from employee where employement_status='MovedOut') 'exit_employee_count';
+  

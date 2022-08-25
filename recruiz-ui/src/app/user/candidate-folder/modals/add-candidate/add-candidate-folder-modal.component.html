@@ -1,0 +1,36 @@
+<h4 md-dialog-title>Candidate Lists</h4>
+<hr>
+<div class="clearfix"></div>
+<mat-dialog-content>
+    <div class="row" style="margin-top: 10px;">
+        <div class="col-md-6" *ngFor="let candidate of candidateList | paginate: { id: 'server', itemsPerPage: pageSize, currentPage: onPage, totalItems: totalElements }; let i = index">
+            <div class="interview-panel clearfix" style="margin:0; margin-bottom: 15px; box-shadow: 0px 0px 3px 2px #ccc;">
+                <div class="avatar-image">
+                    <ngx-avatar name="{{ candidate?.fullName }}" initialsSize="1" class="avatar" size="50" textSizeRatio="2"></ngx-avatar>
+                </div>
+                <div class="panel-details">
+                    <h4 class="name">{{ candidate?.fullName }}</h4>
+                    <p class="color">
+                        <img src="../../../assets/icons/client-details/Email.png" alt=""> {{ candidate?.email }}
+                    </p>
+                </div>
+
+                <div class="bar-options">
+                    <mat-checkbox [(ngModel)]="candidate.selected" (change)="selectedCandidate(candidate, i)"></mat-checkbox>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-12">
+            <pagination-controls (pageChange)="loadCandidate($event)" id="server" maxSize="9" directionLinks="true" autoHide="true" responsive="true" previousLabel="" nextLabel="" screenReaderPaginationLabel="Pagination" screenReaderPageLabel="page" screenReaderCurrentLabel="You're on page">
+            </pagination-controls>
+        </div>
+    </div>
+</mat-dialog-content>
+
+<hr>
+<mat-dialog-actions align="end">
+    <div style="position: absolute; right: 60%; font-weight: bold;">{{ candidateIdsList?.length }} candidate(s) selected</div>
+    <button mat-raised-button (click)="onCloseCancel()">CANCEL</button>
+    <button mat-raised-button color="primary" (click)="addCandidateToFolder()">ADD</button>
+</mat-dialog-actions>

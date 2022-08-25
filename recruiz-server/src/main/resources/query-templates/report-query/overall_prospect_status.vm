@@ -1,0 +1,5 @@
+SELECT 
+	CONCAT(p.status) AS 'Status', COUNT(p.prospectId) AS 'Total Number'
+FROM prospect p
+GROUP BY
+	 p.status;

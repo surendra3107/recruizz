@@ -1,0 +1,235 @@
+.main-section {
+  background-color: #fff;
+  padding: 10px;
+  box-shadow: 0px 0px 5px 0px #ccc;
+  margin-left: 15px;
+  margin-right: 15px;
+  margin-top: 20px;
+  margin-bottom: 40px;
+}
+
+.main-section .row {
+  margin-left: 10px;
+  margin-right: 10px;
+}
+
+.row-bar {
+  display: inline-flex;
+  width: 100%;
+  border: 1px solid #ccc;
+  margin-left: 15px;
+  margin-right: 15px;
+  padding: 12px 0px 0px 0px;
+  text-align: center;
+  margin-top: 20px;
+  background: gainsboro;
+  color: black;
+}
+
+.row-bar p {
+  font-size: 14px;
+  font-weight: bold;
+  text-shadow: none;
+}
+
+.row-bar-bottom {
+  display: inline-flex;
+  width: 100%;
+  border-top: 1px solid #ccc;
+  border-right: 1px solid #ccc;
+  border-left: 1px solid #ccc;
+  margin-left: 15px;
+  margin-right: 15px;
+  padding: 12px 0px 0px 0px;
+  text-align: center;
+}
+
+.row-bar-bottom:last-child {
+  border-bottom: 1px solid #ccc;
+  margin-bottom: 30px;
+}
+
+.mat-menu-item {
+  height: 30px;
+  line-height: 2;
+}
+
+.user-details {
+  text-align: left;
+  font-size: 15px;
+  font-weight: bold;
+}
+
+.user-details span {
+  text-align: left;
+  font-style: italic;
+  color: #ccc;
+}
+
+.check-box-user {
+  float: left;
+  margin-right: 20px;
+  line-height: 3;
+}
+
+.check-box-user span {
+  font-size: 19px;
+  cursor: pointer;
+}
+
+.team-details {
+  font-weight: bold;
+  cursor: pointer;
+  color: #21bcb0 !important;
+}
+
+.team-hierarchy {
+  margin-top: 10px;
+  text-align: center;
+}
+
+.team-hierarchy .team {
+  display: block;
+  margin: 0 auto 40px;
+  padding: 10px;
+  font-size: 15px;
+  font-weight: 500;
+  letter-spacing: 0.04em;
+  width: 200px;
+  border: solid 1px #DCE0E9;
+  -webkit-box-shadow: #ccc 0px 4px 10px -5px;
+  box-shadow: #ccc 0px 4px 10px -5px;
+  text-align: center;
+  position: relative;
+}
+
+.team-hierarchy .team span.name {
+  font-size: 18px;
+  font-weight: 500;
+}
+
+.team-hierarchy .team span {
+  display: block;
+  max-width: 100%;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  word-wrap: normal;
+  width: 100%;
+}
+
+.team-hierarchy .arrow:before {
+  height: 90%;
+  width: 2px;
+  left: 0;
+  right: 0;
+  margin: auto;
+}
+
+.team-hierarchy .arrow:before,
+.team-hierarchy .arrow:after {
+  content: "";
+  display: block;
+  position: absolute;
+  background: #DCE0E9;
+}
+
+.team-hierarchy .arrow:after {
+  width: 10px;
+  height: 10px;
+  background: none;
+  border: solid 2px #DCE0E9;
+  -webkit-transform: rotate(45deg);
+  transform: rotate(45deg);
+  bottom: 5px;
+  border-top: none;
+  border-left: none;
+}
+
+.team-hierarchy .arrow:before {
+  content: "";
+  display: block;
+  position: absolute;
+  background: #DCE0E9;
+}
+
+.team-hierarchy .arrow:after {
+  content: "";
+  display: block;
+  position: absolute;
+  background: none;
+}
+
+.team-hierarchy .team-group {
+  display: inline-block;
+  position: relative;
+  text-align: center;
+  border: solid 1px #DCE0E9;
+  padding: 20px 15px 5px;
+  margin: 0 auto 40px;
+  -webkit-box-shadow: #ccc 0px 4px 10px -5px;
+  box-shadow: #ccc 0px 4px 10px -5px;
+}
+
+.team-hierarchy .team span.name {
+  font-size: 18px;
+  font-weight: 500;
+}
+
+.team-hierarchy .team {
+  display: block;
+  margin: 0 auto 40px;
+  padding: 10px;
+  font-size: 15px;
+  font-weight: 500;
+  letter-spacing: 0.04em;
+  width: 200px;
+  border: solid 1px #DCE0E9;
+  -webkit-box-shadow: #ccc 0px 4px 10px -5px;
+  box-shadow: #ccc 0px 4px 10px -5px;
+  text-align: center;
+  position: relative;
+}
+
+.team-hierarchy .team-group p {
+  display: inline-block;
+  margin: 0 0 10px;
+  padding: 10px;
+  font-size: 15px;
+  font-weight: 500;
+  letter-spacing: 0.04em;
+  max-width: 100%;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  word-wrap: normal;
+  margin-right: 10px;
+  border: solid 1px #DCE0E9;
+  -webkit-box-shadow: #ccc 0px 4px 10px -5px;
+  box-shadow: #ccc 0px 4px 10px -5px;
+}
+
+.team-hierarchy .arrow.top {
+  top: 100%;
+}
+
+.team-hierarchy .arrow {
+  display: block;
+  position: absolute;
+  height: 40px;
+  width: 10px;
+  left: 0;
+  right: 0;
+  margin: auto;
+}
+
+.team-hierarchy .team-group {
+  display: inline-block;
+  position: relative;
+  text-align: center;
+  border: solid 1px #DCE0E9;
+  padding: 20px 15px 5px;
+  margin: 0 auto 40px;
+  -webkit-box-shadow: #ccc 0px 4px 10px -5px;
+  box-shadow: #ccc 0px 4px 10px -5px;
+}

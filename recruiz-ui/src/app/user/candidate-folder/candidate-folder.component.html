@@ -1,0 +1,85 @@
+<!-- Breadcrumb Section -->
+<section class="main-section ">
+    <div class="top-head row">
+        <div class="heading col-md-8">
+            <mat-label class="client" style="text-transform: uppercase;">CANDIDATE FOLDER</mat-label>
+
+            <nav class="breadcrumb-nav" aria-label="breadcrumb">
+                <ol class="breadcrumb breadcrumb-list">
+                    <li class="breadcrumb-item"><a routerLink="/user/dashboard">Home</a></li>
+                    <li class="breadcrumb-item recruiz-green bold">Candidate Folder</li>
+                </ol>
+            </nav>
+        </div>
+        <div class="rest-part col-md-4">
+            <ul class="side-filters list-inline m-0">
+                <li class="list-inline-item">
+                    <a class="btn btn-default btn-sm add-client" *ngIf="true" (click)="openModalToCreateFolder('')">
+                        <img class="mr-2 add-client-image btn-default" src="../../assets/icons/client-list/Add Client.png">
+                        <span class="client-button">Create Folder</span>
+                    </a>
+
+                </li>
+
+            </ul>
+        </div>
+    </div>
+</section>
+
+<div class="block-body">
+    <div class="row">
+        <div class="col-md-3" *ngFor='let folder of candidateFolder'>
+            <div class="card">
+                <div class="bar-options">
+                    <a #menuTrigger="matMenuTrigger" [matMenuTriggerFor]="menu" style="cursor: pointer;">
+                        <img src="../../assets/icons/client-list/Menu.png" alt="">
+                    </a>
+                </div>
+                <mat-menu #menu="matMenu">
+                    <button mat-menu-item (click)="openModalToAddCandidates(folder.folderName)">
+                        <img src="../../../assets/icons/candidate-folder/ic_add.png" alt="">
+                        Add Candidate
+                    </button>
+
+                    <button mat-menu-item (click)="updateCandidateFolder(folder)">
+                        <img src="../../../assets/icons/client-details/Edit.png" alt="">
+                        Edit Folder
+                    </button>
+
+                    <button mat-menu-item (click)="openModalToViewUserList(folder.folderName)">
+                        <img class="mr-2" src="../../../assets/icons/candidate-folder/Share.png" alt="" style="width: 17px;">
+                        Share Folder
+                    </button>
+
+                    <button mat-menu-item (click)="deleteCandidateFolder(folder.folderName)">
+                        <img src="../../../assets/icons/client-details/Delete.png" alt="">
+                        Delete Folder
+                    </button>
+
+                </mat-menu>
+                <div class="round-block text-center">
+                    <div class="round">
+                        <h5 class="candidate-number">{{ folder?.candidateCount }}</h5>
+                        <p>Candidates</p>
+                    </div>
+                </div>
+                <div class="text text-center">
+                    <h4 class="candidate-name">{{ folder?.folderName }}</h4>
+                    <p>{{ folder?.folderDesc }}</p>
+                </div>
+                <div class="button-group text-center">
+                    <a class="btn user-button" (click)="openModalToUnshareFolder(folder.folderName, 'unshare')">
+                        <img class="mr-2 " src="../../../assets/icons/candidate-folder/User.png" alt=""> {{ folder?.sharedUserCount }} User (s)
+                    </a>
+                    <a class="btn share-button" (click)="openModalToViewUserList(folder.folderName)">
+                        <img class="mr-2" src="../../../assets/icons/candidate-folder/share_1.png" alt="">Share Folder
+                    </a>
+                </div>
+                <button class="btn all-candidate">View all candidates</button>
+            </div>
+        </div>
+        <a class="plus-icon" (click)="openModalToCreateFolder('')" style="cursor: pointer;">
+            <img src="./../../../assets/icons/client-details/add_interview_panel.png" alt="">
+        </a>
+    </div>
+</div>

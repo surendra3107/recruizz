@@ -1,0 +1,15 @@
+select count(*) total,
+	sum(case when status = 'YetToProcess' then 1 else 0 end) 'Yet To Process',
+    sum(case when status = 'InProgress' then 1 else 0 end) 'In Progress',
+    sum(case when status = 'Approved' then 1 else 0 end) 'Approved',
+    sum(case when status = 'Rejected' then 1 else 0 end) 'Rejected',
+    sum(case when status = 'OnHold' then 1 else 0 end) 'On Hold',
+    sum(case when status = 'Duplicate' then 1 else 0 end) 'Duplicate',
+    sum(case when status = 'DroppedOut' then 1 else 0 end) 'Dropped Out',
+    sum(case when status = 'NotInterested' then 1 else 0 end) 'Not Interested',
+    sum(case when status = 'Offered' then 1 else 0 end) 'Offered',
+    sum(case when status = 'OfferAccepted' then 1 else 0 end) 'Offer Accepted',
+    sum(case when status = 'OfferDeclined' then 1 else 0 end) 'Offer Declined',
+    sum(case when status = 'Joined' then 1 else 0 end) 'Joined'
+    
+from round_candidate where positionCode='${positionCode}' AND sourcedBy='${sourcedBy}' AND modification_date between '${startDate}' And '${endDate}';

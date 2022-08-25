@@ -1,0 +1,1 @@
+ALTER TABLE `prospect_contact_info` ADD `designation` varchar(255) DEFAULT NULL;

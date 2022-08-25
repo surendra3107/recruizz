@@ -1,0 +1,723 @@
+<app-sub-header></app-sub-header>
+<section class="main-section">
+    <div class="basic-container">
+        <ul class="list-menu">
+            <li class="list-items">
+
+                <a href=""><img class="alphabet-image" src="https://d1muf25xaso8hp.cloudfront.net/https%3A%2F%2Fs3.amazonaws.com%2Fappforest_uf%2Ff1512936020165x278911292087286720%2FA.png?w=16&h=16&auto=compress&dpr=3&fit=max"
+                        alt=""></a>
+                <div class="row candidate-detail">
+                    <div class="col-md-4 p-0">
+                        <h2 class="recruiz-head">KaliKrishna</h2>
+                        <p class="active-button para"><img src="../../assets/icons/client-list/Radiobutton On.png" alt="">
+                            Active </p>
+                        <p>Candidate Id : <span class="bold">C - 139430</span></p>
+                        <p>Highest Qualification : <span class="bold">N/A</span></p>
+                        <p>Current Location : <span class="bold">Bengluru/Banglore</span></p>
+                    </div>
+                    <div class="col-md-4 middle-div">
+                        <p class="phone"><img src="../../../assets/icons/client-details/Phone.png" alt="">
+                            <span class="bold"> 233905000498</span>
+                        </p>
+                        <p>Current Company : <span class="bold">Siemens Technology Banglore</span></p>
+                        <p class="salary">Current Salary : <span class="bold">&#x20b9; 500000</span></p>
+                        <p>Preferred Location : <span class="bold">Bengluru/Banglore</span></p>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="details-bar-option">
+                            <a #menuTrigger="matMenuTrigger" [matMenuTriggerFor]="menu">
+                                <img src="../../assets/icons/client-list/Menu.png" alt="">
+                            </a>
+                        </div>
+                        <mat-menu #menu="matMenu">
+                            <button mat-menu-item><img src="../../../assets/icons/client-details/Edit.png" alt=""> Edit</button>
+                            <button mat-menu-item><img src="../../../assets/icons/client-details/Delete.png" alt="">
+                                Delete</button>
+                        </mat-menu>
+                        <p class="email"><img src="../../../assets/icons/client-details/Email.png" alt="">
+                            <span class="bold"> sajin@recruiz.com</span>
+                        </p>
+                        <p>Total Experience : <span class="bold">7 Years</span></p>
+                        <p class="salary">Expected Salary : <span class="bold">750000</span></p>
+                        <p>Notice Period : <span class="bold">15 Days</span></p>
+                    </div>
+                </div>
+                <div class="bottom-line col-md-6">
+                    <h3>Skill Set</h3>
+                    <ul class="skills">
+                        <li>Modification</li>
+                        <li>Ownership</li>
+                        <li>C</li>
+                        <li>Fasilitating</li>
+                        <li>Saas</li>
+                        <li>Regulatory</li>
+                        <li>Sourcing</li>
+                        <li>Invoices</li>
+                        <li>Provision</li>
+                        <li>Due Diligence</li>
+                        <li>EMs</li>
+                        <!-- <button class="btn btn-more">+ More</button> -->
+                    </ul>
+                </div>
+                <div class="block-items">
+                    <ul class="list-footer">
+                        <li>Sourced : Email Sync</li>
+                        <li>Sourced by : antony@beyondbytes.co.in</li>
+                        <li>Sourced on : 10-07-2019</li>
+                        <li>Last edited on : 10-07-2019</li>
+                    </ul>
+                </div>
+            </li>
+        </ul>
+        <div class="row">
+            <div class="col-md-8 pr-0">
+                <div class="client-detailtab">
+                    <div class="customtabs">
+                        <ul class="nav nav-pills nav-fill">
+                            <li class="nav-item" [ngClass]="selectedTab=='resume' ? 'active':''">
+                                <a class="nav-link" [ngClass]="selectedTab=='resume' ? 'selected-tab':''" (click)="onTabMenu('resume')">Resume</a>
+                            </li>
+                            <li class="nav-item" [ngClass]="selectedTab=='docs' ? 'active':''">
+                                <a class="nav-link" [ngClass]="selectedTab=='docs' ? 'selected-tab':''" (click)="onTabMenu('docs')">Docs</a>
+                            </li>
+                            <li class="nav-item" [ngClass]="selectedTab=='activity' ? 'active':''">
+                                <a class="nav-link" [ngClass]="selectedTab=='activity' ? 'selected-tab':''" (click)="onTabMenu('activity')">Activity</a>
+                            </li>
+                            <li class="nav-item" [ngClass]="selectedTab=='feedback' ? 'active':''">
+                                <a class="nav-link" [ngClass]="selectedTab=='feedback' ? 'selected-tab':''" (click)="onTabMenu('feedback')">Feedback</a>
+                            </li>
+                            <li class="nav-item" [ngClass]="selectedTab=='positions' ? 'active':''">
+                                <a class="nav-link" [ngClass]="selectedTab=='positions' ? 'selected-tab':''" (click)="onTabMenu('positions')">Positions</a>
+                            </li>
+                            <li class="nav-item" [ngClass]="selectedTab=='notes' ? 'active':''">
+                                <a class="nav-link" [ngClass]="selectedTab=='notes' ? 'selected-tab':''" (click)="onTabMenu('notes')">Notes</a>
+                            </li>
+                            <li class="nav-item" [ngClass]="selectedTab=='assessment' ? 'active':''">
+                                <a class="nav-link" [ngClass]="selectedTab=='assessment' ? 'selected-tab':''" (click)="onTabMenu('assessment')">Assesssment</a>
+                            </li>
+                        </ul>
+                    </div>
+                    <!-- ----------------- Main Tab Content Block ------------------ -->
+                    <!-- ----------------------------------------------------------- -->
+                    <div class="tabs-content">
+                        <!-- Resume -->
+                        <div *ngIf="selectedTab=='resume'">
+                            <!--No Resume -->
+                            <div *ngIf="isResumeEmpty" class="row job-description">
+
+                            </div>
+                            <!-- Resume List -->
+                            <div *ngIf="!isResumeEmpty">
+                                <div class="resume-header row">
+                                    <div class="col-md-4">
+                                        <p class="m-0">File Name</p>
+                                    </div>
+                                    <div class="col-md-4 text-center">1/4</div>
+                                    <div class="col-md-4 text-right">Icons</div>
+                                </div>
+                                <div class="reader"></div>
+                            </div>
+                        </div>
+                        <!-- Docs -->
+                        <div *ngIf="selectedTab=='docs'">
+                            <!-- No Docs -->
+                            <div *ngIf="isDocsEmpty"></div>
+                            <!-- Docs List -->
+                            <div *ngIf="!isDocsEmpty">
+                                <div>
+                                    <h3 class="resume-head">Resume</h3>
+                                    <div class="row original-resume">
+                                        <div class="col-md-4 head m-15">Original Resume</div>
+                                        <div class="col-md-4 m-15 text-center">
+                                            <p class="text-center"><img src="../../../../assets/icons/candidate-detail/pdf.png"
+                                                    alt=""></p>
+                                            <p>Minuthomaa8_0.pdf</p>
+                                            <a href="" class="mr-5"><img src="../../../../assets/icons/candidate-detail/pdf Download.png"
+                                                    alt=""></a>
+                                            <a href=""><img src="../../../../assets/icons/candidate-detail/Edit Icon.png"
+                                                    alt=""></a>
+                                        </div>
+                                        <div class="col-md-4 m-15 text-center">
+                                            <p><img src="../../../../assets/icons/candidate-detail/pdf.png" alt=""></p>
+                                            <p>Minuthomaa8_0.pdf</p>
+                                            <a href="" class="mr-5"><img src="../../../../assets/icons/candidate-detail/pdf Download.png"
+                                                    alt=""></a>
+                                            <a href=""><img src="../../../../assets/icons/candidate-detail/Edit Icon.png"
+                                                    alt=""></a>
+                                        </div>
+                                    </div>
+                                    <div class="masked-resume">
+                                        <h3 class="masked-head">Masked Resume</h3>
+                                        <label for="file-upload" class="custom-file-upload">
+                                            <img src="../../../../assets/icons/candidate-detail/Upload.png" alt="">
+                                            Upload
+                                        </label>
+                                        <input id="file-upload" type="file" />
+                                    </div>
+                                    <!-- Cover Letter -->
+                                    <div>
+                                        <h3 class="resume-head">Cover Letter</h3>
+                                        <div class="row original-resume">
+                                            <div class="col-md-4 m-15">
+                                                <p class="head">Cover Letter</p>
+                                                <p>Max.1</p>
+                                            </div>
+                                            <div class="col-md-4 m-15 text-center">
+                                                <p class="text-center"><img src="../../../../assets/icons/candidate-detail/pdf.png"
+                                                        alt=""></p>
+                                                <p>Minuthomaa8_0.pdf</p>
+                                                <a href="" class="mr-2"><img src="../../../../assets/icons/candidate-detail/pdf Download.png"
+                                                        alt=""></a>
+                                                <a href="" class="mr-2"><img src="../../../../assets/icons/candidate-detail/Edit Icon.png"
+                                                        alt=""></a>
+                                                <a href=""><img src="../../../../assets/icons/candidate-detail/Delete.png"
+                                                        alt=""></a>
+                                            </div>
+                                            <div class="col-md-4 m-15 text-center">
+                                                <p><img src="../../../../assets/icons/candidate-detail/pdf.png" alt=""></p>
+                                                <p>Minuthomaa8_0.pdf</p>
+                                                <a href="" class="mr-2"><img src="../../../../assets/icons/candidate-detail/pdf Download.png"
+                                                        alt=""></a>
+                                                <a href="" class="mr-2"><img src="../../../../assets/icons/candidate-detail/Edit Icon.png"
+                                                        alt=""></a>
+                                                <a href=""><img src="../../../../assets/icons/candidate-detail/Delete.png"
+                                                        alt=""></a>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <!-- current company -->
+
+                                    <h3 class="resume-head">Current Company</h3>
+                                    <div class="row original-resume mt-0">
+                                        <div class="col-md-4 m-15">
+                                            <p class="head">Appointment Letter</p>
+                                            <p class="m-0">Max.1</p>
+                                        </div>
+                                        <div class="col-md-4 m-15 text-center">
+
+                                        </div>
+                                        <div class="col-md-4 m-15 text-center">
+
+                                        </div>
+                                    </div>
+                                    <div class="masked-resume1">
+                                        <label for="file-upload" class="custom-file-upload">
+                                            <img src="../../../../assets/icons/candidate-detail/Upload.png" alt="">
+                                            Upload
+                                        </label>
+                                        <input id="file-upload" type="file" />
+                                    </div>
+                                    <!-- to be removed after loop -->
+
+                                    <div class="row original-resume mt-0">
+                                        <div class="col-md-4 m-15">
+                                            <p class="head">Appointment Letter</p>
+                                            <p class="m-0">Max.1</p>
+                                        </div>
+                                        <div class="col-md-4 m-15 text-center">
+
+                                        </div>
+                                        <div class="col-md-4 m-15 text-center">
+
+                                        </div>
+                                    </div>
+                                    <div class="masked-resume1">
+                                        <label for="file-upload" class="custom-file-upload">
+                                            <img src="../../../../assets/icons/candidate-detail/Upload.png" alt="">
+                                            Upload
+                                        </label>
+                                        <input id="file-upload" type="file" />
+                                    </div>
+
+                                    <div class="row original-resume mt-0">
+                                        <div class="col-md-4 m-15">
+                                            <p class="head">Appointment Letter</p>
+                                            <p class="m-0">Max.1</p>
+                                        </div>
+                                        <div class="col-md-4 m-15 text-center">
+
+                                        </div>
+                                        <div class="col-md-4 m-15 text-center">
+
+                                        </div>
+                                    </div>
+                                    <div class="masked-resume1">
+                                        <label for="file-upload" class="custom-file-upload">
+                                            <img src="../../../../assets/icons/candidate-detail/Upload.png" alt="">
+                                            Upload
+                                        </label>
+                                        <input id="file-upload" type="file" />
+                                    </div>
+
+                                    <!-- New Company -->
+
+                                    <h3 class="resume-head">New Company</h3>
+                                    <div class="row original-resume mt-0">
+                                        <div class="col-md-4 m-15">
+                                            <p class="head">Appointment Letter</p>
+                                            <p class="m-0">Max.1</p>
+                                        </div>
+                                        <div class="col-md-4 m-15 text-center">
+
+                                        </div>
+                                        <div class="col-md-4 m-15 text-center">
+
+                                        </div>
+                                    </div>
+                                    <div class="masked-resume1">
+                                        <label for="file-upload" class="custom-file-upload">
+                                            <img src="../../../../assets/icons/candidate-detail/Upload.png" alt="">
+                                            Upload
+                                        </label>
+                                        <input id="file-upload" type="file" />
+                                    </div>
+
+                                    <div class="row original-resume mt-0">
+                                        <div class="col-md-4 m-15">
+                                            <p class="head">Offers in Hand</p>
+                                            <p class="m-0">Max.1</p>
+                                        </div>
+                                        <div class="col-md-4 m-15 text-center">
+
+                                        </div>
+                                        <div class="col-md-4 m-15 text-center">
+
+                                        </div>
+                                    </div>
+                                    <div class="masked-resume1">
+                                        <label for="file-upload" class="custom-file-upload">
+                                            <img src="../../../../assets/icons/candidate-detail/Upload.png" alt="">
+                                            Upload
+                                        </label>
+                                        <input id="file-upload" type="file" />
+                                    </div>
+
+                                    <div class="row original-resume mt-0">
+                                        <div class="col-md-4 m-15">
+                                            <p class="head">Other Documents</p>
+                                            <p class="m-0">Max.1</p>
+                                        </div>
+                                        <div class="col-md-4 m-15 text-center">
+
+                                        </div>
+                                        <div class="col-md-4 m-15 text-center">
+
+                                        </div>
+                                    </div>
+                                    <div class="masked-resume1">
+                                        <label for="file-upload" class="custom-file-upload">
+                                            <img src="../../../../assets/icons/candidate-detail/Upload.png" alt="">
+                                            Upload
+                                        </label>
+                                        <input id="file-upload" type="file" />
+                                    </div>
+
+                                    <!-- offer letter -->
+                                    <div>
+                                            <h3 class="resume-head">Offer Letter</h3>
+                                            <div class="row original-resume1">
+                                                <p class="no-offer">No offer letter added yet.</p>
+                                            </div>
+                                    </div>
+                                    <!-- Additonal Document -->
+                                    <div>
+                                        <div class="row">
+                                            <div class="col-md-8">
+                                                <h3 class="resume-head additional-doc">Additonal Document</h3>
+                                            </div>
+                                            <div class="col-md-4">
+                                                <div class="upload-btn">
+                                                        <label for="file-upload" class="custom-file-upload m-top">
+                                                            <img src="../../../../assets/icons/candidate-detail/Upload.png" alt="">
+                                                            Upload
+                                                        </label>
+                                                        <input id="file-upload" type="file" />
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="row original-resume mb-3">
+                                                <div class="col-md-2 m-15 align-element">
+                                                    <p class="head">File Name</p>
+                                                </div>
+                                                <div class="col-md-3 m-15 text-center">
+                                                    <p class="text-center"><img src="../../../../assets/icons/candidate-detail/pdf.png"
+                                                            alt=""></p>
+                                                    <p>Minuthomaa8_0.pdf</p>
+                                                    <a href="" class="mr-2"><img src="../../../../assets/icons/candidate-detail/pdf Download.png"
+                                                            alt=""></a>
+                                                    <a href="" class="mr-2"><img src="../../../../assets/icons/candidate-detail/Edit Icon.png"
+                                                            alt=""></a>
+                                                    <a href=""><img src="../../../../assets/icons/candidate-detail/Delete.png"
+                                                            alt=""></a>
+                                                </div>
+                                                <div class="col-md-2">
+                                                </div>
+                                                <div class="col-md-2 m-15 align-element">
+                                                    <p class="head">File Name</p>
+                                                </div>
+                                                <div class="col-md-3 m-15 text-center">
+                                                    <p><img src="../../../../assets/icons/candidate-detail/pdf.png" alt=""></p>
+                                                    <p>Minuthomaa8_0.pdf</p>
+                                                    <a href="" class="mr-2"><img src="../../../../assets/icons/candidate-detail/pdf Download.png"
+                                                            alt=""></a>
+                                                    <a href="" class="mr-2"><img src="../../../../assets/icons/candidate-detail/Edit Icon.png"
+                                                            alt=""></a>
+                                                    <a href=""><img src="../../../../assets/icons/candidate-detail/Delete.png"
+                                                            alt=""></a>
+                                                </div>
+                                                
+                                            </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+                        <!-- Activity -->
+                        <div *ngIf="selectedTab=='activity'">
+                            <!-- No Activity -->
+                            <div *ngIf="isActivityEmpty">
+                            </div>
+                            <!-- Activity List -->
+                            <div *ngIf='!isActivityEmpty'>
+                                <div class="interview-panel clearfix">
+                                    <div class="avatar-image1">
+                                        <img class="icon-image" src="../../../assets/icons/client-details/Notification.png"
+                                            alt="">
+
+                                    </div>
+                                    <div class="panel-details1">
+                                        <h4 class="activity-name">antony@beyondbytes.co.in</h4>
+                                        <p class="color"> Modified by <span>antony(antony@beyondbytes.co.in)</span></p>
+                                    </div>
+
+                                    <div class="date-time">
+                                        <h4>16-Jul-2019</h4>
+                                        <p>4:33 PM</p>
+                                    </div>
+                                </div>
+                                <!-- To Be Deleted -->
+                                <div class="interview-panel clearfix">
+                                    <div class="avatar-image1">
+                                        <img class="icon-image" src="../../../assets/icons/client-details/Notification.png"
+                                            alt="">
+
+                                    </div>
+                                    <div class="panel-details1">
+                                        <h4 class="activity-name">antony@beyondbytes.co.in</h4>
+                                        <p class="color"> Modified by <span>antony(antony@beyondbytes.co.in)</span></p>
+                                    </div>
+
+                                    <div class="date-time">
+                                        <h4>16-Jul-2019</h4>
+                                        <p>4:33 PM</p>
+                                    </div>
+                                </div>
+                                <div class="interview-panel clearfix">
+                                    <div class="avatar-image1">
+                                        <img class="icon-image" src="../../../assets/icons/client-details/Notification.png"
+                                            alt="">
+
+                                    </div>
+                                    <div class="panel-details1">
+                                        <h4 class="activity-name">antony@beyondbytes.co.in</h4>
+                                        <p class="color"> Modified by <span>antony(antony@beyondbytes.co.in)</span></p>
+                                    </div>
+
+                                    <div class="date-time">
+                                        <h4>16-Jul-2019</h4>
+                                        <p>4:33 PM</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Feedback -->
+                        <div *ngIf="selectedTab=='feedback'">
+                            <!-- No Feedback -->
+                            <div class="p-15" *ngIf="isFeedbackEmpty">
+                                <div class="bg">
+                                    <p class="no-feedback text-center">No Feedback Yet</p>
+                                </div>
+                            </div>
+                            <!-- Feedback List -->
+                            <div class="inner-div" *ngIf="!isFeedbackEmpty">
+                                <div class="interview-panel clearfix">
+                                    <div class="avatar-image">
+                                        <img src="https://d1muf25xaso8hp.cloudfront.net/https%3A%2F%2Fs3.amazonaws.com%2Fappforest_uf%2Ff1512936020165x278911292087286720%2FA.png?w=16&h=16&auto=compress&dpr=3&fit=max"
+                                            alt="">
+
+                                    </div>
+                                    <div class="panel-details">
+                                        <h4 class="name">Niraml Raj</h4>
+                                        <p class="color">
+                                            Developer</p>
+                                        <p class="color"><img src="../../../../assets/icons/candidate-detail/star-rating.png"
+                                                alt=""></p>
+                                    </div>
+
+                                    <div class="bar-options">
+                                        <p class="feedback-date">04/04/2019</p>
+                                    </div>
+                                    <p class="feedback-text">Lorem ipsum dolor sit amet consectetur adipisicing elit.
+                                        Consectetur libero dolorum ut beatae sit quod modi at veniam dolore saepe
+                                        temporibus tempora amet illo corporis rem aliquid a, tenetur autem.</p>
+                                </div>
+                                <!-- To Be Deleted -->
+                                <div class="interview-panel clearfix">
+                                    <div class="avatar-image">
+                                        <img src="https://d1muf25xaso8hp.cloudfront.net/https%3A%2F%2Fs3.amazonaws.com%2Fappforest_uf%2Ff1512936020165x278911292087286720%2FA.png?w=16&h=16&auto=compress&dpr=3&fit=max"
+                                            alt="">
+
+                                    </div>
+                                    <div class="panel-details">
+                                        <h4 class="name">Niraml Raj</h4>
+                                        <p class="color">
+                                            Developer</p>
+                                        <p class="color"><img src="../../../../assets/icons/candidate-detail/star-rating.png"
+                                                alt=""></p>
+                                    </div>
+
+                                    <div class="bar-options">
+                                        <p class="feedback-date">04/04/2019</p>
+                                    </div>
+                                    <p class="feedback-text">Lorem ipsum dolor sit amet consectetur adipisicing elit.
+                                        Consectetur libero dolorum ut beatae sit quod modi at veniam dolore saepe
+                                        temporibus tempora amet illo corporis rem aliquid a, tenetur autem.</p>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- Positions -->
+                        <div *ngIf="selectedTab=='positions'">
+                            <!-- No Positions -->
+                            <div *ngIf="isPositionsEmpty">
+                                <div class="p-15" *ngIf="isFeedbackEmpty">
+                                    <div class="bg">
+                                        <p class="no-feedback text-center">No positions added</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- Positions List -->
+                            <div *ngIf="!isPositionsEmpty" class="p-15">
+                                <ul class="list-menu2">
+                                    <li class="list-items2 row ">
+                                        <div class="col-md-4">
+                                            <h3 class="recruiz-head">Recruiz - Sales</h3>
+                                            <div class="recruiz-detail">
+                                                <p class=""><img src="../../../assets/icons/Positions-list/Recruiz_test.png"
+                                                        alt="">
+                                                    Recruiz Test</p>
+                                                <p class=""><img src="../../../assets/icons/Positions-list/Openings.png"
+                                                        alt="">
+                                                    Openings : 1</p>
+                                                <p class=""><img src="../../../assets/icons/Positions-list/Location.png"
+                                                        alt="">
+                                                    Banglore,Karnataka,India</p>
+                                            </div>
+
+                                        </div>
+                                        <div class="col-md-3 published">
+                                            <p class="active-button"><img src="../../assets/icons/client-list/Radiobutton On.png"
+                                                    alt="">
+                                                Active</p>
+                                            <p class=""><img src="../../../assets/icons/Positions-list/Published.png"
+                                                    alt="">
+                                                Published</p>
+                                        </div>
+                                        <div class="col-md-5 buttons">
+                                            <div class="bar-options1">
+                                                <a #menuTrigger="matMenuTrigger" [matMenuTriggerFor]="menu">
+                                                    <img src="../../assets/icons/client-list/Menu.png" alt="">
+                                                </a>
+                                            </div>
+                                            <mat-menu #menu="matMenu">
+                                                <button mat-menu-item><img src="../../../assets/icons/client-details/Edit.png"
+                                                        alt=""> Edit</button>
+                                                <button mat-menu-item><img src="../../../assets/icons/client-details/Delete.png"
+                                                        alt=""> Delete</button>
+                                            </mat-menu>
+                                            <button class="btn btn-default btn-sm btn1 mr-3" routerLink="/user/positions-detail">
+                                                <img src="../../../assets/icons/client-list/Statistic_Icon.png" alt="">
+                                                Statistics
+                                            </button>
+                                            <button class="btn btn-default btn-sm btn2" routerLink="/user/pipeline">
+                                                <img src="../../../assets/icons/Positions-list/Pipeline.png" alt="">
+                                                Pipeline
+                                            </button>
+
+                                        </div>
+
+                                        <div class="block-items2">
+                                            <div class="profile">
+                                                <ul class="rounds">
+                                                    <li>Sourcing:9</li>
+                                                    <li>Profile sub:7</li>
+                                                    <li>Technical:17</li>
+                                                    <li>Managerial:8</li>
+                                                    <li>HR:2</li>
+                                                    <li>Test:4</li>
+                                                    <li>Final round:2</li>
+                                                </ul>
+                                            </div>
+
+                                            <ul class="pd-left">
+                                                <li>Created on:10-09-2018</li>
+                                                <li>Close by:16-07-2018</li>
+                                                <li>Last edited on:09-07-2018</li>
+                                            </ul>
+                                        </div>
+                                    </li>
+                                </ul>
+
+                            </div>
+                        </div>
+
+                        <!-- Notes -->
+                        <div class="docs-div" *ngIf="selectedTab=='notes'">
+                            <!-- No Notes -->
+                            <div *ngIf="isNotesEmpty">
+
+                            </div>
+                            <!-- Notes List -->
+                            <div *ngIf="!isNotesEmpty">
+                                <div class="interview-panel-notes1 clearfix">
+                                    <div class="date">
+                                        <p class="time-date">16-Jul-2019, 4:41 PM</p>
+                                    </div>
+                                    <div class="bar-options1">
+                                        <a #menuTrigger="matMenuTrigger" [matMenuTriggerFor]="menu">
+                                            <img src="../../assets/icons/client-list/Menu.png" alt="">
+                                        </a>
+                                    </div>
+                                    <mat-menu #menu="matMenu">
+                                        <button mat-menu-item><img src="../../../assets/icons/client-details/Edit.png"
+                                                alt=""> Edit</button>
+                                        <button mat-menu-item><img src="../../../assets/icons/client-details/Delete.png"
+                                                alt=""> Delete</button>
+                                    </mat-menu>
+                                    <div class="bottom-div">
+                                        <div class="avatar-image2">
+                                            <img class="icon-image2" src="../../../assets/icons/Positions-list/Notes.png"
+                                                alt="">
+                                        </div>
+                                        <div class="panel-details2">
+                                            <p class="notes">Lorem ipsum dolor sit amet consectetur adipisicing elit.
+                                                Eligendi velit enim deleniti molestiae quos. Error nisi illo velit
+                                                maiores, facere aut tempora sint. Repellendus, dicta vitae totam dolor
+                                                in fugiat</p>
+                                        </div>
+                                        <div class="added-by-div">
+                                            <p class="added-by">
+                                                Added by antony(antony@beyondbytes.co.in)
+                                            </p>
+                                        </div>
+                                    </div>
+                                </div>
+                                <a routerLink="" class="plus-icon">
+                                    <img src="./../../../assets/icons/client-details/add_interview_panel.png" alt="">
+                                </a>
+
+                                <!-- Below Content to be deleted After Using Loop -->
+                                <div class="interview-panel-notes1 clearfix">
+                                    <div class="date">
+                                        <p class="time-date">16-Jul-2019, 4:41 PM</p>
+                                    </div>
+                                    <div class="bar-options1">
+                                        <a #menuTrigger="matMenuTrigger" [matMenuTriggerFor]="menu">
+                                            <img src="../../assets/icons/client-list/Menu.png" alt="">
+                                        </a>
+                                    </div>
+                                    <mat-menu #menu="matMenu">
+                                        <button mat-menu-item><img src="../../../assets/icons/client-details/Edit.png"
+                                                alt=""> Edit</button>
+                                        <button mat-menu-item><img src="../../../assets/icons/client-details/Delete.png"
+                                                alt=""> Delete</button>
+                                    </mat-menu>
+                                    <div class="bottom-div">
+                                        <div class="avatar-image2">
+                                            <img class="icon-image2" src="../../../assets/icons/Positions-list/Notes.png"
+                                                alt="">
+                                        </div>
+                                        <div class="panel-details2">
+                                            <p class="notes">Lorem ipsum dolor sit amet consectetur adipisicing elit.
+                                                Eligendi velit enim deleniti molestiae quos. Error nisi illo velit
+                                                maiores, facere aut tempora sint. Repellendus, dicta vitae totam dolor
+                                                in fugiat</p>
+                                        </div>
+                                        <div class="added-by-div">
+                                            <p class="added-by">
+                                                Added by antony(antony@beyondbytes.co.in)
+                                            </p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Assesssment -->
+                        <div class="docs-div" *ngIf="selectedTab=='assessment'">
+                            <!-- No Assessment -->
+                            <div *ngIf="isAssessmentEmpty">
+                                <div class="p-8">
+                                    <div class="bg">
+                                        <p class="no-feedback text-center">No assessment found !</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- Assessment List -->
+                            <div *ngIf="!isAssessmentEmpty">
+                                <h2>list</h2>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- End-Client Detail Tab -->
+                </div>
+            </div>
+            <!-- Right Side Main Block -->
+            <!-- --------------------- -->
+            <div class="col-md-4">
+                <div class="client-additional">
+                    <div class="custom-additional-tab">
+                        <p class="title">ADDITIONAL INFO</p>
+                    </div>
+                    <div class="tabs-content">
+                        <div class="description">
+                            <h6>Positions Sourced For :</h6>
+                        </div>
+                        <div class="more-details">
+                            <ul>
+                                <li>Category:Software / IT</li>
+                                <li>Sub-Category : Software Engineer</li>
+                                <li>Industry : Software Developer</li>
+                                <li>Average Stay In Company : 52 months</li>
+                                <li>Longest Stay In Company : 96 months</li>
+                                <li>Serving Notice Perios : No</li>
+                                <li>Communication : N/A</li>
+                                <li>Employment : Software/IT</li>
+                                <li>Comments : N/A</li>
+                                <li>Languages : N/A</li>
+                                <li>Last Active 18-07-2019</li>
+                                <hr>
+                                <li>Gender : Male</li>
+                                <li>Date of Birth : June 01 1981</li>
+                                <li>Nationality : N/A</li>
+                                <li>Address : N/A</li>
+                                <li>Marital Status : N/A</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <div class="custom-info">
+                    <h4 class="title-tab">Custom info</h4>
+                </div>
+                <div class="custom">
+                    <div>
+                        <p class="education-info"></p>
+                        <p class="education-info"></p>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</section>

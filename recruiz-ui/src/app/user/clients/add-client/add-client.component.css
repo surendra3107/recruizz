@@ -1,0 +1,50 @@
+mat-label {
+  color: #444767;
+  margin-left: 15px;
+  padding: 12px;
+  font-size: 18px;
+  font-weight: 600;
+  letter-spacing: 1px;
+}
+
+.heading {
+  background-color: #f0f1f5;
+  margin-left: -19px;
+  padding: 10px;
+  height: 45px;
+  text-transform: uppercase;
+}
+
+.main-content {
+  background-color: #ececec;
+  height: 100%;
+  width: 100%;
+  float: left;
+}
+
+.card-detail {
+  height: 200px;
+}
+
+
+.card-text {
+  color: #8991a2;
+}
+
+.card-new-title {
+  font-size: 28px;
+}
+
+.marg-10 {
+  margin: 25px 5px;
+}
+
+.fl-left {
+  float: left;
+}
+
+.pd-10 {
+  padding: 10px;
+}
+
+

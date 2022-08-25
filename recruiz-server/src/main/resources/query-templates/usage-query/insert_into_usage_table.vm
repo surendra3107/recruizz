@@ -1,0 +1,1 @@
+INSERT INTO tenant (`user_email`, `name`, `action`, `time`, `id`,`last_hit_gap`) VALUES ('$userEmail','$name','$action',$time,$id,($hitDiffStatement));

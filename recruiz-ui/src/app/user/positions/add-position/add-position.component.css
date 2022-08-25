@@ -1,0 +1,48 @@
+.main-content {
+  background-color: #ececec;
+  height: 100%;
+  width: 100%;
+  float: left;
+}
+
+.card-detail {
+  height: 200px;
+}
+
+
+.card-text {
+  color: #8991a2;
+}
+
+.card-new-title {
+  font-size: 28px;
+}
+
+.marg-10 {
+  margin: 25px 5px;
+}
+
+.fl-left {
+  float: left;
+}
+
+.pd-10 {
+  padding: 10px;
+}
+
+::ng-deep .mat-form-field-appearance-legacy .mat-form-field-suffix .mat-datepicker-toggle-default-icon {
+  width: 1.5em !important;
+}
+
+::ng-deep button:focus {
+  outline: 0px dotted !important;
+  outline: 0px auto -webkit-focus-ring-color !important;
+}
+
+.error-msg {
+  position: absolute;
+  top: 40px;
+  font-size: 11px;
+  color: red;
+  font-weight: 500;
+}

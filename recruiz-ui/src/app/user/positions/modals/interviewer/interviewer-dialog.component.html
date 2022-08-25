@@ -1,0 +1,110 @@
+<div>
+    <h4 md-dialog-title *ngIf="dataOption.mode !== 'edit-mode'">List of Interviewers</h4>
+    <h4 md-dialog-title *ngIf="dataOption.mode === 'edit-mode'">Update Interviewer</h4>
+    <hr>
+    <div class="clearfix"></div>
+    <mat-dialog-content *ngIf="dataOption.mode !== 'edit-mode'">
+        <div class="row">
+            <div class="col-md-6" *ngFor="let interviewer of allGlobalInterviwerList">
+                <div class="interview-panel clearfix" style="margin:0; margin-bottom: 15px;">
+                    <div class="avatar-image">
+                        <ngx-avatar name="{{ interviewer?.name }}" initialsSize="1" class="avatar" size="50" textSizeRatio="2"></ngx-avatar>
+                    </div>
+                    <div class="panel-details">
+                        <h4 class="name">{{ interviewer?.name }}</h4>
+                        <p class="color">
+                            <img src="../../../assets/icons/client-details/Email.png" alt=""> {{ interviewer?.email }}
+                        </p>
+                        <p class="color" *ngIf="interviewer?.mobile">
+                            <img src="../../../assets/icons/client-details/Phone.png" alt=""> {{ interviewer?.mobile }}
+                        </p>
+                        <p class="color" *ngIf="!interviewer?.mobile">
+                            <img src="../../../assets/icons/client-details/Phone.png" alt=""> N/A
+                        </p>
+                    </div>
+
+                    <div class="bar-options">
+                        <mat-checkbox [(ngModel)]="interviewer.selected"></mat-checkbox>
+                    </div>
+                </div>
+            </div>
+
+            <!--place holder-->
+            <div class="col-md-12" *ngIf="allGlobalInterviwerList.length === 0">
+                <h4 class="place-holders">Record not found. Add interviewers manually.</h4>
+            </div>
+        </div>
+
+        <hr />
+        <div class="row">
+            <div class="col-md-12" style="margin-bottom: 20px;">
+                <button mat-raised-button color="default" (click)="addMoreInterviewer()">ADD INTERVIEWER MANUALLY</button>
+            </div>
+        </div>
+        <div class="clearfix"></div>
+
+        <span *ngFor="let interviewerPanel of manuallyAddedInterviewer; let i = index">
+            <div class="row side-box">
+              <div class="col-md-4">
+                  <mat-form-field class="example-full-width">
+                    <input matInput placeholder="Full name" [(ngModel)]="interviewerPanel.name" required>
+                 </mat-form-field>
+              </div>
+
+            <div class="col-md-4">
+                <mat-form-field class="example-full-width">
+                     <input matInput placeholder="Email" [(ngModel)]="interviewerPanel.email" required (blur)="validateInterviewerEmail(i, interviewerPanel.email)">
+                     <span class="error-msg-custom" *ngIf="i === errorIndex">
+                        {{ errorEmail }}
+                     </span>
+        </mat-form-field>
+</div>
+
+<div class="col-md-4">
+    <mat-form-field class="example-full-width">
+        <input matInput placeholder="Mobile" [(ngModel)]="interviewerPanel.mobile">
+    </mat-form-field>
+</div>
+<div class="delete-icon">
+    <img src="../../../assets/icons/client-details/Delete.png" alt="" (click)="removeAddedInterviewer(i)">
+</div>
+</div>
+</span>
+
+</mat-dialog-content>
+
+<mat-dialog-content *ngIf="dataOption.mode === 'edit-mode'">
+
+    <span *ngFor="let interviewerPanel of manuallyAddedInterviewer; let i = index">
+            <div class="row side-box">
+              <div class="col-md-4">
+                  <mat-form-field class="example-full-width">
+                    <input matInput placeholder="Full name" [(ngModel)]="interviewerPanel.name" required>
+                 </mat-form-field>
+              </div>
+
+            <div class="col-md-4">
+                <mat-form-field class="example-full-width">
+                     <input matInput placeholder="Email" [(ngModel)]="interviewerPanel.email" disabled (blur)="validateInterviewerEmail(i, interviewerPanel.email)">
+                     <span class="error-msg-custom" *ngIf="i === errorIndex">
+                        {{ errorEmail }}
+                     </span>
+    </mat-form-field>
+    </div>
+
+    <div class="col-md-4">
+        <mat-form-field class="example-full-width">
+            <input matInput placeholder="Mobile" [(ngModel)]="interviewerPanel.mobile">
+        </mat-form-field>
+    </div>
+    </div>
+    </span>
+</mat-dialog-content>
+
+<hr>
+<mat-dialog-actions>
+    <button mat-raised-button color="primary" (click)="addInterviewerToPosition()" *ngIf="dataOption.mode !== 'edit-mode'">ADD INTERVIEWER</button>
+    <button mat-raised-button color="primary" (click)="updateInterviewerToPosition()" *ngIf="dataOption.mode === 'edit-mode'">UPDATE INTERVIEWER</button>
+    <button mat-raised-button (click)="onCloseCancel()">CANCEL</button>
+</mat-dialog-actions>
+</div>

@@ -1,0 +1,75 @@
+SELECT
+		CONCAT(G.clientName) AS 'Name',CONCAT(G.title) AS 'Position Name',CONCAT(G.totalPosition) AS 'No of openings',
+		CONCAT(G.name) AS 'Recruitment Team', DATE_FORMAT(G.openedDate, '%d/%m/%Y') AS 'Opened on',
+		IFNULL(DATE_FORMAT(G.closeByDate, '%d/%m/%Y'), DATE_FORMAT(NOW(), '%d/%m/%Y')) AS 'Close by Date',
+		DATE_FORMAT(G.modification_date, '%d/%m/%Y') AS 'Modified on', CONCAT(G.status) AS 'Status', IFNULL(H.sourcedCount,0) AS Sourced,
+		IFNULL(M.forwardedCount,0) AS 'Profile Forwarded', IFNULL(I.scheduledCount,0) AS 'Interviews Scheduled', IFNULL(J.offeredCount,0) AS 'Offered', IFNULL(K.joinedCount,0) AS 'Joined', IFNULL(L.rejectedCount,0) AS 'Rejected'
+	FROM
+	 (
+	 	SELECT positionId, positionCode, title, modification_date, owner, clientId, clientName, totalPosition, closeByDate, STATUS,
+	 	openedDate,
+	 		CASE
+	 			WHEN name IS NULL THEN (SELECT name FROM USER WHERE email = owner)
+	 		ELSE name
+	 		END AS name,
+	 		CASE
+	 			WHEN email IS NULL THEN owner
+	 			ELSE email
+	 		END AS email
+	FROM (
+		SELECT * FROM (
+		SELECT * FROM
+		(
+			SELECT DISTINCT id AS positionId, positionCode, modification_date, title, client_id, totalPosition,
+			openedDate, closeByDate, STATUS, owner
+			FROM POSITION $teamFilter ) A
+	INNER JOIN
+	(
+		SELECT DISTINCT id AS clientId, clientName
+		FROM CLIENT) B ON A.client_id=B.clientId) C
+	LEFT JOIN
+	(
+		SELECT DISTINCT position_ID, HR_ID
+		FROM position_hr) D ON c.positionId = D.position_ID) E
+	LEFT JOIN
+	(
+		SELECT DISTINCT user_id,name, email
+		FROM USER) F ON E.HR_ID = F.user_id) G
+	LEFT JOIN
+	(
+		SELECT modification_date, positionCode, sourcedBy, COUNT(id) AS sourcedCount
+		FROM round_candidate WHERE sourcedBy IS NOT NULL
+		GROUP BY positionCode, sourcedBy) H ON G.positionCode = H.positionCode AND G.email = H.sourcedBy
+	LEFT JOIN
+	(
+		SELECT modification_date, positionCode, sourcedBy, STATUS, COUNT(id) AS offeredCount
+		FROM round_candidate WHERE STATUS = '$offeredStatus'  OR STATUS = 'AwaitingOffer' AND sourcedBy IS NOT NULL
+		GROUP BY positionCode, sourcedBy) J ON G.positionCode = J.positionCode AND G.email = J.sourcedBy
+	LEFT JOIN
+	(
+		SELECT modification_date, positionCode, sourcedBy, STATUS, COUNT(id) AS joinedCount
+		FROM round_candidate WHERE STATUS = '$joinedStatus' OR STATUS = '$employeeStatus' AND sourcedBy IS NOT NULL
+		GROUP BY positionCode, sourcedBy) K ON G.positionCode = K.positionCode AND G.email = K.sourcedBy
+	LEFT JOIN
+	(
+		SELECT modification_date, positionCode, sourcedBy, STATUS, COUNT(id) AS rejectedCount
+		FROM round_candidate WHERE STATUS = '$rejectedStatus' AND sourcedBy IS NOT NULL
+		GROUP BY positionCode, sourcedBy) L ON G.positionCode = L.positionCode AND G.email = L.sourcedBy
+	LEFT JOIN
+	(
+		SELECT positionCode, interviewSchedulerEmail, COUNT(id) AS scheduledCount
+		FROM interview_schedule GROUP BY positionCode, interviewSchedulerEmail) I ON G.positionCode = I.positionCode AND G.email = I.interviewSchedulerEmail
+	LEFT JOIN
+	(
+		SELECT rc.positionCode, COUNT(feed.id) AS forwardedCount, feed.eventCreatedBy
+		FROM feedback feed inner join round_candidate rc on rc.id = feed.round_candidate where feed.type IN ('Forwarded','Forwarded Ignored') and feed.eventCreatedBy IS NOT NULL Group By rc.positionCode, feed.eventCreatedBy) M
+		ON G.positionCode = M.positionCode AND G.email = (CASE
+	 			WHEN (SELECT LOCATE(G.email,M.eventCreatedBy)) > 0 THEN G.email
+	 		ELSE 0
+	 		END)
+	WHERE
+		G.modification_date BETWEEN '$startDate' AND '$endDate'
+		#if ($userEmail != "all")
+			AND G.email in ($userEmail)
+		#end
+		ORDER BY G.clientName, G.title, G.name

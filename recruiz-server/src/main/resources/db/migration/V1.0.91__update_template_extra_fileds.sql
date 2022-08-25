@@ -1,0 +1,1 @@
+UPDATE `email_template_data` SET `subjectVersion`='0', `bodyVersion`='0', `subjectEdited`=0, `bodyEdited`=0;

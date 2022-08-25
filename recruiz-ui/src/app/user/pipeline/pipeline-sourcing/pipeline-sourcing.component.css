@@ -1,0 +1,142 @@
+hr {
+    color: #a8a9ab;
+}
+.main-section {
+    padding: 5px;
+    background-color: #ececec;
+    position: relative;
+    min-height: 484px;
+}
+.basic-container {
+    background-color: #ececec;
+    width: 96%;
+    margin: 0 auto;
+}
+.orange {
+    color: #cf7826;
+}
+.alphabet-image {
+    margin: 10px 0px;
+    padding:0;
+}
+
+.alphabet-image img{
+    width: 100%;
+    margin: 0 auto;
+    display: block;
+}
+
+.head {
+    background: linear-gradient(180deg, rgba(23,101,36,1) 23%, rgba(7,39,12,1) 92%);
+    color: #fff;
+    padding: 5px 12px;
+    border-top-left-radius: 4px;
+    border-top-right-radius: 4px;
+}
+.head h5 {
+    display: inline-block;
+    width: 90%;
+    font-size: 13px;
+    margin: 2px 0px;
+}
+.head img {
+    background-color: #fff;
+    padding: 2px;
+    margin-bottom: 1px;
+}
+.bg-color-white {
+    padding:8px;
+    background-color: #fff;
+    width: 100%;
+    float: left;
+    padding-bottom: 0;
+}
+.bg-color-grey {
+    background-color: #f0f1f5;
+    border-radius: 3px;
+    padding: 8px;
+    width: 100%;
+    float: left;
+    margin-bottom:8px;
+}
+.name {
+    font-weight: 600;
+    color: #21bcb0;
+    margin: 10px 0px 0px 0px;
+    float: left;
+    font-size:16px;
+}
+.bar-options1 {
+    float: right;
+    margin: 10px 6px 0px 0px;
+}
+.phone-number {
+    margin: 7px 0;
+    float: left;
+    font-size: 12px;
+    font-weight: 600;
+}
+
+.inline-email {
+    padding: 0;
+}
+
+.inline-email li {
+    display: inline-block;
+    margin: 6px 0;
+}
+
+.block-footer {
+    font-size: 10px;
+    font-weight: 600;
+}
+
+.process-button {
+    color: #fff;
+}
+
+.btn-warning {
+    background-color: #c5a400;
+}
+
+.fl-left{
+    float:left;
+}
+
+.lower-tab{    
+    float: left;
+    width:100%;
+    position: relative;
+}
+
+
+.lower-tab:before{
+    content: '';
+    width: 106%;
+    height: 1px;
+    background: #a99797;
+    position: absolute;
+    top: -10px;
+    left: -3%;
+}
+
+.pd-r0{
+    padding-right:0;
+    padding-left:7px;
+}
+
+.nopadding{
+    padding:0;
+}
+
+
+.col-md-3{
+    padding:0 8px;
+}
+
+.schedule-button {
+    background-color: #fff; 
+}
+.schedule-button:hover {
+    color: #17a2b8;
+}

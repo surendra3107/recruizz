@@ -1,0 +1,48 @@
+<h4 md-dialog-title>Invite Recruiz Users</h4>
+<hr>
+<div class="clearfix"></div>
+<mat-dialog-content>
+    <div class="row" *ngFor="let name of data.inviteUsers; let indx = index; first as isFirst" style="margin-top: 10px;">
+        <div class="col-md-4">
+            <mat-form-field class="example-full-width">
+                <mat-label>Name</mat-label>
+                <input matInput [(ngModel)]="data.inviteUsers[indx].userName">
+            </mat-form-field>
+        </div>
+
+        <div class="col-md-4">
+            <mat-form-field class="example-full-width">
+                <mat-label>Email</mat-label>
+                <input matInput [(ngModel)]="data.inviteUsers[indx].email">
+            </mat-form-field>
+        </div>
+
+        <div class="col-md-3">
+            <mat-form-field>
+                <mat-label>Role</mat-label>
+                <mat-select [(ngModel)]="data.inviteUsers[indx].roleId">
+                    <mat-option *ngFor="let role of allroles" [value]="role.id">
+                        {{ role.roleName }}
+                    </mat-option>
+                </mat-select>
+            </mat-form-field>
+        </div>
+
+        <div class="col-md-1" *ngIf="!isFirst">
+            <i class="material-icons" style="font-size: 18px; cursor: pointer; line-height: 3; float: right;" (click)="deleteRow($event, name)">
+              delete
+            </i>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            <button mat-button color="primary" class="pull-right" (click)="addMoreUser('')">Add more user</button>
+        </div>
+    </div>
+</mat-dialog-content>
+
+<hr>
+<mat-dialog-actions align="end">
+    <button mat-raised-button (click)="onCloseConfirm()">CANCEL</button>
+    <button mat-raised-button color="primary" (click)="getInviteUser()">Send Invites</button>
+</mat-dialog-actions>

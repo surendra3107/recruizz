@@ -1,0 +1,129 @@
+<div class="container-fluid content">
+    <mat-toolbar class="navbar recuiz-nav" [style.margin-left]="isSidebarToggle==true ? '85px' : '200px'">
+        <div class="col-md-4 m-sm-0">
+            <ul class="links">
+                <li>
+                    <a class="expclp" (click)="toggleSidebar()"> <i class="fa fa-bars" aria-hidden="true"></i></a>
+                </li>
+                <li><a class="m-1" (click)="goToRoute('/user/client-list')"
+                        [ngClass]="activeRoute=='client' ? 'link-active-class' :''">{{translateName}}</a></li>
+                <li><a class="m-1" (click)="goToRoute('/user/positions-list')"
+                        [ngClass]="activeRoute=='positions' ? 'link-active-class' : ''">POSITIONS</a></li>
+                <li><a class="m-1" (click)="goToRoute('/user/candidate-list')"
+                        [ngClass]="activeRoute=='candidates' ? 'link-active-class' : ''">CANDIDATE</a></li>
+            </ul>
+        </div>
+
+        <div class="col-md-3 d-lg-block">
+            <input type="text" class="search" name="searchField" placeholder="Global search">
+            <i class="fa fa-search icon" aria-hidden="true"></i>
+        </div>
+
+        <div class="col-md-5 text-right d-lg-block">
+            <button mat-raised-button class="btn-group">Advanced search</button>
+            <button mat-raised-button class="btn-group">Recruiz search</button>
+
+            <ul class="right-icon">
+                <li>
+                    <a>
+                        <i class="fa fa-plus btn-icon" aria-hidden="true" [matMenuTriggerFor]="menu1"
+                            #menuTrigger1="matMenuTrigger"></i>
+                    </a>
+                    <mat-menu #menu1="matMenu" [overlapTrigger]="false">
+                        <span (mouseleave)="menuTrigger1.closeMenu()">
+                            <button class="drop-btn" mat-menu-item style="display: none;">
+                                Add Prospect
+                            </button>
+                            <button class="drop-btn" mat-menu-item>
+                                <mat-icon>shop</mat-icon> Add Prospect
+                            </button>
+                            <button class="drop-btn" mat-menu-item [routerLink]="['/user/add-client']">
+                                <mat-icon>work</mat-icon> Add Client
+                            </button>
+                            <button class="drop-btn" mat-menu-item [routerLink]="['/user/add-position']">
+                                <mat-icon>assignment_ind</mat-icon>  Add Position
+                            </button>
+                            <button class="drop-btn" mat-menu-item>
+                                <mat-icon>person_add</mat-icon> Add Candidate
+                            </button>
+                            <button class="drop-btn" mat-menu-item>
+                                <mat-icon>edit</mat-icon> Add Candidate Manual
+                            </button>
+                            <button class="drop-btn" mat-menu-item [disabled]="true">
+                                <mat-icon> publish</mat-icon> Add Candidate Auto
+                            </button>
+                            <button class="drop-btn" mat-menu-item>
+                                <mat-icon>timer</mat-icon> Add Candidate Qick
+                            </button>
+                            <button class="drop-btn" mat-menu-item>
+                                <mat-icon>cloud_upload</mat-icon> Bulk Upload
+                            </button>
+                        </span>
+                    </mat-menu>
+                </li>
+                <li>
+                    <a class="btn-icon2" [matMenuTriggerFor]="menu" #menuTrigger="matMenuTrigger">
+                        <i class="fa fa-user btn-icon1" aria-hidden="true"></i></a>
+                    <mat-menu #menu="matMenu" [overlapTrigger]="false" class="recuiz-nav-bar">
+                        <span>
+                            <button class="drop-btn top-first" mat-menu-item>
+                                <div class="img-avatar pull-left">
+                                    <ngx-avatar name="{{ globalData?.userName }}" class="avatar alphabet-image"
+                                        initialsSize="1" size="50" textSizeRatio="2"></ngx-avatar>
+                                </div>
+                                <div class="img-text">
+                                    <p>{{ globalData?.userName }}</p>
+                                    <p>{{ globalData?.email }}</p>
+                                </div>
+                            </button>
+
+                            <button class="drop-btn" mat-menu-item (click)="goToAdminSettings()">
+                                <mat-icon>people_outline</mat-icon>
+                                <span>Admin Settings</span>
+                            </button>
+
+                            <mat-accordion (click)="$event.stopPropagation();">
+                                <mat-expansion-panel (opened)="panelOpenState = true" (closed)="panelOpenState = false" class="force-overflow">
+                                    <mat-expansion-panel-header>
+                                        <mat-panel-title>
+                                            <mat-icon style="margin-right: 10px;">call_to_action</mat-icon>   Organizations
+                                        </mat-panel-title>
+                                        <mat-panel-description>
+                                            Switch between organizations
+                                        </mat-panel-description>
+                                    </mat-expansion-panel-header>
+                                    <section class="example-list-section">
+                                        <ul class="organisation-list">
+                                            <li *ngFor="let tenant of userTenants | keyvalue">
+                                                <mat-checkbox class="example-margin" [checked]="orgName === tenant.value" (click)="$event.Propagation();">
+                                                    {{ tenant.value }}
+                                                </mat-checkbox>
+                                            </li>
+                                           
+                                        </ul>
+                                      </section>
+                                </mat-expansion-panel>
+                            </mat-accordion>
+
+                            <button class="drop-btn" mat-menu-item *ngIf="loggedInUserType === 'app'">
+                                <mat-icon>help</mat-icon>
+                                <span>Help</span>
+                            </button>
+
+                            <button class="drop-btn" mat-menu-item *ngIf="loggedInUserType === 'app'">
+                                <mat-icon>feedback</mat-icon>
+                                <span>Feedback</span>
+                            </button>
+
+                            <button class="drop-btn" mat-menu-item (click)="logoutSession();">
+                                <mat-icon>exit_to_app</mat-icon>
+                                <span>Logout</span>
+                            </button>
+                        </span>
+                    </mat-menu>
+                </li>
+            </ul>
+        </div>
+
+    </mat-toolbar>
+</div>

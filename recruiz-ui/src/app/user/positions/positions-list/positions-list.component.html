@@ -1,0 +1,292 @@
+<!-- Breadcrumb Section -->
+<div *ngIf="isFilterOpen" class="overlay"></div>
+<section class="main-section ">
+    <div class="top-head row">
+        <div class="heading col-md-8">
+            <mat-label class="client">{{pageTitle}}</mat-label>
+            <!-- Bread-crum section -->
+            <nav *ngIf="isBreadcrumbShow" class="breadcrumb-nav" aria-label="breadcrumb">
+                <ol class="breadcrumb breadcrumb-list">
+                    <li class="breadcrumb-item"><a routerLink="/user/dashboard">Home</a></li>
+                    <li class="breadcrumb-item"><a routerLink="{{mainRoute}}">{{mainBreacrumb}}</a></li>
+                    <li class="breadcrumb-item recruiz-green bold">{{finalBreadcrumb}}</li>
+                </ol>
+            </nav>
+        </div>
+        <div class="rest-part col-md-4">
+            <ul class="side-filters list-inline m-0">
+                <li class="list-inline-item">
+                    <a class="btn btn-default btn-sm add-client" *ngIf="false">
+                        <img class="mr-2 add-client-image btn-default" src="../../assets/icons/client-list/Add Client.png">
+                        <span class="client-button">Add Client</span>
+                    </a>
+                    <a class="btn btn-default btn-sm add-client" *ngIf="true">
+                        <img class="mr-2 add-client-image btn-default" src="../../assets/icons/client-list/Add Client.png">
+                        <span class="client-button">Add Position</span>
+                    </a>
+                </li>
+                <li class="list-inline-item">
+                    <div class="btn-group button-group m-0">
+                        <button type="button" class="btn btn-default button-default btn-sm m-0">
+                            <img class="sort-by" src="../..//assets/icons/client-list/Sortby.png" alt="">
+                        </button>
+                        <button type="button" class="btn btn-default button-second dropdown-toggle dropdown-toggle-split btn-sm" #menuTrigger="matMenuTrigger" [matMenuTriggerFor]="menu"></button>
+                        <mat-menu #menu="matMenu">
+                            <ul class="cutom-radio-button">
+                                <li *ngFor="let sortName of sortDropdown">
+                                    <input type="radio" name="selector" value="{{sortName.value}}" [(ngModel)]="sortBy">
+                                    <label for="f-option" (click)="onSortByChange(sortName.value)">{{ sortName?.key }}</label>
+                                    <div class="check"></div>
+                                </li>
+                            </ul>
+                        </mat-menu>
+                    </div>
+                </li>
+                <li class="list-inline-item">
+                    <div class="btn-group button-group" (click)="openFilter()">
+                        <button type="button" class="btn btn-default button-default btn-sm m-0">
+                            <img class="sort-by" src="../..//assets/icons/client-list/Filter.png" alt="">
+                        </button>
+                        <button type="button" class="btn btn-default button-second dropdown-toggle btn-sm"></button>
+                    </div>
+                </li>
+            </ul>
+        </div>
+    </div>
+
+    <div class="row" *ngIf="filterObject.statusList.length !==0">
+        <div class="col-lg-12">
+            <ul class="filters-applied">
+                <li class="star-inserted" *ngFor="let list of allStatusList; let i = index" [hidden]="list.checkStatus !== true">
+                    {{ list?.value }}
+                    <mat-icon class="mat-18 mat-icon mat-new-icon notranslate material-icons mat-icon-no-color" role="img" aria-hidden="true" (click)="removeStatusPosition(list.id, allStatusList, i)">close
+                    </mat-icon>
+                </li>
+            </ul>
+        </div>
+    </div>
+
+
+    <!-- Filter Sidebar/Pop-up -->
+    <div *ngIf="isFilterOpen" class="container bg-white filter-box">
+        <div class="row filter-head filter-line mb-4">
+            <div class="col-md-10 mt-3">
+                <p class="filter"> FILTERS</p>
+            </div>
+            <div class="col-md-2 mt-3">
+                <i class="fa fa-times" aria-hidden="true" (click)="openFilter()"></i>
+            </div>
+        </div>
+
+        <!--status filter-->
+        <div class="status">
+            <div class="row status-row">
+                <div class="col-md-10">
+                    <p class='title'>STATUS</p>
+                </div>
+                <div class="col-md-2">
+                    <i class="fa {{statusDivIcon}} green-icon" aria-hidden="true" (click)="toggleFilterDiv('status')"></i>
+                </div>
+            </div>
+            <div class="show-hide" *ngIf='isStatusDivOpen'>
+                <div class="row status-row">
+                    <div class="col-md-6" *ngFor="let status of allStatusList">
+                        <div class="text-left">
+                            <mat-checkbox m-0 value="{{status.name}}" [(ngModel)]="status.checkStatus" class="check" (change)="changeStatusPosition(status.id, status.checkStatus);">
+                                {{ status?.value }}
+                            </mat-checkbox>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+        <div class="location status">
+            <div class="row status-row">
+                <div class="col-md-10">
+                    <p class='title'>CURRENT LOCATION</p>
+                </div>
+                <div class="col-md-2">
+                    <i class="fa {{currentDivIcon}} green-icon" aria-hidden="true" (click)="toggleFilterDiv('location')"></i>
+                </div>
+            </div>
+            <div *ngIf='isCurrentLocationDivOpen' class="searchinp">
+                <i class="fa fa-search icon" aria-hidden="true"></i>
+                <input id="location" class="form-control m-10" type="text" placeholder="Search location" (input)="search($event,'location')" autocomplete="off">
+                <div *ngIf="isLocationSearch" class="search-container">
+                    <ul id="search-result">
+                        <li><a>Adele</a></li>
+                        <li><a>Agnes</a></li>
+                        <li><a>Billy</a></li>
+                        <li><a>Bob</a></li>
+                        <li><a>Billy</a></li>
+                        <li><a>Bob</a></li>
+                        <li><a>Calvin</a></li>
+                        <li><a>Christina</a></li>
+                        <li><a>Cindy</a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <div class="client-name status">
+            <div class="row status-row">
+                <div class="col-md-10">
+                    <p class='title'>CLIENT NAME</p>
+                </div>
+                <div class="col-md-2">
+                    <i class="fa {{clientNameDivIcon}} green-icon" aria-hidden="true" (click)="toggleFilterDiv('client')"></i>
+                </div>
+            </div>
+            <div *ngIf='isClientNameDivOpen'>
+                <i class="fa fa-search icon" aria-hidden="true"></i>
+                <input id="name" class="form-control m-10 mb-4" type="text" placeholder="Search Name" (input)="search($event,'name')" autocomplete="off">
+                <div *ngIf="isNameSearch" class="search-container-name">
+                    <ul id="search-result">
+                        <li><a>Adele</a></li>
+                        <li><a>Agnes</a></li>
+                        <li><a>Billy</a></li>
+                        <li><a>Bob</a></li>
+                        <li><a>Calvin</a></li>
+                        <li><a>Christina</a></li>
+                        <li><a>Cindy</a></li>
+                        <li><a>Billy</a></li>
+                        <li><a>Bob</a></li>
+                        <li><a>Calvin</a></li>
+                        <li><a>Christina</a></li>
+                        <li><a>Cindy</a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</section>
+<!-- Breadcrumb End -->
+
+<!--postoion details starts-->
+<section class="main-section">
+    <div class="basic-container">
+        <ul class="list-menu">
+            <li class="list-items row " *ngFor="let position of positionList | paginate: { id: 'server', itemsPerPage: pageSize, currentPage: onPage, totalItems: totalElements }">
+                <div class="col-md-4">
+                    <h3 class="recruiz-head" (click)="goToUrl(position.id, '/user/positions-detail')" style="cursor: pointer;">{{ position?.title }}</h3>
+                    <p class="active-button" *ngIf="position.finalStatus === 'Active'">
+                        <img src="../../assets/icons/Positions-list/active.png" alt=""> {{ position?.finalStatus }}
+                    </p>
+                    <p class="active-button" *ngIf="position.finalStatus === 'OnHold'">
+                        <img src="../../assets/icons/Positions-list/on-hold.svg" alt=""> On Hold
+                    </p>
+                    <p class="active-button" *ngIf="position.finalStatus === 'Closed'">
+                        <img src="../../assets/icons/Positions-list/closed.svg" alt=""> {{ position?.finalStatus }}
+                    </p>
+                    <p class="active-button" *ngIf="position.finalStatus === 'StopSourcing'">
+                        <img src="../../assets/icons/Positions-list/stop-sourcing.svg" alt=""> Stop Sourcing
+                    </p>
+                    <div class="recruiz-detail">
+                        <p class=""><img src="../../../assets/icons/Positions-list/Recruiz_test.png" alt=""> {{ position?.client.clientName }}</p>
+                        <p class=""><img src="../../../assets/icons/Positions-list/Openings.png" alt=""> Openings : {{ position?.totalPosition }}</p>
+                        <p class=""><img src="../../../assets/icons/Positions-list/Location.png" alt=""> {{ position?.location }}
+                        </p>
+                    </div>
+
+                </div>
+                <div class="col-md-4 published">
+                    <p class="" *ngIf="position.publishCareerSite === true">
+                        <img src="../../../assets/icons/Positions-list/Published.png" alt=""> Published
+                    </p>
+                    <p class="" *ngIf="position.publishCareerSite === false">
+                        <img src="../../../assets/icons/Positions-list/un-published.svg" alt=""> Un Published
+                    </p>
+                </div>
+                <div class="col-md-4 buttons">
+                    <div class="bar-options1">
+                        <a #menuTrigger="matMenuTrigger" [matMenuTriggerFor]="menu">
+                            <img src="../../assets/icons/client-list/Menu.png" alt="" alt="" style="cursor: pointer;">
+                        </a>
+                    </div>
+
+                    <mat-menu #menu="matMenu">
+                        <button mat-menu-item>
+                            <img src="../../../assets/icons/client-details/Edit.png" alt=""> Edit
+                        </button>
+
+                        <button mat-menu-item (click)="deletePosition(position, positionList.indexOf(position), positionList)">
+                            <img src="../../../assets/icons/client-details/Delete.png" alt=""> Delete
+                        </button>
+
+                        <button mat-menu-item *ngIf="position.finalStatus !== 'Active'" (click)="changeStatus(allStatusList[0].id, position.id, positionList.indexOf(position), position.clientStatus)">
+                            <img src=" ../../assets/icons/Positions-list/active.png " alt=" "> {{allStatusList[0]?.value}}
+                        </button>
+
+                        <button mat-menu-item *ngIf="position.finalStatus !=='OnHold'" (click)="changeStatus(allStatusList[1].id, position.id, positionList.indexOf(position), position.clientStatus)">
+                            <img src="../../assets/icons/Positions-list/on-hold.svg" alt=" "> {{allStatusList[1]?.value}}
+                        </button>
+
+                        <button mat-menu-item *ngIf="position.finalStatus !=='Closed'" (click)="changeStatus(allStatusList[2].id, position.id, positionList.indexOf(position), position.clientStatus)">
+                            <img src="../../assets/icons/Positions-list/closed.svg" alt=" "> {{allStatusList[2]?.value}}
+                        </button>
+
+                        <button mat-menu-item *ngIf="position.finalStatus !=='StopSourcing'" (click)="changeStatus(allStatusList[3].id, position.id, positionList.indexOf(position), position.clientStatus)">
+                            <img src="../../assets/icons/Positions-list/stop-sourcing.svg" alt=" "> {{allStatusList[3]?.value}}
+                        </button>
+
+                        <button mat-menu-item [disabled]="position.finalStatus !=='Active'">
+                            <img src="../../assets/icons/Positions-list/candidate-match.svg " alt=" "> Candidate Match
+                        </button>
+
+                        <button mat-menu-item *ngIf="!position.publishCareerSite" (click)="publishPosition(true, position.id, positionList.indexOf(position), position)">
+                            <img src="../../../assets/icons/Positions-list/Published.png" alt=" "> Publish
+                        </button>
+
+                        <button mat-menu-item *ngIf="position.publishCareerSite" (click)="publishPosition(false, position.id, positionList.indexOf(position), position)">
+                            <img src="../../assets/icons/Positions-list/un-published.svg"  alt=" "> Unpublish
+                        </button>
+                    </mat-menu>
+
+                    <button class="btn btn-default btn-sm btn1 mr-3" routerLink="/user/positions-detail">
+                        <img src="../../../assets/icons/client-list/Statistic_Icon.png" alt=""> Statistics
+                    </button>
+                    <button class="btn btn-default btn-sm btn2" (click)="moveToBoard('/user/pipeline',position.positionCode)">
+                        <img src="../../../assets/icons/Positions-list/Pipeline.png" alt=""> Pipeline
+                    </button>
+                </div>
+
+                <div class="block-items">
+                    <p class="pd-left">
+                        <b class="sourcing">
+                        <span *ngFor="let count of position.boardCandidateCount | keyvalue" class="first-one">
+									{{count.key}} :
+									<b>{{count.value}}</b>
+                        </span>
+                        </b>
+                    </p>
+                    <hr>
+                    <p class="pd-left dates">Created on: {{position.creationDate| date: 'dd-MM-yyyy'}} | Close by: {{position.closeByDate| date: 'dd-MM-yyyy'}} | Last edited on: {{position.modificationDate| date: 'dd-MM-yyyy'}}</p>
+                </div>
+            </li>
+
+        </ul>
+
+
+        <div class="page-footer" *ngIf="positionList">
+            <div class="row ">
+                <div class="col-md-5">
+                    Showing <b>{{ firstView }} to {{ totalNumberOfElements }} of {{ totalElements }}</b> entries
+                </div>
+                <div class="col-md-7 paginations" *ngIf="totalElements > 10">
+                    <div class="row number-row">
+                        <div class="col-md-7 left-page-number">
+                            <pagination-controls (pageChange)="getPositionListOnPageChange($event)" id="server" maxSize="9" directionLinks="true" autoHide="true" responsive="true" previousLabel="" nextLabel="" screenReaderPaginationLabel="Pagination" screenReaderPageLabel="page"
+                                screenReaderCurrentLabel="You're on page">
+                            </pagination-controls>
+                        </div>
+                        <div class="col-md-5 right-page-number">
+                            <div>Go page <input type="text" [(ngModel)]="goToPage" class="search-bar" (keyup.enter)="getPositionListOnPageChange(goToPage)"> <b>Go</b> <i class="material-icons" (click)="getPositionListOnPageChange(goToPage)">arrow_right</i></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>

@@ -1,0 +1,108 @@
+<div>
+    <h4 md-dialog-title>Add / Edit Decision Maker</h4>
+    <hr>
+    <div class="clearfix"></div>
+    <mat-dialog-content *ngIf="dataOption.modalType !== 'update'">
+        <div class="row">
+            <div class="col-md-6" *ngFor="let decisionMaker of allGlobalDecisionMakerList">
+                <div class="interview-panel clearfix" style="margin:0; margin-bottom: 15px;">
+                    <div class="avatar-image">
+                        <ngx-avatar name="{{ decisionMaker?.name }}" initialsSize="1" class="avatar" size="50" textSizeRatio="2"></ngx-avatar>
+                    </div>
+                    <div class="panel-details">
+                        <h4 class="name">{{ decisionMaker?.name }}</h4>
+                        <p class="color">
+                            <img src="../../../assets/icons/client-details/Email.png" alt=""> {{ decisionMaker?.email }}
+                        </p>
+                        <p class="color" *ngIf="decisionMaker?.mobile">
+                            <img src="../../../assets/icons/client-details/Phone.png" alt=""> {{ decisionMaker?.mobile }}
+                        </p>
+                        <p class="color" *ngIf="!decisionMaker?.mobile">
+                            <img src="../../../assets/icons/client-details/Phone.png" alt=""> N/A
+                        </p>
+                    </div>
+
+                    <div class="bar-options">
+                        <mat-checkbox [(ngModel)]="decisionMaker.selected" (change)="selectDecisionMaker(decisionMaker)"></mat-checkbox>
+                    </div>
+                </div>
+            </div>
+
+            <!--place holder-->
+            <div class="col-md-12" *ngIf="allGlobalDecisionMakerList.length === 0">
+                <h4 class="place-holders">Record not found. Add descision maker manually.</h4>
+            </div>
+        </div>
+
+        <hr />
+        <div class="row">
+            <div class="col-md-12" style="margin-bottom: 20px;">
+                <button mat-raised-button color="default" (click)="addMoreDecisionMaker()">ADD DECISION MAKER MANUALLY</button>
+            </div>
+        </div>
+        <div class="clearfix"></div>
+
+        <div *ngFor="let decision of manuallyAddedDecisionMaker; let i = index">
+            <div class="row side-box">
+                <div class="col-md-4">
+                    <mat-form-field class="example-full-width">
+                        <input matInput placeholder="Full name" [(ngModel)]="decision.name" required>
+                    </mat-form-field>
+                </div>
+
+                <div class="col-md-4">
+                    <mat-form-field class="example-full-width">
+                        <input matInput placeholder="Email" [(ngModel)]="decision.email" required (blur)="validateDecisionMakerEmail(i, decision.email)">
+                        <span class="error-msg-custom" *ngIf="i === errorIndex">
+                        {{ errorEmail }}
+                     </span>
+                    </mat-form-field>
+                </div>
+
+                <div class="col-md-4">
+                    <mat-form-field class="example-full-width">
+                        <input matInput placeholder="Mobile" [(ngModel)]="decision.mobile">
+                    </mat-form-field>
+                </div>
+                <div class="delete-icon">
+                    <img src="../../../assets/icons/client-details/Delete.png" alt="" (click)="removeAddedDecisionMaker(i)">
+                </div>
+            </div>
+        </div>
+
+    </mat-dialog-content>
+
+    <mat-dialog-content *ngIf="dataOption.modalType === 'update'">
+        <div *ngFor="let decision of manuallyAddedDecisionMaker; let i = index">
+            <div class="row side-box">
+                <div class="col-md-4">
+                    <mat-form-field class="example-full-width">
+                        <input matInput placeholder="Full name" [(ngModel)]="decision.name" required>
+                    </mat-form-field>
+                </div>
+
+                <div class="col-md-4">
+                    <mat-form-field class="example-full-width">
+                        <input matInput placeholder="Email" [(ngModel)]="decision.email" disabled (blur)="validateInterviewerEmail(i, decision.email)">
+                        <span class="error-msg-custom" *ngIf="i === errorIndex">
+                        {{ errorEmail }}
+                        </span>
+                    </mat-form-field>
+                </div>
+
+                <div class="col-md-4">
+                    <mat-form-field class="example-full-width">
+                        <input matInput placeholder="Mobile" [(ngModel)]="decision.mobile">
+                    </mat-form-field>
+                </div>
+            </div>
+        </div>
+    </mat-dialog-content>
+
+    <hr>
+    <mat-dialog-actions>
+        <button mat-raised-button color="primary" (click)="submitDescisionMakerInfo()" *ngIf="dataOption.modalType !== 'update'">ADD DECISION MAKERS</button>
+        <button mat-raised-button color="primary" (click)="updateDescisionMakerInfo()" *ngIf="dataOption.modalType === 'update'">UPDATE DECISION MAKERS</button>
+        <button mat-raised-button (click)="onCloseCancel()">CANCEL</button>
+    </mat-dialog-actions>
+</div>

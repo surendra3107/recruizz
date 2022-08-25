@@ -1,0 +1,30 @@
+SELECT  CONCAT(E.clientName) AS 'Client Name', CONCAT(E.title) AS 'Position Name', 
+CONCAT(E.sourcedBy) AS 'Recruiter', CONCAT(F.fullname) AS 'Candidate Name', CONCAT(F.currentLocation) AS 'Current Location', CONCAT(F.totalExp) AS 'Total Exp', CONCAT(F.currentCtc) AS 'Current CTC', CONCAT(F.expectedCtc) AS 'Expected CTC', CONCAT(F.noticePeriod) AS 'Notice Period',CONCAT(F.lastWorkingDay) AS 'LWD', CASE 
+	WHEN E.status = 'InProgress' THEN 'In Progress'
+	WHEN E.status = 'YetToProcess' THEN 'Yet To Process'
+	WHEN E.status = 'MovedOut' THEN 'Moved Out'
+	WHEN E.status = 'OnHold' THEN 'On Hold'
+	WHEN E.status = 'DroppedOut' THEN 'Dropped Out'
+	WHEN E.status = 'NotInterested' THEN 'Not Interested'
+	WHEN E.status = 'OfferAccepted' THEN 'Offer Accepted'
+	WHEN E.status = 'OfferDeclined' THEN 'Offer Declined'
+	ELSE E.status END AS 'Current Status',  CONCAT(G.roundName) AS 'Current Stage',
+	CASE 
+	WHEN E.status = 'Joined' THEN IFNULL(DATE_FORMAT(CONVERT_TZ(E.joined_date,'+00:00','$timeZone'), '%d/%m/%Y'),'N/A')  
+	ELSE 'N/A' END AS 'Joined Date'
+	FROM (
+SELECT * FROM (
+SELECT * FROM
+		(SELECT DISTINCT id AS positionId, positionCode as posCode, title, client_id FROM POSITION) A
+	INNER JOIN 
+	(SELECT DISTINCT id AS clientId, clientName
+	FROM CLIENT) B ON A.client_id=B.clientId) C
+	INNER JOIN
+	(SELECT DISTINCT positionCode as pcode, candidate_cid, creation_date, status, roundId, modification_date, joined_date, sourcedBy
+	FROM round_candidate) D ON posCode = pcode) E
+	INNER JOIN 
+	(SELECT id, roundName from rounds) G ON G.id = E.roundId
+	INNER JOIN
+	(SELECT DISTINCT cid, fullname, totalExp, currentCtc, expectedCtc, currentLocation, noticePeriod, lastWorkingDay FROM candidate) F on E.candidate_cid = F.cid
+	WHERE E.modification_date BETWEEN '$startDate' AND '$endDate'
+	ORDER BY E.clientName, E.title, F.fullname

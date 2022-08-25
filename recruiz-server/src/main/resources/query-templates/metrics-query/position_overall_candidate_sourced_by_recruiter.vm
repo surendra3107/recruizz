@@ -1,0 +1,7 @@
+SELECT COUNT(u.user_id) AS 'Total Sourced Count', u.name AS 'Recruiter Name', p.title AS 'Position Name'
+FROM USER u
+INNER JOIN 
+ 	round_candidate rc ON rc.sourcedBy = u.email
+INNER JOIN POSITION p ON p.positionCode = rc.positionCode
+GROUP BY
+	rc.sourcedBy, rc.positionCode;

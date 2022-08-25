@@ -1,0 +1,73 @@
+<div class="main-section">
+  <div class="tasks">
+    <div class="task-header row">
+      <div class="col-md-4">
+        <h3 class="list-name">Calendar</h3>
+      </div>
+      <div class="col-md-4">
+        <h3 class="list-name text-center">
+          <div *ngIf="view !== CalendarView.Year" class="date-view">
+          <i class="fa fa-chevron-left left-chevron" aria-hidden="true" mwlCalendarPreviousView [view]="view"
+            [(viewDate)]="viewDate" (viewDateChange)="closeOpenMonthViewDay()"></i>
+          {{ viewDate | calendarDate:(view + 'ViewTitle'):'en' }}
+          <i class="fa fa-chevron-right right-chevron" aria-hidden="true" mwlCalendarNextView [view]="view"
+            [(viewDate)]="viewDate" (viewDateChange)="closeOpenMonthViewDay()"></i>
+          </div>
+          <div *ngIf="view === CalendarView.Year" class="date-view">
+            <i class="fa fa-chevron-left left-chevron" aria-hidden="true" (click)="toggleYear('pre')"></i>
+            {{year}}
+            <i class="fa fa-chevron-right right-chevron" aria-hidden="true" (click)="toggleYear('next')"></i>
+          </div>
+        </h3>
+      </div>
+      <div class="col-md-4"></div>
+    </div>
+    <div class="task-body">
+      <div class="border-class">
+        <div class="row">
+          <div class="col-md-12 p-0">
+            <ul class="time-period">
+              <li (click)="setView(CalendarView.Day)" [class.active]="view === CalendarView.Day"><a>Day</a></li>
+              <li (click)="setView(CalendarView.Week)" [class.active]="view === CalendarView.Week"><a>Week</a></li>
+              <li (click)="setView(CalendarView.Month)" [class.active]="view === CalendarView.Month"><a>Month</a></li>
+              <li (click)="setView(CalendarView.Year)" [class.active]="view === CalendarView.Year"><a>Year</a></li>
+            </ul>
+          </div>
+        </div>
+        <div class="task-list">
+          <!-- calendar -->
+          <div class="list row">
+            <div class="col-md-12">
+              <br />
+              <div [ngSwitch]="view">
+                <mwl-calendar-month-view *ngSwitchCase="CalendarView.Month" [viewDate]="viewDate" [events]="events"
+                  [refresh]="refresh" [activeDayIsOpen]="activeDayIsOpen" (dayClicked)="dayClicked($event.day)"
+                  (eventClicked)="handleEvent('Clicked', $event.event)" (eventTimesChanged)="eventTimesChanged($event)">
+                </mwl-calendar-month-view>
+                <mwl-calendar-week-view *ngSwitchCase="CalendarView.Week" [viewDate]="viewDate" [events]="events"
+                  [refresh]="refresh" (eventClicked)="handleEvent('Clicked', $event.event)" (eventTimesChanged)="eventTimesChanged($event)">
+                </mwl-calendar-week-view>
+                <mwl-calendar-day-view *ngSwitchCase="CalendarView.Day" [viewDate]="viewDate" [events]="events"
+                  [refresh]="refresh" (eventClicked)="handleEvent('Clicked', $event.event)" (eventTimesChanged)="eventTimesChanged($event)">
+                </mwl-calendar-day-view>
+                <div class="year-box" *ngSwitchCase="CalendarView.Year">
+                  <div class="row">
+                    <div class="col-md-3 months-style" *ngFor='let months of monthsName'>
+                      <p class="m-0 schedule">3</p>
+                      <p class="m-0 months">{{months}}</p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
+
+<!-- calendar -->

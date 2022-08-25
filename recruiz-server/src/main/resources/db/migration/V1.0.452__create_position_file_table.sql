@@ -1,0 +1,12 @@
+DROP TABLE IF EXISTS `position_file`;
+
+CREATE TABLE IF NOT EXISTS `position_file` (
+`id` BIGINT(20) NOT NULL AUTO_INCREMENT,
+  `creation_date` DATETIME DEFAULT NULL,
+  `modification_date` DATETIME DEFAULT NULL,
+  `position_id` VARCHAR(255) DEFAULT NULL,
+  `file_name` VARCHAR(1000) DEFAULT NULL,
+  `file_path` VARCHAR(1000) DEFAULT NULL,
+  `file_type` VARCHAR(1000) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;

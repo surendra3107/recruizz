@@ -1,0 +1,29 @@
+<nav class="common-nav">
+    <a class="common-nav-item" [ngClass]="{'is-active': activeTab === 'organizations'}" (click)="switchTabs('organizations')">
+      organization settings
+    </a>
+
+    <a class="common-nav-item" [ngClass]="{'is-active': activeTab === 'user'}" (click)="switchTabs('user')">
+      user management
+    </a>
+
+    <a class="common-nav-item" [ngClass]="{'is-active': activeTab === 'roles'}" (click)="switchTabs('roles')">
+      roles
+    </a>
+
+    <a class="common-nav-item" [ngClass]="{'is-active': activeTab === 'permission'}" (click)="switchTabs('permission')">
+      permission
+    </a>
+
+    <a class="common-nav-item" [ngClass]="{'is-active': activeTab === 'intergation'}" (click)="switchTabs('intergation')">
+      integration
+    </a>
+
+    <a class="common-nav-item" [ngClass]="{'is-active': activeTab === 'onboarding'}" (click)="switchTabs('onboarding')">
+      onboarding
+    </a>
+
+    <a class="common-nav-item" [ngClass]="{'is-active': activeTab === 'team'}" (click)="switchTabs('team')">
+      team management
+    </a>
+</nav>

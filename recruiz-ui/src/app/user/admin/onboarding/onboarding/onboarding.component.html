@@ -1,0 +1,121 @@
+<app-common-header></app-common-header>
+
+<section class="main-section">
+    <div class="ac-container-drop">
+        <div class="row">
+            <div class="col-md-12">
+                <h4>Onboarding</h4>
+                <hr />
+            </div>
+        </div>
+        <div class="clearfix"></div>
+
+        <div class="row">
+            <div class="col-md-6">
+                <h5 class="header-onboard">Currently Editing : {{ templateName }}</h5>
+                <a *ngIf="templateName !== 'master'" (click)="deleteTemplate(templateName)" matTooltip="Delete {{ templateName }}">
+                    <span class="material-icons onboard-icon"> delete</span>
+                </a>
+            </div>
+
+            <div class="col-md-4">
+                <mat-form-field>
+                    <mat-label>Template Name</mat-label>
+                    <mat-select [(ngModel)]="templateName" (ngModelChange)="switchTemplate(templateName)">
+                        <mat-option *ngFor="let template of templateList" [value]="template">
+                            {{ template }}
+                        </mat-option>
+                        <mat-option value="master"> Master Template</mat-option>
+                    </mat-select>
+                </mat-form-field>
+            </div>
+
+            <div class="col-md-2">
+                <button mat-raised-button color="primary" (click)="addSubCategory('')">Add New</button>
+            </div>
+        </div>
+        <hr />
+
+        <!--temp edit-->
+        <div class="row">
+            <div class="col-md-12">
+                <div class="category" *ngIf="templateName !== 'master' && !showActivity">
+                    <div class="alert alert-danger">
+                        <p>No Activity found. Please add new.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-12" *ngIf="showActivity" style="margin-bottom: 30px;">
+                <div class="card" style="margin-bottom: 0px;" *ngFor="let item of allSubCategory | keyvalue">
+                    <div class="card-header">
+                        {{ item?.key }}
+                    </div>
+
+                    <div class="card-body">
+                        <div class="category-group " *ngFor="let subItem of item.value | keyvalue">
+                            <div class="subCategory-title title">
+                                <div class="expand" (click)="ShowHeader(subItem)" style="cursor: pointer;">
+                                    <span *ngIf="!subItem.show">
+								                       <span class="material-icons">keyboard_arrow_right</span>
+                                    </span>
+                                    <span *ngIf="subItem.show">
+                                      <span class="material-icons">{{ subItem.arrowClass }}</span>
+                                    </span>
+                                </div>
+
+                                <mat-checkbox [(ngModel)]="subItem.headerChecked" (change)="checkAllCategory(subItem)">
+                                    {{ subItem?.key }}
+                                </mat-checkbox>
+
+                                <div class="delete-item pull-right text-right" style="margin-right: 10px;">
+                                    <span class="material-icons onboard-icon" style="line-height: 0;" matTooltip="Delete" (click)="deleteSubCategory(item.key, subItem.key)">
+                                      delete
+                                    </span>
+                                </div>
+                                <div class="onboarding">
+                                    <div class="activities" *ngIf="subItem.show">
+                                        <div class="activity-group" *ngFor="let task of subItem.value; let i = index;">
+                                            <div class="activity-title title">
+                                                <mat-checkbox [(ngModel)]="task.subItemChecked" (change)="checkindividual(task, subItem)">
+                                                    {{ task.title }}
+                                                </mat-checkbox>
+                                                <div class="text-right" style="position: absolute; right: 10px;">
+                                                    <div class="bar-options1">
+                                                        <a #menuTrigger="matMenuTrigger" [matMenuTriggerFor]="menu">
+                                                            <img src="../../assets/icons/client-list/Menu.png" alt="" alt="" style="cursor: pointer;">
+                                                        </a>
+                                                    </div>
+                                                </div>
+
+                                                <mat-menu #menu="matMenu">
+                                                    <button mat-menu-item (click)="addSubCategory(task)">
+                                                           <img src="../../../assets/icons/client-details/Edit.png" alt=""> Edit
+                                                        </button>
+                                                    <button mat-menu-item (click)="deleteTask(task)">
+                                                            <img src="../../../assets/icons/client-details/Delete.png" alt=""> Delete
+                                                        </button>
+                                                </mat-menu>
+                                            </div>
+                                            <div class="activity-description" *ngIf="task.subItemChecked">
+                                                <div [innerHTML]="task.description"></div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+
+            <!--button-->
+            <div class="col-md-12" *ngIf="templateName === 'master'">
+                <button mat-stroked-button color="primary" (click)="clearSelection()">Canel</button>
+                <button mat-raised-button color="primary" (click)="createTemplate()">Save as Template</button>
+            </div>
+        </div>
+    </div>
+</section>

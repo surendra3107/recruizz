@@ -1,0 +1,6 @@
+SELECT 
+	count(cid) as count , gender 
+FROM 
+	candidate 
+GROUP BY 
+	gender ;

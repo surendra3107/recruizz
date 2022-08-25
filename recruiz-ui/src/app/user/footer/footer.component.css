@@ -1,0 +1,20 @@
+.footer{
+    background-color: #f0f1f5;
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+}
+ul{
+    padding: 10px;
+}
+ul li{
+    display: inline-block;
+    padding: 10px;
+    list-style: none;
+}
+li a{
+    color: #5b5f7a;
+    text-decoration: none;
+    font-size: 12px;
+    font-weight: 700;
+}

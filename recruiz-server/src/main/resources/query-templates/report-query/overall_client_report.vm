@@ -1,0 +1,5 @@
+SELECT 
+	CONCAT(cl.clientName) AS 'Name', CONCAT(cl.status) AS 'Current Status', 
+	DATE_FORMAT(cl.creation_date, '%d/%m/%Y') AS 'Added on', 
+	DATE_FORMAT(cl.modification_date, '%d/%m/%Y') AS 'Last Modified on'
+FROM client cl

@@ -1,0 +1,262 @@
+<div>
+    <div class="heading">
+        <mat-label>DASHBOARD</mat-label>
+    </div>
+    <div class="main-content">
+        <div class="row marg-10">
+            <div class="col-lg-3 col-md-6 mb-3">
+                <div class="card card-detail">
+                    <p class="text-center mt-4">
+                        <img class="card-img" src="./../../assets/icons/dashboard/Department.png" alt="Card image cap">
+                    </p>
+                    <div class="card-body text-center">
+                        <h5 class="card-title card-new-title m-0">{{ entityCounts?.clientCount }}</h5>
+                        <p class="card-text">Departments</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-3 col-md-6 mb-3">
+                <div class="card card-detail">
+                    <p class="text-center mt-4">
+                        <img class="card-img" src="./../../assets/icons/dashboard/Positions.png" alt="Card image cap">
+                    </p>
+                    <div class="card-body text-center">
+                        <h5 class="card-title card-new-title m-0">{{ entityCounts?.positionCount }}</h5>
+                        <p class="card-text">Positions</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-3 col-md-6 mb-3">
+                <div class="card card-detail">
+                    <p class="text-center mt-4">
+                        <img class="card-img" src="./../../assets/icons/dashboard/Candidates.png" alt="Card image cap">
+                    </p>
+                    <div class="card-body text-center">
+                        <h5 class="card-title card-new-title m-0">{{ entityCounts?.candidateCount }}</h5>
+                        <p class="card-text">Candidates</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-3 col-md-6 mb-3">
+                <div class="card card-detail">
+                    <p class="text-center mt-4">
+                        <img class="card-img" src="./../../assets/icons/dashboard/Task Completed.png" alt="Card image cap">
+                    </p>
+                    <div class="card-body text-center">
+                        <h5 class="card-title card-new-title m-0">{{ entityCounts?.taskCount }}</h5>
+                        <p class="card-text mb-2">Tasks Completed out of</p>
+                        <div class="progress text-center">
+                            <div class="progress-bar bg-success" role="progressbar" style="width: 50%;" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="row marg-10">
+            <div class="col-lg-6 col-md-12 mb-sm-3">
+                <div class="card card-space h-100">
+                    <div class="card-body">
+                        <div class="col-md-8 fl-left">
+                            <h4 class="card-title">Candidate Databse Growth</h4>
+                        </div>
+
+                        <div class="col-md-4 col-sm-6 my-sm-2 my-md-0 fl-left" *ngIf="dataTeamList?.length !== 0" (change)="changeCandidateGrowth(candidateIntervalPeriod)">
+                            <select class="margin-control form-control growth-db" [(ngModel)]="candidateIntervalPeriod">
+                                <option *ngFor="let time of customTimePeriodDropDown" value="{{ time?.id }}">{{ time?.value }}</option>
+                            </select>
+                        </div>
+
+                        <!-- lIne Chart -->
+                        <div [hidden]="!isCandidateGrowthData">
+                            <canvas id="LineChart">{{ charts }}</canvas>
+                        </div>
+
+                        <div class="place_hoder" *ngIf="!isCandidateGrowthData">
+                            <h3>Data not found...</h3>
+                        </div>
+
+                        <div class="place_hoder" *ngIf="dataTeamList?.length === 0">
+                            <h3>Not part of any team.</h3>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-3 col-md-6 mb-sm-3 card-space">
+                <div class="card h-100">
+                    <div class="card-body">
+                        <h4 class="card-title text-center">Sourcing Channel Mix</h4>
+                        <canvas id="doughnutChart" width="400" height="400"></canvas>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-3 col-md-6 mb-sm-3 card-space">
+                <div class="card card-height h-100">
+                    <div class="card-body text-center">
+                        <h4 class="card-title text-center">Skill Set</h4>
+                        <img src="./../../assets/skillset.png" alt="" class="img-fluid text-center">
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+
+        <div class="row marg-10">
+            <div class="col-lg-12">
+                <div class="card">
+                    <div class="card-body tbl-cont">
+                        <div class="col-sm-6 fl-left pd-10 rec-heading">
+                            <h5 class="card-title tbl-heading">Recruitment Status</h5>
+                        </div>
+                        <div class="col-sm-6  fl-left">
+                            <div class="col-md-4 col-sm-12 fl-left">
+
+                                <mat-form-field class="multiselect">
+                                    <mat-label class="select-label">Select HR</mat-label>
+                                    <mat-select [(ngModel)]="selected" name="selected" multiple (ngModelChange)="onSelectHrs(selected)">
+                                        <mat-option *ngFor="let hr of allHrsList" value="'{{hr.email}}'">{{ hr?.name }}</mat-option>
+                                    </mat-select>
+                                </mat-form-field>
+
+                            </div>
+
+                            <div class="col-md-4 col-sm-12 fl-left">
+                                <mat-form-field class="multiselect">
+                                    <mat-label class="select-label">Select Client</mat-label>
+                                    <mat-select [(ngModel)]="selectedClient" multiple (ngModelChange)="onSelectClient(selectedClient)">
+                                        <mat-option *ngFor="let client of allClientList" [value]="client">{{ client }}</mat-option>
+                                    </mat-select>
+                                </mat-form-field>
+                            </div>
+
+                            <div class="col-md-4 col-sm-12 fl-left pd-right-0">
+                                <mat-form-field class="multiselect">
+                                    <mat-select [formControl]="toppings" [(ngModel)]="selectedTime" (ngModelChange)="onSelectTimePeriod(selectedTime)">
+                                        <mat-option *ngFor="let time of timeInterval" value="{{ time?.id }}">{{ time?.value }}</mat-option>
+                                    </mat-select>
+                                </mat-form-field>
+
+                            </div>
+
+                        </div>
+                        <br>
+                        <div class="row" *ngIf="multiselectData.length>0">
+                            <div class="col-lg-12">
+                                <ul class="filters-applied">
+                                    <li class="star-inserted" *ngFor="let mulSelect of multiselectData; let i=index;">
+                                        <mat-icon class="mat-18 mat-icon mat-new-icon notranslate material-icons mat-icon-no-color" role="img" aria-hidden="true" (click)="removeFromSelection(i)">close
+                                        </mat-icon>{{mulSelect}}
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+
+                        <div class="col-sm-12 fl-left nopadding theading">
+                            <div class="col-sm-3  fl-left">Department/Positions</div>
+                            <div class="col-sm-2 text-center fl-left">Forwarded</div>
+                            <div class="col-sm-2 text-center fl-left">Interviews</div>
+                            <div class="col-sm-2 text-center  fl-left">Offered</div>
+                            <div class="col-sm-1 text-center fl-left">Joined</div>
+                            <div class="col-sm-1 text-center  fl-left">Rejected</div>
+                            <div class="col-sm-1 text-center  fl-left"></div>
+                        </div>
+
+                        <div class="panel-group" id="accordion">
+
+                            <div class="panel panel-default" *ngFor="let recruitment of recruitmentStatus; let i=index;">
+                                <div class="panel-heading">
+                                    <div class="col-sm-3  fl-left nopaddingr">
+                                        <span class="data">{{recruitment.department}}</span>
+                                        <span class="innerspan"><b>Close by :</b> 09-08-2017 <span class="label label-success">Active</span>
+                                        </span>
+                                    </div>
+                                    <div class="col-sm-2 text-center fl-left">{{recruitment.forwarded}}</div>
+                                    <div class="col-sm-2 text-center fl-left">{{recruitment.Interviews}}</div>
+                                    <div class="col-sm-2 text-center  fl-left">{{recruitment.offered}}</div>
+                                    <div class="col-sm-1 text-center fl-left">{{recruitment.joined}}</div>
+                                    <div class="col-sm-1 text-center  fl-left">{{recruitment.rejected}}</div>
+                                    <div class="col-sm-1 text-center  fl-left" *ngIf="recruitment?.innerRow.length>0">
+                                        <i *ngIf="!isInnerRowShow" class="fa fa-caret-down" aria-hidden="true" (click)="toggleInnerRow(i)"></i>
+                                        <i *ngIf="isInnerRowShow" class="fa fa-caret-up" aria-hidden="true" (click)="toggleInnerRow(i)"></i>
+                                    </div>
+                                </div>
+
+                                <div class="" *ngIf="selectedIndex==i">
+                                    <div class="panel-body">
+
+                                        <div class="inner-row" *ngFor="let innerData of recruitment?.innerRow; let j=index;">
+
+                                            <div class="col-sm-3 fl-left"><span class="data">{{innerData.department}}</span></div>
+                                            <div class="col-sm-2 text-center fl-left">{{innerData.forwarded}}</div>
+                                            <div class="col-sm-2 text-center fl-left">{{innerData.Interviews}}</div>
+                                            <div class="col-sm-2 text-center  fl-left">{{innerData.offered}}</div>
+                                            <div class="col-sm-1 text-center fl-left">{{innerData.joined}}</div>
+                                            <div class="col-sm-2 text-center  fl-left">{{innerData.rejected}}</div>
+                                        </div>
+
+                                    </div>
+                                </div>
+
+                            </div>
+
+                        </div>
+
+                        <div class="col-sm-12 text-center mb-25 fl-left">
+                            <a routerLink="" class="btn btn-success">Load More</a>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+        <div class="row marg-10">
+            <div class="col-lg-12">
+                <div class="card">
+                    <div class="card-body tbl-cont">
+                        <div class="col-sm-8 col-lg-10 fl-left pd-10">
+                            <h5 class="card-title tbl-heading">Interviews Scheduled</h5>
+                        </div>
+                        <div class="col-sm-4 col-lg-2 fl-left pd-10">
+                            <form>
+                                <select class="form-control">
+                                    <option value="Today" selected>Today</option>
+                                    <option value="Yesterday">Yesterday</option>
+                                    <option value="Tomorrow">Tomorrow</option>
+                                </select>
+                            </form>
+                        </div>
+
+                        <table class="table custom-table">
+                            <thead>
+                                <tr>
+                                    <th>Candidate Name</th>
+                                    <th>Department/Positions</th>
+                                    <th>Interviewer</th>
+                                    <th>Starts On</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr *ngFor="let schedule of scheduleDetails; let i=index;">
+                                    <td>{{ schedule?.candidateNames }}</td>
+                                    <td>{{schedule?.clientName }}/{{schedule?.positionName }}</td>
+                                    <td> N/A </td>
+                                    <td>{{schedule?.scheduleDate | date : "dd/MM/yyyy" }}</td>
+                                </tr>
+                                <tr *ngIf="scheduleDetails?.length === 0">
+                                    <td colspan="4" class="place_hoder">
+                                        <h3 style="position: inherit; margin-bottom: 50px;">No schedule available...</h3>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

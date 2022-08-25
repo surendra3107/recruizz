@@ -1,0 +1,21 @@
+SELECT 
+    TIME_TO_SEC(TIMEDIFF((SELECT 
+                            time
+                        FROM
+                            $tableName
+                        WHERE
+                            user_email = '$userEmail'
+                                AND time >= DATE_sub(UTC_TIMESTAMP(), INTERVAL $interval MINUTE)
+                        ORDER BY time DESC
+                        LIMIT 1),
+                    (SELECT 
+                            time
+                        FROM
+                            $tableName
+                        WHERE
+                            user_email = '$userEmail'
+                                AND time >= DATE_sub(UTC_TIMESTAMP(), INTERVAL $interval MINUTE)
+                        ORDER BY time ASC
+                        LIMIT 1))) time_difference_in_sec;
+                        
+                        

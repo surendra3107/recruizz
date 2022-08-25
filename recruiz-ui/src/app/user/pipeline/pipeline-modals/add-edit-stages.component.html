@@ -1,0 +1,61 @@
+<h4 md-dialog-title>Add OR Edit Stages</h4>
+<hr>
+<div class="clearfix"></div>
+<mat-dialog-content>
+    <div class="row">
+        <div class="col-md-10">
+            <mat-form-field class="example-full-width">
+                <mat-label>Stage Name</mat-label>
+                <input matInput autocomplete="off" [(ngModel)]="stageName" required>
+            </mat-form-field>
+        </div>
+        <div class="col-md-2">
+            <button mat-raised-button color="primary" (click)="addRounds()" [disabled]="!stageName">
+               Add
+           </button>
+        </div>
+    </div>
+    <div class="clearfix"></div>
+    <hr />
+
+    <div class="row">
+        <div class="col-md-12">
+            <h5>Existing Stages</h5>
+        </div>
+    </div>
+    <div class="clearfix"></div>
+    <hr />
+
+    <div cdkDropList class="example-list" (cdkDropListDropped)="drop($event)">
+        <div class="example-box " *ngFor="let round of rounds; first as isFirst; let indx = index" cdkDrag>
+            <div class="row">
+                <div class="col-md-2">
+                    <span class="material-icons" style="line-height: 65px;" *ngIf="!isFirst">drag_handle</span>
+                </div>
+
+                <div class="col-md-9">
+                    <mat-form-field class="example-full-width">
+                        <input matInput [ngClass]="{roundStrike:round.isStrike === true}" [(ngModel)]="round.name" required [disabled]="round.isStrike">
+                    </mat-form-field>
+                </div>
+
+                <div class="col-md-1">
+                    <span style="line-height: 65px; cursor: pointer;" *ngIf="!isFirst" (click)="preDeleteRound(round.roundId, indx, round.isStrike)">
+                     <i class="material-icons" *ngIf="!round.isStrike" matTooltip="Dlete Stage">delete</i>
+                     <i class="material-icons" *ngIf="round.isStrike"  matTooltip="Undo Stage">undo</i>
+                    </span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</mat-dialog-content>
+
+<hr>
+<mat-dialog-actions align="end">
+    <p class="note-hint"><b>Note:</b> Deleting a stage / round will delete the candidates from the respective stage & pipeline</p>
+    <button mat-raised-button (click)="onCloseConfirm()">CANCEL</button>
+    <button mat-raised-button color="primary" (click)="saveRounds()">
+      Save
+    </button>
+</mat-dialog-actions>

@@ -1,0 +1,187 @@
+<div class="heading">
+    <mat-label>ADD NEW {{ translateNameSingle }}</mat-label>
+</div>
+<div class="main-content">
+    <div class="row marg-10">
+        <div class="col-lg-12">
+            <div class="card">
+                <div class="card-body tbl-cont">
+                    <mat-horizontal-stepper linear #stepper>
+                        <mat-step [stepControl]="firstFormGroup">
+                            <form [formGroup]="firstFormGroup" style="margin-top: 10px;">
+                                <ng-template matStepLabel>{{ translateNameSingle }}</ng-template>
+
+                                <div class="row">
+                                    <div class="col-md-4">
+                                        <mat-form-field>
+                                            <input matInput placeholder="{{ translateNameSingle }} name" formControlName="clientName" (blur)="validateClient()" required>
+                                        </mat-form-field>
+                                        <mat-error *ngIf="isClientExixts">{{ translateNameSingle }} Name already exixts</mat-error>
+                                    </div>
+
+                                        <div class="col-md-4">
+                                            <mat-form-field>
+                                                <input matInput ngx-google-places-autocomplete [options]='options' #placesRef="ngx-places" (onAddressChange)="handleAddressChange($event)" placeholder="Location" formControlName="location" required>
+                                            </mat-form-field>
+                                        </div>
+
+                                    <div class="col-md-4">
+                                        <mat-form-field>
+                                            <input matInput placeholder="Address" formControlName="address">
+                                        </mat-form-field>
+                                    </div>
+                                </div>
+
+                                <div class="row">
+                                    <div class="col-md-4">
+                                        <mat-form-field>
+                                            <input matInput placeholder="Website" formControlName="website">
+                                        </mat-form-field>
+                                    </div>
+
+                                    <div class="col-md-4">
+                                        <mat-form-field>
+                                            <input matInput placeholder="Employee Stength of Company" formControlName="employeeStrength">
+                                        </mat-form-field>
+                                    </div>
+
+                                    <div class="col-md-4">
+                                        <mat-form-field>
+                                            <input matInput placeholder="Turnover" formControlName="turnover">
+                                        </mat-form-field>
+                                    </div>
+                                </div>
+
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <label style="color: #aaa; margin-top: 20px;">About {{ translateNameSingle }}</label>
+                                        <ckeditor [editor]="Editor" formControlName="bodyData"></ckeditor>
+                                    </div>
+                                </div>
+
+                                <div style="margin-top: 20px;">
+                                    <button mat-stroked-button matStepperNext>Next</button>
+                                </div>
+                            </form>
+                        </mat-step>
+
+                        <mat-step [stepControl]="secondFormGroup">
+                            <form [formGroup]="secondFormGroup">
+                                <ng-template matStepLabel>Decision Makers</ng-template>
+                                <hr />
+                                <div class="row">
+                                    <div class="col-md-4">
+                                        <h4>Add descision makers</h4>
+                                    </div>
+                                    <div class="col-md-6">
+
+                                    </div>
+                                    <div class="col-md-2">
+                                        <button mat-raised-button color="primary" class="pull-right" (click)="addDecisionMakerFromAdd('add-client')">
+                                           <mat-icon>add</mat-icon> Add
+                                        </button>
+                                    </div>
+                                </div>
+
+                                <div class="row">
+                                    <div class="col-md-6" *ngFor="let decisionMaker of descisionMakerList; let i = index">
+                                        <div class="interview-panel clearfix" style="margin:0; margin-bottom: 15px;">
+                                            <div class="avatar-image">
+                                                <ngx-avatar name="{{ decisionMaker?.name }}" initialsSize="1" class="avatar" size="50" textSizeRatio="2"></ngx-avatar>
+                                            </div>
+                                            <div class="panel-details">
+                                                <h4 class="name">{{ decisionMaker?.name }}</h4>
+                                                <p class="color">
+                                                    <img src="../../../assets/icons/client-details/Email.png" alt=""> {{ decisionMaker?.email }}
+                                                </p>
+                                                <p class="color" *ngIf="decisionMaker?.mobile">
+                                                    <img src="../../../assets/icons/client-details/Phone.png" alt=""> {{ decisionMaker?.mobile }}
+                                                </p>
+                                                <p class="color" *ngIf="!decisionMaker?.mobile">
+                                                    <img src="../../../assets/icons/client-details/Phone.png" alt=""> N/A
+                                                </p>
+                                            </div>
+
+                                            <div class="bar-options">
+                                                <mat-icon (click)="removeDescisionMaker(i)" style="cursor: pointer;">delete</mat-icon>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="place-holder" *ngIf="descisionMakerList?.length === 0">
+                                    <h3>Click on add button to add Descision Maker</h3>
+                                </div>
+
+                                <div>
+                                    <button mat-stroked-button matStepperPrevious style="margin-right: 15px;">
+                                        <mat-icon>arrow_back</mat-icon> Back
+                                    </button>
+                                    <button mat-raised-button color="primary" matStepperNext>
+                                     Continue <mat-icon>arrow_forward</mat-icon> 
+                                    </button>
+                                </div>
+                            </form>
+                        </mat-step>
+
+                        <mat-step>
+                            <ng-template matStepLabel>Interview Panel</ng-template>
+                            <hr />
+                            <div class="row">
+                                <div class="col-md-4">
+                                    <h4>Add interview panel</h4>
+                                </div>
+                                <div class="col-md-6">
+
+                                </div>
+                                <div class="col-md-2">
+                                    <button mat-raised-button color="primary" class="pull-right" (click)="addInterviewPanelFromAdd('add-client')">
+                                     <mat-icon>add</mat-icon> Add
+                                    </button>
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <div class="col-md-6" *ngFor="let interviewer of interviwerList; let i = index">
+                                    <div class="interview-panel clearfix" style="margin:0; margin-bottom: 15px;">
+                                        <div class="avatar-image">
+                                            <ngx-avatar name="{{ interviewer?.name }}" initialsSize="1" class="avatar" size="50" textSizeRatio="2"></ngx-avatar>
+                                        </div>
+                                        <div class="panel-details">
+                                            <h4 class="name">{{ interviewer?.name }}</h4>
+                                            <p class="color">
+                                                <img src="../../../assets/icons/client-details/Email.png" alt=""> {{ interviewer?.email }}
+                                            </p>
+                                            <p class="color" *ngIf="interviewer?.mobile">
+                                                <img src="../../../assets/icons/client-details/Phone.png" alt=""> {{ interviewer?.mobile }}
+                                            </p>
+                                            <p class="color" *ngIf="!interviewer?.mobile">
+                                                <img src="../../../assets/icons/client-details/Phone.png" alt=""> N/A
+                                            </p>
+                                        </div>
+
+                                        <div class="bar-options">
+                                            <mat-icon (click)="removeInterviewPanel(i)" style="cursor: pointer;">delete</mat-icon>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="place-holder" *ngIf="interviwerList?.length === 0">
+                                <h3>Click on add button to add Interview Panel</h3>
+                            </div>
+
+                            <div>
+                                <button mat-stroked-button matStepperPrevious style="margin-right: 15px;">
+                                    <mat-icon>arrow_back</mat-icon> Back
+                                </button>
+
+                                <button mat-raised-button color="primary" (click)="createClient()">Create</button>
+                            </div>
+                        </mat-step>
+                    </mat-horizontal-stepper>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

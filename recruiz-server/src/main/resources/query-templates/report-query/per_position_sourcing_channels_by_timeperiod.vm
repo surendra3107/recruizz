@@ -1,0 +1,24 @@
+## checking by per position or all likewise if else condition execute
+#if ($positionCode == "all")
+      SELECT 
+		CONCAT(c.source) as 'Source Channel', count(c.cid) as 'Total Number' 
+	FROM 
+		candidate c 
+	INNER JOIN 
+		round_candidate rc on rc.candidate_cid = c.cid 
+		where rc.creation_date between '$startDate' and '$endDate'
+	GROUP BY
+		 c.source;
+#else
+      SELECT 
+		CONCAT(c.source) as 'Source Channel', count(c.cid) as 'Total Number' 
+	FROM 
+		candidate c 
+	INNER JOIN 
+		round_candidate rc on rc.candidate_cid = c.cid 
+		where rc.positionCode= '$positionCode' and rc.creation_date between '$startDate' and '$endDate'
+	GROUP BY
+		 c.source;
+#end
+
+

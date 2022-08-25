@@ -1,0 +1,6 @@
+SELECT 
+	CONCAT(c.gender) as 'Gender', count(c.cid) as 'Total Number' 
+FROM 
+	candidate c where c.creation_date > DATE_SUB(NOW(), $timePeriod)
+GROUP BY
+	 c.gender;

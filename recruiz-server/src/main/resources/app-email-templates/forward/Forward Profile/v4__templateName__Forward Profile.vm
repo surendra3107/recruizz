@@ -1,0 +1,36 @@
+<p style="font-family: Helvetica, Arial, sans-serif; font-size: 15px; line-height: 23px; margin-top: 16px; margin-bottom: 24px;">Hi, <br /><br /> Few candidate profiles for open position - ${positionName} have been forwarded to you for Review and Feedback.</p>
+<p>#foreach( $candidate in $candidateList )#end</p>
+<table  border="1" cellspacing="2" cellpadding="2">
+<tbody>
+<tr>
+#if( !$isMasked )
+<td style="width:15%">Name</td>
+<td style="width:10%">Mobile</td>
+<td style="width:15%">Email</td>
+#end
+
+<td style="width:10%">Current Company</td>
+<td style="width:10%">Designation</td>
+<td style="width:10%">Current Location</td>
+<td style="width:10%">Total Experience</td>
+<td style="width:10%">Current CTC (Lacs)</td>
+<td style="width:10%">Expected CTC (Lacs)</td>
+</tr>
+ #foreach( $candidate in $candidateList )
+    <tr>
+    	#if( !$isMasked )
+		<td>$candidate.fullName</td>
+		<td>$candidate.mobile</td>
+		<td>$candidate.email</td>
+		#end
+		<td>$candidate.currentCompany</td>
+		<td>$candidate.currentTitle</td>
+		<td>$candidate.currentLocation</td>
+		<td>$candidate.totalExp</td>
+		<td>$candidate.currentCtc</td>
+		<td>$candidate.expectedCtc</td>
+</tr>
+ #end
+</tbody>
+</table>
+<p style="font-family: Helvetica, Arial, sans-serif; font-size: 15px; line-height: 23px; margin-top: 16px; margin-bottom: 24px;"><br /><br /> Please click the link below to view and give your feedback.<br /><br /> ${emailSignature}</p>

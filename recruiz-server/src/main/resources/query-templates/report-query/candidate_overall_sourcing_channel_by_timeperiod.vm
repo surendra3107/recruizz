@@ -1,0 +1,6 @@
+SELECT 
+	CONCAT(c.source) as 'Source Channel', count(c.cid) as 'Total Number' 
+FROM 
+	candidate c where c.creation_date between '$startDate' and '$endDate'
+GROUP BY
+	 c.source;

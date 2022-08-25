@@ -1,0 +1,47 @@
+SELECT 
+	CONCAT(C.clientName) AS 'Name', CONCAT(C.clientLocation) AS 'Location', 
+	IFNULL(E.activeCount,0) AS 'Active Positions', IFNULL(D.closedCount,0) AS 'Closed Positions', 
+	IFNULL(F.onHoldCount,0) AS 'On-Hold Positions', IFNULL(G.nearClosureCount,0) AS 'Near Closure Positions', 
+	IFNULL(H.postClosureCount,0) AS 'Post Close Date Positions'
+FROM (
+SELECT *
+FROM
+		(
+		SELECT DISTINCT id AS positionId, client_id
+		FROM POSITION) A
+	INNER JOIN 
+		(
+		SELECT DISTINCT id AS clientId, clientName, clientLocation
+		FROM CLIENT) B ON A.client_id=B.clientId) C
+	LEFT JOIN
+	(
+		SELECT client_id, COUNT(id) AS closedCount
+		FROM POSITION
+		WHERE STATUS='$closedStatus'
+		GROUP BY client_id)D ON C.clientId = D.client_id
+	LEFT JOIN
+	(
+		SELECT client_id, COUNT(id) AS activeCount
+		FROM POSITION
+		WHERE STATUS='$activeStatus'
+		GROUP BY client_id)E ON C.clientId = E.client_id
+	LEFT JOIN
+	(
+		SELECT client_id, COUNT(id) AS onHoldCount
+		FROM POSITION
+		WHERE STATUS='$onHoldStatus'
+		GROUP BY client_id)F ON C.clientId = F.client_id
+	LEFT JOIN
+	(
+		SELECT client_id, COUNT(id) AS nearClosureCount
+		FROM POSITION
+		WHERE STATUS <> '$closedStatus' AND closeByDate > DATE_ADD(NOW(), INTERVAL 5 DAY)
+		GROUP BY client_id)G ON C.clientId = G.client_id
+	LEFT JOIN
+	(
+		SELECT client_id, COUNT(id) AS postClosureCount
+		FROM POSITION
+		WHERE STATUS <> '$closedStatus' AND NOW() > closeByDate
+		GROUP BY client_id)H ON C.clientId = H.client_id
+	GROUP BY C.clientName
+	ORDER BY C.clientName ASC;

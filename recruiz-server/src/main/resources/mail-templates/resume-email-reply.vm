@@ -1,0 +1,14 @@
+<div class="email-body" style="background: #fff; border: solid 1px #e8e8e8; border-top: solid 3px #21BCB0; border-bottom: solid 3px #21BCB0; overflow: hidden; position: relative; padding: 20px; border-radius: 4px; box-shadow: 0px 10px 10px -5px #e8e8e8; width: 100%; max-width: 768px; font-size: 15px; margin: 20px auto 0;">
+
+  <div style="font-family: Helvetica, Arial, sans-serif;">
+    <p>Hi,</p>
+    #if ((! $positionName) && ("$!positionName" == ""))
+      <h4>Resume process report(sent to recruiz)</h4>
+      <p style="font-size: 15px;">$candidateList</p></br></br>
+    #else
+      <h4>Resume process report(sent to recruiz) to be added to position : <b>$positionName</b></h4>
+      <p style="font-size: 15px;">$candidateList</p>
+      </br></br>
+    #end 
+  </div>
+</div>

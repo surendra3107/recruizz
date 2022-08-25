@@ -1,0 +1,24 @@
+mat-sidenav {
+    background-color: #21bcb0;
+    margin: 0;
+    padding: 0;
+    position: fixed;
+    height: 100%;
+    transition: all .3s;
+}
+
+.sidebar-links{
+    margin-top: 8px;
+    padding: 0px 0px 0 15px;
+    color: #fff;
+    font-size: 14px;
+}
+.recruiz-logo{
+    margin: 0 6px;
+}
+::ng-deep .mat-drawer-inner-container {
+    overflow: visible !important;
+}
+.material-sidenav {
+    overflow: visible!important;
+}

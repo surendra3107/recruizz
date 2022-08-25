@@ -1,0 +1,8 @@
+SELECT 
+    (SELECT 
+            SUM(last_hit_gap)
+        FROM
+            $tableName
+        WHERE
+            time between '$startDate' AND '$endDate'
+                AND last_hit_gap > $idleTimeOut) totalIdleTime;

@@ -1,0 +1,737 @@
+.candidate-detail p {
+    margin-bottom: 8px;
+    color: #acbaca;
+}
+.para{
+    font-weight: 600;
+    color: #7f7f7f!important;
+}
+.main-section {
+    padding: 5px;
+    background-color: #ececec;
+    position: relative;
+}
+
+.basic-container {
+    background-color: #ececec;
+    width: 92%;
+    margin: 0 auto;
+}
+.list-menu {
+   padding: 0;
+}
+.list-menu2 {
+    padding: 10px;
+    background-color: #f0f1f5;
+    margin: 0;
+}
+.list-items {
+    list-style: none;
+    background-color: #fff;
+    margin: 15px 0px;
+    padding-top: 15px;
+}
+.recruiz-head {
+    font-size: 17px;
+    color: #21bcb0;
+    font-weight: 600;
+}
+.inline-div {
+    padding: 0;
+}
+.inline-div li{
+    display: inline-block;
+    margin-right: 50px;
+}
+.dates {
+    font-size: 12px;
+    font-weight: 100;
+}
+.details-bar-option {
+    text-align: right;
+}
+/* .list-items:hover {
+    box-shadow: 0px 1px 5px 0px rgba(0,0,0,0.5 );
+} */
+
+button:focus {
+    outline:none !important;
+    box-shadow:none !important;
+}
+.btn1 {
+    background-color: #000;
+    outline: none;
+    border-color: #000;
+    color: #fff;
+    padding: 4px 15px;
+    margin: 5px;
+}
+
+.btn2 {
+    background-color: #7d014f;
+    outline: none;
+    border-color: #7d014f;
+    color: #fff;
+    padding: 4px 15px;
+    margin: 5px;
+}
+.btn3 {
+    
+    background-color: #000;
+    outline: none;
+    border-color: #000;
+    color: #fff;
+    margin: 5px;
+    padding: 4px 15px;
+}
+.btn4 {
+    background-color: #652595;
+    outline: none;
+    border-color: #652595;
+    color: #fff;
+    margin: 5px;
+    padding: 4px 15px;
+}
+.links{
+    width: 84%;
+    text-align: right;
+    margin: 5px 0px;
+}
+.link1{
+    margin-right: 10px;
+}
+.button-grp {
+    margin: 4px;
+}
+
+
+
+
+
+
+/* Lower Tab Section  */
+
+.nav-pills {
+    background-color: #f0f1f5;
+}
+
+.nav-pills li a {
+    color: #727375;
+    font-size: 12px;
+    font-weight: 600;
+    padding: 13px 10px;
+    position: relative;
+}
+
+.nav-pills li a::after{
+    content: '|';
+    position: absolute;
+    top: 10px;
+    font-size: 15px;
+    color: #ccc;
+    font-weight: 100;
+    right: 0;
+}
+
+
+.nav-pills li:last-child a::after{
+    content: '|';
+    position: absolute;
+    top: 10px;
+    font-size: 15px;
+    color: #ccc;
+    font-weight: 100;
+    right: 0;
+    display: none;
+}
+
+
+.nav-pills li.active a::after{
+    content: '|';
+    position: absolute;
+    top: 10px;
+    font-size: 15px;
+    color: #ccc;
+    font-weight: 100;
+    right: 0;
+    display: none;
+}
+
+
+.selected-tab {
+    background-color: #21bcb0;
+    color: #fff!important;
+}
+
+.client-detailtab{
+    background:#fff;
+}
+
+.customtabs{
+    border-bottom: 1px solid #ddd;
+    padding: 12px 20px;
+}
+
+.tabs-content{
+    padding-bottom: 1px;
+    min-height:200px;
+    position: relative;
+}
+.client-additional{
+    background-color: #f5f7ff;
+    margin-bottom: 15px;
+}
+.custom-additional-tab {
+    border-bottom: 1px solid #ddd;
+    padding: 24px 20px;
+}
+.title {
+    margin: 0;
+    font-size: 14px;
+    font-weight: 600;
+}
+.description {
+    padding: 15px;
+    border-bottom: 1px solid #ddd;
+    color: #626266;
+}
+.custom-info {
+    padding: 15px;
+    background-color: #f5f7ff;
+    border-bottom: 1px solid #ddd;
+}
+.custom {
+    padding: 15px;
+    background-color: #f5f7ff;
+    margin-bottom: 15px;
+}
+/* .tabs-content p {
+    font-size: 12px;
+    font-weight: 600;
+} */
+.title-tab {
+    font-size: 14px;
+    font-weight: 600;
+}
+.education-info {
+    color: #626266;
+    font-weight: 600;
+}
+
+/* No Decision Makers */
+.no-decision {
+    position: absolute;
+    top: 25%;
+    left: 44%;
+}
+.job-description {
+    margin: 0;
+    padding: 10px 8px;
+}
+.job-description p {
+    font-size: 14px;
+}
+.resume-header {
+    background-color: #354b63;
+    color: #fff;
+    padding: 15px;
+    margin: 18px 18px 2px 18px;
+    border-top-left-radius: 5px;
+    border-top-right-radius: 5px;
+}
+.reader {
+    background-color: #758da8;
+    min-height: 400px;
+    margin: 0px 18px 18px 18px;
+}
+
+/* interview panel list */
+.interview-panel {
+    background-color: #f0f1f5;
+    margin: 10px;
+}
+.panel-details .name {
+    font-size: 16px;
+    font-weight: 600;
+    color: #235e65;
+}
+.avatar-image {
+    float: left;
+    padding: 10px 15px;
+}
+.avatar-image img {
+    width: 130%;
+}
+.avatar-image .doc-avatar {
+    width: 100%;
+}
+.icon-image {
+    width: 150%;
+    vertical-align: middle;
+    border-style: none;
+    background-color: #c6e6e7;
+    border-radius: 50%;
+}
+.panel-details {
+    float: left;
+    padding: 10px;
+}
+.bar-options {
+    float: right;
+    padding: 20px;
+}
+.color {
+    color: #758da8;
+    font-weight: 600;
+    margin: 2px 0px;
+}
+
+/* Activity */
+.date-time {
+    float: right;
+    padding: 22px 22px 10px 22px;
+}
+.date-time h4 {
+    font-size: 14px;
+    font-weight: 600;
+}
+.activity-name {
+    font-weight: 600;
+    font-size: 16px;
+}
+.panel-details1 {
+    float: left;
+    padding: 18px;
+}
+.avatar-image1 {
+    float: left;
+    padding: 25px 15px;
+    clear: both;
+
+}
+
+/* Notes  */ 
+
+.interview-panel-notes {
+    background-color: #f0f1f5;
+    margin: 18px;
+    padding: 0px 15px;
+}
+.interview-panel-notes1 {
+    background-color: #f0f1f5;
+    margin: 10px;
+    padding: 5px;
+}
+.date {
+    float: left;
+    padding: 12px;
+}
+.bar-options1 {
+    /* display: inline-block; */
+    width: 100%;
+    text-align: right;
+    padding: 8px;
+}
+.time-date {
+    margin-bottom: 0;
+    font-size: 13px!important;
+    font-weight: 600;
+}
+
+
+.avatar-image2 {
+    float: left;
+    padding: 8px;
+}
+
+.panel-details2 {
+    float: left;
+    width: 90%;
+    padding: 5px;
+}
+.panel-details2 .notes {
+    font-size: 14px;
+    font-weight: 600;
+}
+.bottom-div {
+    clear: both;
+}
+.icon-image2 {
+    width: 100%;
+    vertical-align: middle;
+    border-style: none;
+    background-color: #c6e6e7;
+    border-radius: 50%;
+    padding: 10px;
+}
+.added-by-div {
+    clear: both;
+    width: 82%;
+    margin: 0 auto;
+}
+.added-by {
+    color : #838486;
+}
+
+/* Rate */
+.no-rate {
+    font-size: 14px;
+    color: #6e6e6e;
+    font-weight: 600;
+}
+.no-decision1 {
+    position: absolute;
+    top: 32%;
+    left: 46%;
+}
+
+/* Docs */
+.docs-div {
+    padding: 5px;
+}
+.docs-bg {
+    background-color: #758da8;
+    margin: 20px 25px 0px 25px;
+    padding: 0px 40px;
+    border-top-left-radius: 0.4rem;
+    border-top-right-radius: 0.4rem;
+}
+
+.file-head {
+    color: #fff;
+    margin: 8px;
+    font-size: 14px;
+}
+.upload-img {
+    margin: 6px;
+}
+.uploaded {
+    margin: 0px 25px 15px 25px;
+    background-color: #f0f1f5;
+    padding: 10px;
+}
+.file-image {
+    float: left;
+}
+.float {
+    overflow: hidden;
+    padding: 0px 18px;
+}
+.docs-icon {
+    text-align: right;
+    padding-right: 25px;
+}
+.doc-title {
+    font-size: 13px;
+    font-weight: 600;
+}
+.dov-date {
+    font-size: 12px;
+}
+.upload-link {
+    padding: 5px 12px;
+}
+
+a{
+    cursor: pointer;
+}
+
+/* Add Interview Panel */
+.plus-icon {
+    position: absolute;
+    top: 70%;
+    left: 80%;
+}
+
+
+
+/* Additonal Info */
+/* ************* */
+.description h6 {
+    font-weight: 600;
+    font-size: 14px;
+    color: #000;
+}
+.description ul {
+    padding: 5px;
+    margin: 0;
+}
+.description ul li {
+    display: inline-block;
+    list-style: none;
+    margin-right: 10px;
+}
+.more-details ul {
+    padding: 15px;
+    margin: 0;
+}
+.more-details ul li {
+    line-height: 2;
+    list-style: none;
+    font-size: 14px;
+    font-weight: 600;
+    margin: 5px 0px;
+}
+
+/* Team Table */
+tr .team-name {
+    color: #21bcb0;
+    font-weight: 600;
+}
+.hr-table {
+    border-radius: 5px;
+}
+.team-heading {
+    margin: 22px;
+    font-size: 16px;
+    font-weight: 600;
+    color: #000;
+}
+.team-table {
+    width: 95%;
+    margin: 0 auto;
+}
+.team-table th{
+    padding: 8px;
+}
+.team-table td{
+    padding: 15px;
+}
+.team-table td {
+    font-size: 14px;
+}
+.team-table thead {
+    background-color: #758da8;
+    color: #fff;
+}
+.team-table tbody {
+    background-color: #f0f1f5;
+    color: #000;
+}
+.team-table thead, tbody {
+    text-align: center;
+}
+/* New Changes */
+.bold {
+    font-weight: 600;
+    color: #000;
+}
+.alphabet-image {
+    float: left;
+    margin-left: 10px;
+}
+.middle-div {
+    margin-top: 25px;
+}
+.candidate-detail {
+    border-bottom: 1px solid #ddd;
+    margin: 0 auto;
+    width: 93%;
+}
+.bottom-line {
+    padding: 0;
+    margin: 10px 69px;
+}
+.bottom-line h3 {
+    font-size: 15px;
+    font-weight: 600;
+}
+.salary {
+    color: #758da8!important;
+    font-weight: 600;
+}
+.skills {
+    padding: 0;
+}
+.skills li {
+    color: #000;
+    font-size: 12px;
+    font-weight: 600;
+    display: inline-block;
+    list-style: none;
+    padding: 5px;
+    background-color: #eef2ff;
+    margin: 6px 6px 6px 0;
+}
+.btn-more {
+    color: #fff;
+    background-color: #21bcb0;
+    border: 0;
+    padding: 2px 6px;
+}
+/* list footer  */
+.list-footer {
+    padding: 10px 0px 0px 0px;
+}
+.list-footer li {
+    color: #999999;
+    font-size: 12px;
+    font-weight: 600;
+    list-style: none;
+    display: inline-block;
+    margin-bottom: 15px;
+    margin-right: 12px;
+    border-right: 1px solid #ddd;
+    padding-right: 10px;
+}
+.list-footer li:last-child {
+    border-right: 0;
+}
+.block-items {
+    width: 93%;
+    /* padding-left: 0; */
+    margin-left: 70px;
+    border-top: 1px solid #ddd;
+}
+
+.p-15 {
+    padding: 15px;
+}
+.p-8 {
+    padding: 8px;
+}
+.bg {
+    background-color: #f0f1f5;
+    min-height: 200px;
+} 
+
+.no-feedback {
+    position: absolute;
+    top: 45%;
+    left: 40%;
+    font-size: 18px;
+    font-weight: 600;
+    color: #808082;
+}
+.rounds {
+    padding: 0;
+}
+.rounds li {
+    color: #000;
+    font-size: 12px;
+    font-weight: 600;
+    display: inline-block;
+    list-style: none;
+    padding: 5px;
+    background-color: #eef2ff;
+    margin: 6px 6px 6px 0;
+}
+.block-items2 {
+    width: 100%;
+    padding: 15px;
+    padding-bottom: 0;
+}
+
+
+/* list footer  */
+.pd-left {
+    padding: 10px 0px 0px 0px;
+}
+.pd-left li {
+    color: #999999;
+    font-size: 12px;
+    font-weight: 600;
+    list-style: none;
+    display: inline-block;
+    /* margin-bottom: 15px; */
+    margin-right: 12px;
+    border-right: 1px solid #ddd;
+    padding-right: 10px;
+}
+.pd-left li:last-child {
+    border-right: 0;
+}
+.profile {
+    border-bottom: 1px solid #ddd;
+}
+.bar-options .feedback-date {
+    color: #909093;
+    /* font-weight: 600; */
+}
+.interview-panel .feedback-text {
+    width: 85%;
+    clear: both;
+    margin-left: 20px;
+    font-size: 13px;
+    font-weight: 600;
+}
+
+/* Docs & Docs File Upload */
+input[type="file"] {
+    display: none;
+}
+.custom-file-upload {
+    background-color: #000b58;
+    color: #fff;
+    cursor: pointer;
+    padding: 8px 15px;
+    border-radius: 4px;
+    margin-left: 15px;
+    margin-bottom: 15px;
+}
+.original-resume {
+    background-color: #f0f1f5;
+    margin: 12px;
+    margin-bottom: 0;
+}
+.original-resume1 {
+    background-color: #f0f1f5;
+    margin: 12px;
+    margin-bottom: 0;
+    display: flex;
+    justify-content: center;
+    min-height: 100px;
+    align-items: center;
+}
+.head {
+    font-size: 14px;
+    font-weight: 600;
+    align-self: center;
+}
+.masked-resume {
+    background-color: #f0f1f5;
+    margin: 12px;
+    margin-top: 0;
+    border-top: 2px solid #ddd;
+}
+.masked-resume1 {
+    background-color: #f0f1f5;
+    margin: 12px;
+    margin-top: 0;
+    margin-bottom: 0;
+    border-bottom: 2px solid #ddd;
+}
+.masked-head {
+    font-size: 14px;
+    font-weight: 600;
+    padding: 10px 15px;
+}
+.m-15 {
+    margin: 15px 0px;
+}
+.resume-head {
+    font-size: 16px;
+    font-weight: 600;
+    padding: 8px 14px;
+    margin-bottom: 0px;
+    margin-top: 8px;
+}
+.no-offer {
+    margin-bottom: 0;
+    font-size: 15px;
+    font-weight: 600;
+    color: #77787a;
+}
+.upload-btn {
+    text-align: right;
+    padding-right: 15px;
+}
+.m-top {
+    margin: 14px 0px 0px 0px;
+}
+.align-element {
+    align-self: center
+}
+.additional-doc {
+    margin-top: 12px;
+}

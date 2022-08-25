@@ -1,0 +1,6 @@
+SELECT 
+	CONCAT(c.source) AS 'Source Channel', count(c.cid) AS 'Total Number' 
+FROM 
+	candidate c 
+GROUP BY
+	 c.source;

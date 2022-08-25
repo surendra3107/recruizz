@@ -1,0 +1,7 @@
+SELECT 
+		CONCAT(p.title) as 'Position Name',IFNULL(TIMESTAMPDIFF(DAY,NOW(),p.closeByDate),0) as 'Number of Days'
+FROM 
+	position p  
+INNER JOIN
+	client c on p.client_id=c.id
+WHERE p.positionCode = '$positionCode';

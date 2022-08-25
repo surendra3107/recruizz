@@ -1,0 +1,121 @@
+.main-section {
+  background-color: #fff;
+  padding: 10px;
+  box-shadow: 0px 0px 5px 0px #ccc;
+  margin-left: 15px;
+  margin-right: 15px;
+  margin-top: 20px;
+  margin-bottom: 40px;
+}
+
+.main-section .row {
+  margin-left: 10px;
+  margin-right: 10px;
+}
+
+.header-onboard {
+  float: left;
+  margin-right: 10px;
+  line-height: 3;
+  font-size: 15px
+}
+
+.onboard-icon {
+  cursor: pointer;
+  font-size: 20px;
+  margin-top: 12px;
+  color: #f70e0e;
+}
+
+.card-header {
+  text-transform: uppercase;
+  font-size: 15px;
+  font-weight: bold;
+}
+
+.category-group {
+  padding: 8px 0px 0px 8px;
+  border-top: 1px solid #ccc;
+  border-right: 1px solid #ccc;
+  border-left: 1px solid #ccc;
+}
+
+.category-group:last-child {
+  border-bottom: 1px solid #ccc;
+}
+
+.expand {
+  float: left;
+  margin-right: 10px;
+  background: #ccc;
+}
+
+.onboarding .activity-title.title {
+  padding-left: 80px;
+  position: relative;
+  transition: clip 600ms ease-out;
+}
+
+.onboarding .title {
+  all: unset;
+  position: relative;
+  padding-left: 60px;
+  min-height: 40px;
+  border-top: solid 1px #DCE0E9;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+  cursor: pointer;
+  background: aliceblue;
+  border-right: 1px solid #DCE0E9;
+}
+
+.onboarding .title:last-child {
+  border-bottom: solid 0px #DCE0E9;
+}
+
+.onboarding .activity-title.title:before {
+  height: 100%;
+  width: 1px;
+  background: #ccc;
+  left: 70px;
+}
+
+.onboarding .activity-title.title:before,
+.onboarding .activity-title.title:after {
+  content: "";
+  display: block;
+  position: absolute;
+}
+
+.onboarding .activity-description {
+  position: relative;
+  padding: 10px 20px 3px 112px;
+  border-top: solid 1px #DCE0E9;
+  background: azure;
+}
+
+.onboarding .activity-description:after {
+  content: "";
+  display: block;
+  position: absolute;
+  height: 100%;
+  width: 1px;
+  background: #ccc;
+  left: 70px;
+  top: 0;
+}
+
+.mat-menu-item {
+  height: 30px;
+  line-height: 2;
+}
+
+.alert-danger p {
+  padding: 65px 0px 50px 0px;
+  text-align: center;
+  font-size: 20px;
+}

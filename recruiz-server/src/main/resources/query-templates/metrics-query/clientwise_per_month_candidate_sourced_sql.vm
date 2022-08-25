@@ -1,0 +1,10 @@
+SELECT 
+count(rc.id) as 'No of Candidates', CONCAT(p.title) AS 'Position(s)',  MONTHNAME(rc.creation_date) as 'Month' from
+	round_candidate rc
+INNER JOIN 
+	position p on p.positionCode = rc.positionCode
+	where rc.creation_date between '$startDate' and '$endDate'
+	and p.client_id = '$clientId'
+GROUP BY
+	 p.title , Month
+	  ORDER BY rc.creation_date desc;

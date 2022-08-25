@@ -1,0 +1,1 @@
+DELETE FROM `email_client_details` WHERE `id` > 0;

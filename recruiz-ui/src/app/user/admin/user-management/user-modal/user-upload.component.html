@@ -1,0 +1,32 @@
+<h4 md-dialog-title>Import Header Mapping</h4>
+<hr>
+<div class="clearfix"></div>
+<mat-dialog-content>
+
+    <div class="row" *ngFor="let header of fileHeaders">
+        <div class="col-md-6">
+            <mat-form-field class="example-full-width">
+                <mat-label>Imported file fields</mat-label>
+                <input matInput [(ngModel)]="header.id" disabled>
+            </mat-form-field>
+        </div>
+
+        <div class="col-md-6">
+            <mat-form-field>
+                <mat-label>Recruiz fields</mat-label>
+                <mat-select [(ngModel)]="header.value">
+                    <mat-option [value]="name" *ngFor="let name of headerConstants">
+                        {{ name }}
+                    </mat-option>
+                </mat-select>
+            </mat-form-field>
+        </div>
+
+    </div>
+</mat-dialog-content>
+
+<hr>
+<mat-dialog-actions align="end">
+    <button mat-raised-button (click)="onCloseConfirm()">CANCEL</button>
+    <button mat-raised-button color="primary" (click)="startImportData()">Start Import</button>
+</mat-dialog-actions>

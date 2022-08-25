@@ -1,0 +1,156 @@
+<div class="container text-center">
+    <div class="auth-container">
+        <div class="row">
+            <!-- Left Side -->
+            <div class="col-md-6 d-none d-md-block nopadding bgimage">
+                <div class="logo text-center">
+                    <img src="../../assets/icons/auth/logo.png" alt="" class="img-responsive">
+                    <p class="logotext">Recruitment on Cruise mode</p>
+                </div>
+                <div id="demo" class="carousel slide" data-ride="carousel">
+                    <ul class="carousel-indicators">
+                        <li data-target="#demo" data-slide-to="0" class="active"></li>
+                        <li data-target="#demo" data-slide-to="1"></li>
+                        <li data-target="#demo" data-slide-to="2"></li>
+                    </ul>
+                    <!-- The slideshow -->
+                    <div class="carousel-inner">
+                        <div class="carousel-item active main-image text-left">
+                            <img class="sliderimg" src="../../assets/icons/auth/group-6027.png" alt="" width="1100"
+                                height="500">
+                        </div>
+                        <div class="carousel-item main-image text-left">
+                            <img class="sliderimg" src="../../assets/icons/auth/group-6027.png" alt="" width="1100"
+                                height="500">
+                        </div>
+                        <div class="carousel-item main-image text-left">
+                            <img class="sliderimg" src="../../assets/icons/auth/group-6027.png" alt="" width="1100"
+                                height="500">
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Right Side  -->
+            <div class="col-md-6">
+                <div>
+                    <ul class="nav nav-pills text-right top-btns">
+                        <li class="nav-item">
+                            <a class="links nav-link sign-in" [ngClass]="selectedSection=='signIn' ? 'color-class-selected' : 'color-class'"
+                                routerLink="" (click)="toggleAuthDiv('signIn')">Sign In</a>
+                        </li>
+                        <li class="nav-item mr-4">
+                            <a class="links nav-link sign-up" [ngClass]="selectedSection=='signUp' ? 'color-class-selected' : 'color-class'"
+                                routerLink="" (click)="toggleAuthDiv('signUp')">Sign Up</a>
+                        </li>
+                    </ul>
+                    <div class="tab-content" *ngIf="selectedSection=='signIn'">
+                        <div>
+                            <h3 class="welcome">Welcome back</h3>
+                            <form class="m-4" [formGroup]="signinForm" (ngSubmit)="onSignIn()">
+                                <div class="form-set">
+                                    <mat-form-field appearance="outline" class="email-field">
+                                        <mat-label class="email">Email</mat-label>
+                                        <input matInput type="email" placeholder="Email" [formControl]="email" required
+                                            autocomplete="off" email>
+                                        <mat-error *ngIf="email.invalid">{{getErrorMessage('email')}}</mat-error>
+                                    </mat-form-field>
+                                    <mat-form-field appearance="outline" class="email-field">
+                                        <mat-label class="email">Password</mat-label>
+                                        <input matInput placeholder="Password" [type]="hide ? 'password' : 'text'"
+                                            [formControl]="password" required>
+                                        <button type='button' mat-icon-button matSuffix (click)="hide = !hide"
+                                            [attr.aria-label]="'Hide password'" [attr.aria-pressed]="hide">
+                                            <mat-icon>{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
+                                        </button>
+                                        <mat-error *ngIf="password.invalid">{{getErrorMessage('password')}}</mat-error>
+                                    </mat-form-field>
+                                </div>
+                                <div class="text-right forget">
+                                    <small><a class="forget-text" routerLink=''>Forgot Password ?</a></small>
+                                </div>
+                                <button type="submit" class="btn default-color btn-block submit-button">Sign In</button>
+                            </form>
+                        </div>
+                    </div>
+                    
+                    <!-- signUp -->
+                    <form class="my-0 mx-4" [formGroup]="signupForm" (ngSubmit)="onSignup()">
+                        <div *ngIf="selectedSection=='signUp'">
+                            <div class="profile">
+                                <span>
+                                    <a class="corporate link" [ngClass]="userType=='Corporate Name' ? 'link-class-selected' : 'link-class'"
+                                        routerLink='' (click)="toggleSignup('Corporate Name')">
+                                        <img class="icons mr-2" src="../../assets/icons/auth/group-6033.png" alt="">Corporate</a>
+                                </span>
+                                <span>
+                                    <a [ngClass]="userType=='Agency Name' ? 'link-class-selected' : 'link-class'" class="agency link"
+                                        routerLink='' (click)="toggleSignup('Agency Name'); signupForm.reset()">
+                                        <img class="icons mr-2" src="../../assets/icons/auth/group-6034.png" alt="">Agency</a>
+                                </span>
+                            </div>
+                            <div class="container">
+                                <div class="form-set">
+                                    <mat-form-field appearance="outline" class="email-field">
+                                        <mat-label class="email">{{userType}}</mat-label>
+                                        <input matInput placeholder="{{userType}}" [formControl]="name">
+                                        <mat-error *ngIf="name.invalid">{{getErrorMessage('name')}}</mat-error>
+                                    </mat-form-field>
+                                    <mat-form-field appearance="outline" class="email-field">
+                                        <mat-label class="email">Email</mat-label>
+                                        <input matInput placeholder="Email" [formControl]="signUpemail" required
+                                            autocomplete="off">
+                                        <mat-error *ngIf="signUpemail.invalid">{{getErrorMessage('signUpemail')}}</mat-error>
+                                    </mat-form-field>
+                                    <mat-form-field appearance="outline" class="email-field">
+                                        <mat-label class="email">Mobile Number</mat-label>
+                                        <input matInput placeholder="Mobile Number" [formControl]="mobileNumber"
+                                            required>
+                                        <mat-error *ngIf="mobileNumber.invalid">{{getErrorMessage('mobileNumber')}}</mat-error>
+                                    </mat-form-field>
+                                </div>
+                                <div class="row form-group bottom-section ">
+                                    <div class="col-md-6 p-0">
+                                        <div class="form-group pswd">
+                                            <mat-form-field appearance="outline" class="email-field">
+                                                <mat-label class="email">Password</mat-label>
+                                                <input matInput placeholder="Password" [type]="hide ? 'password' : 'text'"
+                                                    [formControl]="signUpPassword" required>
+                                                <!-- <button type='button' mat-icon-button matSuffix (click)="hide = !hide"
+                                                [attr.aria-label]="'Hide password'" [attr.aria-pressed]="hide">
+                                                <mat-icon>{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
+                                            </button> -->
+                                                <mat-error *ngIf="signUpPassword.invalid">{{getErrorMessage('password')}}</mat-error>
+                                            </mat-form-field>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6 p-0 conf-pswd">
+                                        <div class="form-group pswd">
+                                            <mat-form-field appearance="outline" class="email-field">
+                                                <mat-label class="email">Confirm</mat-label>
+                                                <input matInput placeholder="Confirm" [type]="hide ? 'password' : 'text'"
+                                                    [formControl]="confirm" required>
+                                                <!-- <button type='button' mat-icon-button matSuffix (click)="hide = !hide"
+                                                [attr.aria-label]="'Hide password'" [attr.aria-pressed]="hide">
+                                                <mat-icon>{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
+                                            </button> -->
+                                                <mat-error *ngIf="confirm.invalid">{{getErrorMessage('confirm')}}</mat-error>
+                                            </mat-form-field>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="text-left">
+                                    <mat-checkbox m-0> I read and agree to <a href="" class="terms">Terms & Conditions</a></mat-checkbox>
+                                </div>
+                                <div class="captcha">
+                                    <re-captcha (resolved)="resolved($event)" siteKey="6LcOuyYTAAAAAHTjFuqhA52fmfJ_j5iFk5PsfXaU"></re-captcha>
+                                </div>
+                                <button type="submit" class="btn default-color btn-block submit-button">Sign Up</button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

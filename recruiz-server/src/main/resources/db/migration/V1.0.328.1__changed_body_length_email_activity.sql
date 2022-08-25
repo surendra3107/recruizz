@@ -1,0 +1,1 @@
+ALTER TABLE `email_activity` CHANGE COLUMN `body` `body` LONGTEXT NULL DEFAULT NULL ;

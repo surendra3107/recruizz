@@ -1,0 +1,8 @@
+ALTER TABLE `position` 
+CHANGE COLUMN `description` `description` LONGTEXT NULL DEFAULT NULL ,
+CHANGE COLUMN `notes` `notes` LONGTEXT NULL DEFAULT NULL ;
+
+
+ALTER TABLE `position_audit` 
+CHANGE COLUMN `description` `description` LONGTEXT NULL DEFAULT NULL ,
+CHANGE COLUMN `notes` `notes` LONGTEXT NULL DEFAULT NULL ;
